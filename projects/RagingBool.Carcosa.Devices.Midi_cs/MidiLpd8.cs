@@ -16,10 +16,10 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
 using Epicycle.Commons.Time;
+using System;
 
 namespace RagingBool.Carcosa.Devices.Midi
 {
