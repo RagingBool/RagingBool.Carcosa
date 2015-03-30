@@ -1,0 +1,10 @@
+project_guid: A485A127-9BDC-4DE4-95D9-48A46B95E32B
+assemblyinfo_guid: f614f9eb-c456-4831-8353-53e810aa20fc
+
+references:
+ - RagingBool.Carcosa.Devices_cs
+
+external_libs:
+ - Epicycle.Commons-cs
+ - YamlDotNet
+ - MIDI.NET

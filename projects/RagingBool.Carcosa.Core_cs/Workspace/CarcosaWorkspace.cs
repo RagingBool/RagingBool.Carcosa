@@ -32,5 +32,15 @@ namespace RagingBool.Carcosa.Core.Workspace
         {
             get { return Configuration.Name; }
         }
+
+        public int ControllerMidiInPort
+        {
+            get { return Configuration.ControllerMidiInPort; }
+        }
+
+        public int ControllerMidiOutPort
+        {
+            get { return Configuration.ControllerMidiOutPort; }
+        }
     }
 }

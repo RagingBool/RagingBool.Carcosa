@@ -29,6 +29,8 @@ namespace RagingBool.Carcosa.Core
         private readonly IFileSystem _fileSystem;
         private readonly CarcosaWorkspace _workspace;
 
+        private readonly IStage _stage;
+
         public Carcosa(IClock clock, IFileSystem fileSystem, FileSystemPath workspacePath)
         {
             ArgAssert.NotNull(clock, "clock");
@@ -38,7 +40,10 @@ namespace RagingBool.Carcosa.Core
             _clock = clock;
             _fileSystem = fileSystem;
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
+
+            _stage = new PartyStage1(_workspace);
         }
+
 
         public ICarcosaWorkspace Workspace
         {
@@ -47,12 +52,12 @@ namespace RagingBool.Carcosa.Core
 
         public void Start()
         {
-
+            _stage.Start();
         }
 
         public void Stop()
         {
-
+            _stage.Stop();
         }
     }
 }

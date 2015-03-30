@@ -4,37 +4,37 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1D0DCD3C-029B-4138-95DB-A1469D126920}</ProjectGuid>
+    <ProjectGuid>{733741A2-942E-4232-B8F4-FBC0DAAE3E6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RagingBool.Carcosa.Core</RootNamespace>
-    <AssemblyName>RagingBool.Carcosa.Core_cs-Test</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>RagingBool.Carcosa.Devices</RootNamespace>
+    <AssemblyName>RagingBool.Carcosa.Devices_cs-Test</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\bin\net35\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NET35</DefineConstants>
+    <OutputPath>..\..\bin\net40\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET40</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\net35\Debug\RagingBool.Carcosa.Core_cs-Test.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\net40\Debug\RagingBool.Carcosa.Devices_cs-Test.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\bin\net35\Release\</OutputPath>
-    <DefineConstants>TRACE;NET35</DefineConstants>
+    <OutputPath>..\..\bin\net40\Release\</OutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\net35\Debug\RagingBool.Carcosa.Core_cs-Test.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\net40\Debug\RagingBool.Carcosa.Devices_cs-Test.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -46,28 +46,13 @@
     <Reference Include="System.Xml" />
 
     <Reference Include="Epicycle.Commons.TestUtils_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net35\Epicycle.Commons.TestUtils_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net40\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net35\Epicycle.Commons_cs.dll</HintPath>
-    </Reference>
-    <Reference Include="Epicycle.Graphics.Platform.SystemDrawing_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Graphics-cs.0.1.5.0\lib\net35\Epicycle.Graphics.Platform.SystemDrawing_cs.dll</HintPath>
-    </Reference>
-    <Reference Include="Epicycle.Graphics_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Graphics-cs.0.1.5.0\lib\net35\Epicycle.Graphics_cs.dll</HintPath>
-    </Reference>
-    <Reference Include="clipper_library">
-      <HintPath>..\..\externals\NuGet\Epicycle.Math-cs.0.1.5.0\lib\net35\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Epicycle.Math.TestUtils_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Math-cs.0.1.5.0\lib\net35\Epicycle.Math.TestUtils_cs.dll</HintPath>
-    </Reference>
-    <Reference Include="Epicycle.Math_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Math-cs.0.1.5.0\lib\net35\Epicycle.Math_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net40\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
-      <HintPath>..\..\externals\NuGet\Moq.4.2.1409.1722\lib\net35\Moq.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\externals\NuGet\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
@@ -83,9 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RagingBool.Carcosa.Core_cs\RagingBool.Carcosa.Core_cs.net35.csproj">
-      <Project>{d323da07-474d-4a00-a45d-242f1d86802c}</Project>
-      <Name>RagingBool.Carcosa.Core_cs</Name>
+    <ProjectReference Include="..\RagingBool.Carcosa.Devices_cs\RagingBool.Carcosa.Devices_cs.net40.csproj">
+      <Project>{76e967a5-9422-4a50-bf41-91706e507c81}</Project>
+      <Name>RagingBool.Carcosa.Devices_cs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
