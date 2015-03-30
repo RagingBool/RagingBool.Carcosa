@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>RagingBool.Carcosa</id>
+    <version>0.0.0.0</version>
+    <title>RagingBool.Carcosa</title>
+    <authors>Raging Bool</authors>
+    <owners>Raging Bool</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/RagingBool/RagingBool.Carcosa</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Carcosa is a lighting driving software that is built as part of the Unbirthday Camp.
+
+* Details &amp; release notes: https://github.com/RagingBool/RagingBool.Carcosa/blob/ver-$version$/README.md
+* Sources: https://github.com/RagingBool/RagingBool.Carcosa/tree/ver-$version$
+* Git repository: https://github.com/RagingBool/RagingBool.Carcosa</description>
+    <summary>Carcosa is a lighting driving software that is built as part of the Unbirthday Camp.</summary>
+    <releaseNotes>https://github.com/RagingBool/RagingBool.Carcosa/blob/ver-$version$/README.md</releaseNotes>
+    <copyright>Copyright 2015 Raging Bool</copyright>
+    <language />
+    <tags>carcosa lighting dmx E1.31 midi party</tags>
+
+    <dependencies>
+      <dependency id="TaskParallelLibrary" version="1.0.2856.0" />
+      <dependency id="YamlDotNet" version="3.5.0" />
+      <dependency id="NUnit" version="2.6.4" />
+      <dependency id="Moq" version="4.2.1409.1722" />
+    </dependencies>
+  </metadata>
+</package>
