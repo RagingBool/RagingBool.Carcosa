@@ -21,10 +21,9 @@
     <tags>carcosa lighting dmx E1.31 midi party</tags>
 
     <dependencies>
-      <dependency id="TaskParallelLibrary" version="1.0.2856.0" />
-      <dependency id="YamlDotNet" version="3.5.0" />
-      <dependency id="NUnit" version="2.6.4" />
-      <dependency id="Moq" version="4.2.1409.1722" />
+      <dependency id="Epicycle.Commons-cs" version="0.1.6.0" />
+      <dependency id="Epicycle.Math-cs" version="0.1.5.0" />
+      <dependency id="Epicycle.Graphics-cs" version="0.1.5.0" />
     </dependencies>
   </metadata>
 </package>

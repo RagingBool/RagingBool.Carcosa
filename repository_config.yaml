@@ -15,10 +15,9 @@ dotnet_frameworks:
  - net45
 
 nuget_dependencies:
- - TaskParallelLibrary.1.0.2856.0
- - YamlDotNet.3.5.0
- - NUnit.2.6.4
- - Moq.4.2.1409.1722
+ - Epicycle.Commons-cs.0.1.6.0
+ - Epicycle.Math-cs.0.1.5.0
+ - Epicycle.Graphics-cs.0.1.5.0
 
 description: |
    Carcosa is a lighting driving software that is built as part of the Unbirthday Camp.
