@@ -21,5 +21,9 @@ namespace RagingBool.Carcosa.Core.Workspace
     public class CarcosaWorkspaceConfiguration
     {
         public string Name { get; set; }
+
+        public int ControllerMidiInPort { get; set; }
+
+        public int ControllerMidiOutPort { get; set; }
     }
 }
