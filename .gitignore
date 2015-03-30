@@ -60,3 +60,4 @@ target/
 bin
 **/obj/
 *.suo
+externals/NuGet
