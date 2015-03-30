@@ -51,6 +51,33 @@
     <Reference Include="Epicycle.Commons_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net40\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
+    <Reference Include="CannedBytes">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.IO">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Media">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Media.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Media.IO">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Media.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.Components">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.IO">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.Message">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.Message.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.Xml">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\externals\NuGet\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
     </Reference>

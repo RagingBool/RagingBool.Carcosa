@@ -7,3 +7,4 @@ references:
 external_libs:
  - Epicycle.Commons-cs
  - YamlDotNet
+ - MIDI.NET
