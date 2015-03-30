@@ -63,6 +63,7 @@
     <Compile Include="ILpd8.cs" />
     <Compile Include="ISnark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialSnark.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
