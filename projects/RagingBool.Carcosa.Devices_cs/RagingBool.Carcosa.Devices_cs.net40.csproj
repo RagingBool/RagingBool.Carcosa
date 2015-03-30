@@ -56,7 +56,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonEventArgs.cs" />
+    <Compile Include="ButtonEventType.cs" />
+    <Compile Include="ControllerChangeEventArgs.cs" />
     <Compile Include="IDevice.cs" />
+    <Compile Include="ILpd8.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
