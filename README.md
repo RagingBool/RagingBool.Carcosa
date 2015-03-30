@@ -17,3 +17,4 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
 ### Version 0.1 
 
 * **Version 0.1.0.0** [NOT RELEASED]
+  * Creating a basic WPF app
