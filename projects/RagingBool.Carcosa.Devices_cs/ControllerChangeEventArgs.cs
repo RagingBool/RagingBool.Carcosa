@@ -16,9 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using System;
+
 namespace RagingBool.Carcosa.Devices
 {
-    public sealed class ControllerChangeEventArgs
+    public sealed class ControllerChangeEventArgs : EventArgs
     {
         private readonly int _controllerId;
         private readonly int _value;
