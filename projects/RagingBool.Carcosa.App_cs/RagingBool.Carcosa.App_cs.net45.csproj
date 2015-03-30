@@ -93,6 +93,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RagingBool.Carcosa.Core_cs\RagingBool.Carcosa.Core_cs.net45.csproj">
+      <Project>{d323da07-474d-4a00-a45d-242f1d86802c}</Project>
+      <Name>RagingBool.Carcosa.Core_cs.net45</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
