@@ -66,6 +66,33 @@
     <Reference Include="Epicycle.Math_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Math-cs.0.1.5.0\lib\net45\Epicycle.Math_cs.dll</HintPath>
     </Reference>
+    <Reference Include="CannedBytes">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.IO">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Media">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Media.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Media.IO">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Media.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.Components">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.IO">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.Message">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.Message.dll</HintPath>
+    </Reference>
+    <Reference Include="CannedBytes.Midi.Xml">
+      <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="YamlDotNet">
       <HintPath>..\..\externals\NuGet\YamlDotNet.3.5.0\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
@@ -82,7 +109,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-
+    <ProjectReference Include="..\RagingBool.Carcosa.Devices_cs\RagingBool.Carcosa.Devices_cs.net45.csproj">
+      <Project>{76e967a5-9422-4a50-bf41-91706e507c81}</Project>
+      <Name>RagingBool.Carcosa.Devices_cs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RagingBool.Carcosa.Devices.Midi_cs\RagingBool.Carcosa.Devices.Midi_cs.net45.csproj">
+      <Project>{a485a127-9bdc-4de4-95d9-48a46b95e32b}</Project>
+      <Name>RagingBool.Carcosa.Devices.Midi_cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
