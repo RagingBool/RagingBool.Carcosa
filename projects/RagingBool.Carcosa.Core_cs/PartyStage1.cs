@@ -18,6 +18,7 @@
 
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Midi;
+using RagingBool.Carcosa.Core.Workspace;
 
 namespace RagingBool.Carcosa.Core
 {
@@ -25,10 +26,10 @@ namespace RagingBool.Carcosa.Core
     {
         private readonly ILpd8 _controller;
         private int _lastController;
-        
-        public PartyStage1()
+
+        public PartyStage1(ICarcosaWorkspace workspace)
         {
-            _controller = new MidiLpd8(0, 1);
+            _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
 
             _controller.OnButtonEvent += _controller_OnButtonEvent;
             _controller.OnControllerChange += _controller_OnControllerChange;

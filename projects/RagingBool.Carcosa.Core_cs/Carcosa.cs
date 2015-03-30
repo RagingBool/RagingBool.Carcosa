@@ -41,7 +41,7 @@ namespace RagingBool.Carcosa.Core
             _fileSystem = fileSystem;
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
 
-            _stage = new PartyStage1();
+            _stage = new PartyStage1(_workspace);
         }
 
 
