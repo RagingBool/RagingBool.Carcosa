@@ -1,4 +1,4 @@
-# RagingBool.Carcosa 0.0.0.0 [NOT RELEASED]
+# RagingBool.Carcosa 0.0.0.0
 Carcosa is a lighting driving software that is built as part of the Unbirthday Camp.
 
 ***Note***: *This application is in it's 0.X version, that means that it's still in active development and backward compatibility is not guaranteed!*
