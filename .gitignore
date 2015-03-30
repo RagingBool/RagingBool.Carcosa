@@ -61,3 +61,4 @@ bin
 **/obj/
 *.suo
 externals/NuGet
+*.csproj.user
