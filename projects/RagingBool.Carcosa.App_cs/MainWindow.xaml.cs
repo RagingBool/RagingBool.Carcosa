@@ -22,6 +22,11 @@ namespace RagingBool.Carcosa.App
 
         private void Window_Initialized(object sender, EventArgs e)
         {
+            var workspaceName = _carcosa.Workspace.WorkspaceName;
+
+            Title = String.Format("CARCOSA [{0}]", workspaceName);
+            _infoLabel.Content = String.Format("WORKSPACE: {0}", workspaceName);
+
             _carcosa.Start();
         }
 
