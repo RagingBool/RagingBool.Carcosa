@@ -74,6 +74,9 @@
     <Compile Include="Carcosa.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Workspace\CarcosaWorkspace.cs" />
+    <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
+    <Compile Include="Workspace\ICarcosaWorkspace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

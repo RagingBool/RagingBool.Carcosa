@@ -16,15 +16,21 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Core.Workspace;
+using Epicycle.Commons.FileSystem;
+using Epicycle.Commons.FileSystemBasedObjects;
 
-namespace RagingBool.Carcosa.Core
+namespace RagingBool.Carcosa.Core.Workspace
 {
-    public interface ICarcosa
+    public class CarcosaWorkspace : DirectoryBasedObjectWithConfiguration<CarcosaWorkspaceConfiguration>, ICarcosaWorkspace
     {
-        void Start();
-        void Stop();
+        public CarcosaWorkspace(IFileSystem fileSystem, FileSystemPath path)
+            : base(fileSystem, path, configurationFileName: "carcosa_config.yaml", autoInit: false)
+        {
+        }
 
-        ICarcosaWorkspace Workspace { get; }
+        public string WorkspaceName
+        {
+            get { return Configuration.Name; }
+        }
     }
 }

@@ -16,15 +16,10 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Core.Workspace;
-
-namespace RagingBool.Carcosa.Core
+namespace RagingBool.Carcosa.Core.Workspace
 {
-    public interface ICarcosa
+    public class CarcosaWorkspaceConfiguration
     {
-        void Start();
-        void Stop();
-
-        ICarcosaWorkspace Workspace { get; }
+        public string Name { get; set; }
     }
 }
