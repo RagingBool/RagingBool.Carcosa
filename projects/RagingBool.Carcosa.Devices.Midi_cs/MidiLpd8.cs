@@ -18,7 +18,6 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
-using Epicycle.Commons.Time;
 using System;
 
 namespace RagingBool.Carcosa.Devices.Midi
@@ -28,7 +27,6 @@ namespace RagingBool.Carcosa.Devices.Midi
         public static readonly int FixedNumberOfButtons = 8;
         public static readonly int FixedNumberOfKnobs = 8;
 
-        private readonly IClock _clock;
         private readonly int _midiInDeviceId;
         private readonly int _midiOutDeviceId;
 
@@ -56,8 +54,6 @@ namespace RagingBool.Carcosa.Devices.Midi
             _midiInPort.Successor = new MidiReceiver(this);
 
             _midiOutPort = new MidiOutPort();
-
-
         }
 
         public void Connect()
