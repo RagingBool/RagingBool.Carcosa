@@ -12,12 +12,30 @@ copy LICENSE NuGetPackage\RagingBool.Carcosa.0.0.0.0\LICENSE
 xcopy bin\net35\Release\RagingBool.Carcosa.Core_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
 xcopy bin\net35\Release\RagingBool.Carcosa.Core_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
 xcopy bin\net35\Release\RagingBool.Carcosa.Core_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
+xcopy bin\net35\Release\RagingBool.Carcosa.Devices.Midi_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
+xcopy bin\net35\Release\RagingBool.Carcosa.Devices.Midi_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
+xcopy bin\net35\Release\RagingBool.Carcosa.Devices.Midi_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
+xcopy bin\net35\Release\RagingBool.Carcosa.Devices_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
+xcopy bin\net35\Release\RagingBool.Carcosa.Devices_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
+xcopy bin\net35\Release\RagingBool.Carcosa.Devices_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net35\
 xcopy bin\net40\Release\RagingBool.Carcosa.Core_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
 xcopy bin\net40\Release\RagingBool.Carcosa.Core_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
 xcopy bin\net40\Release\RagingBool.Carcosa.Core_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
+xcopy bin\net40\Release\RagingBool.Carcosa.Devices.Midi_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
+xcopy bin\net40\Release\RagingBool.Carcosa.Devices.Midi_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
+xcopy bin\net40\Release\RagingBool.Carcosa.Devices.Midi_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
+xcopy bin\net40\Release\RagingBool.Carcosa.Devices_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
+xcopy bin\net40\Release\RagingBool.Carcosa.Devices_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
+xcopy bin\net40\Release\RagingBool.Carcosa.Devices_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net40\
 xcopy bin\net45\Release\RagingBool.Carcosa.Core_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
 xcopy bin\net45\Release\RagingBool.Carcosa.Core_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
 xcopy bin\net45\Release\RagingBool.Carcosa.Core_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Devices.Midi_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Devices.Midi_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Devices.Midi_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Devices_cs.dll NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Devices_cs.pdb NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Devices_cs.xml NuGetPackage\RagingBool.Carcosa.0.0.0.0\lib\net45\
 
 cd NuGetPackage
 nuget pack RagingBool.Carcosa.0.0.0.0\RagingBool.Carcosa.0.0.0.0.nuspec -Properties version=0.0.0.0
