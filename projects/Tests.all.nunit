@@ -1,12 +1,6 @@
 <NUnitProject>
   <Settings activeconfig="All" processModel="Default" domainUsage="Default" />
   <Config name="All" binpathtype="Auto">
-    <assembly path="..\bin\net35\Debug\RagingBool.Carcosa.Core_cs-Test.dll" />
-    <assembly path="..\bin\net35\Release\RagingBool.Carcosa.Core_cs-Test.dll" />
-    <assembly path="..\bin\net35\Debug\RagingBool.Carcosa.Devices.Midi_cs-Test.dll" />
-    <assembly path="..\bin\net35\Release\RagingBool.Carcosa.Devices.Midi_cs-Test.dll" />
-    <assembly path="..\bin\net35\Debug\RagingBool.Carcosa.Devices_cs-Test.dll" />
-    <assembly path="..\bin\net35\Release\RagingBool.Carcosa.Devices_cs-Test.dll" />
     <assembly path="..\bin\net40\Debug\RagingBool.Carcosa.Core_cs-Test.dll" />
     <assembly path="..\bin\net40\Release\RagingBool.Carcosa.Core_cs-Test.dll" />
     <assembly path="..\bin\net40\Debug\RagingBool.Carcosa.Devices.Midi_cs-Test.dll" />
