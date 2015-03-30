@@ -61,6 +61,7 @@
     <Compile Include="ControllerChangeEventArgs.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />
+    <Compile Include="ISnark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
