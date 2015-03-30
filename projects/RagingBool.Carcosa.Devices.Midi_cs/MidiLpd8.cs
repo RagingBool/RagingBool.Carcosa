@@ -37,17 +37,12 @@ namespace RagingBool.Carcosa.Devices.Midi
 
         private MidiOutPort _midiOutPort;
 
-        private double _lastUpdateTime;
-        private double _fps;
-
         private bool[] _buttonLightsState;
 
-        public MidiLpd8(IClock clock, int midiInDeviceId, int midiOutDeviceId, double fps)
+        public MidiLpd8(int midiInDeviceId, int midiOutDeviceId)
         {
-            _clock = clock;
             _midiInDeviceId = midiInDeviceId;
             _midiOutDeviceId = midiOutDeviceId;
-            _fps = fps;
 
             _buttonLightsState = new bool[FixedNumberOfButtons];
             for (var i = 0; i < _buttonLightsState.Length; i++)
@@ -71,8 +66,6 @@ namespace RagingBool.Carcosa.Devices.Midi
             _midiInPort.Start();
 
             _midiOutPort.Open(_midiOutDeviceId);
-
-            _lastUpdateTime = _clock.Time;
         }
 
         public void Disconnect()
