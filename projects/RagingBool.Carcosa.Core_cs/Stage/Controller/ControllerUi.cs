@@ -18,6 +18,7 @@
 
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices;
+using System;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
@@ -33,6 +34,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private IControllerMode _mode;
 
+        private SceneChangedEventArgs _lastSceneChangedEventArgs;
+
         public ControllerUi(IClock clock, ILpd8 controller)
         {
             _controller = controller;
@@ -45,6 +48,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             _SceneSelectionConfirmMode = new SceneSelectionConfirmControllerMode(this, clock, _controller);
 
             _mode = null;
+            _lastSceneChangedEventArgs = null;
         }
 
         public void Start()
@@ -128,7 +132,10 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
                 if (SceneId != newSceneId)
                 {
                     SceneId = newSceneId;
-                    SwitchMode(_SceneSelectionConfirmMode);                    
+                    _liveMode.SubsceneId = 0;
+
+                    SwitchMode(_SceneSelectionConfirmMode);
+                    FireOnSceneChange();
                 }
                 else
                 {
@@ -146,5 +153,26 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             SwitchMode(_sceneSelectMode);
         }
+
+        public void FireOnSceneChange()
+        {
+            if(OnSceneChange != null)
+            {
+                var eventArgs = new SceneChangedEventArgs(SceneId, SubsceneId);
+
+                if (_lastSceneChangedEventArgs != null && 
+                    eventArgs.NewSceneId == _lastSceneChangedEventArgs.NewSceneId &&
+                    eventArgs.NewSubsceneId == _lastSceneChangedEventArgs.NewSubsceneId)
+                {
+                    return;
+                }
+
+                _lastSceneChangedEventArgs = eventArgs;
+
+                OnSceneChange(this, eventArgs);
+            }
+        }
+
+        public event EventHandler<SceneChangedEventArgs> OnSceneChange;
     }
 }

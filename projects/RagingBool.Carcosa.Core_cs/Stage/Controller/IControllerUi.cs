@@ -16,6 +16,8 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using System;
+
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal interface IControllerUi
@@ -29,5 +31,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         int SceneId { get; }
 
         int SubsceneId { get; }
+
+        event EventHandler<SceneChangedEventArgs> OnSceneChange;
     }
 }
