@@ -25,14 +25,14 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         public SubsceneSelectorButton(ILpd8 controller, int subsceneButtonId)
             : base(controller, subsceneButtonId, ButtonTriggerBehaviour.OnPush)
         {
-            SubsceneIndex = 0;
+            SubsceneId = 0;
         }
 
-        public int SubsceneIndex { get; set;}
+        public int SubsceneId { get; set; }
 
         protected override bool? RenderFrame(int phases)
         {
-            switch(SubsceneIndex)
+            switch (SubsceneId)
             {
                 case 0:
                     return (phases % 32) == 0;
