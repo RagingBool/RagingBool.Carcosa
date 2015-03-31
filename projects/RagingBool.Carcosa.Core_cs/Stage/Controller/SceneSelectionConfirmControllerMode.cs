@@ -23,7 +23,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal sealed class SceneSelectionConfirmControllerMode : ControllerModeBase
     {
-        private const double Duration = 0.2;
+        private const double Duration = 0.15;
 
         private bool _isOn;
         private double _startTime;
@@ -36,7 +36,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             base.Enter();
 
             _isOn = true;
-            Fps = 30;
+            Fps = 40;
 
             _startTime = Clock.Time;
         }
