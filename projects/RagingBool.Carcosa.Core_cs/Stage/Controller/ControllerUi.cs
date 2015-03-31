@@ -53,8 +53,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             lock(_lock)
             {
-                SelectScene(0);
-                GoToLiveMode();
+                _currentSceneId = -1;
+                SelectSceneAndGoToLiveMode(0);
             }
         }
 
@@ -119,12 +119,19 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             get { return _currentSceneId; }
         }
 
-        public void SelectScene(int sceneId)
+        public void SelectSceneAndGoToLiveMode(int newSceneId)
         {
             lock (_lock)
             {
-                _currentSceneId = sceneId;
-                SwitchMode(_SceneSelectionConfirmMode);
+                if (_currentSceneId != newSceneId)
+                {
+                    _currentSceneId = newSceneId;
+                    SwitchMode(_SceneSelectionConfirmMode);                    
+                }
+                else
+                {
+                    GoToLiveMode();
+                }
             }
         }
 

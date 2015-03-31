@@ -67,7 +67,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             if(e.ButtonEventType == ButtonEventType.Released)
             {
-                ControllerUi.SelectScene(e.ButtonId);
+                ControllerUi.SelectSceneAndGoToLiveMode(e.ButtonId);
             }
         }
 
