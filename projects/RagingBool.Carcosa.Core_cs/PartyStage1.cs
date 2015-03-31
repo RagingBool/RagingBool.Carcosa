@@ -76,7 +76,6 @@ namespace RagingBool.Carcosa.Core
             _lastController = e.Value;
 
             _snark.SetChannel(e.ControllerId, e.Value);
-            _snark.Update();
         }
     }
 }
