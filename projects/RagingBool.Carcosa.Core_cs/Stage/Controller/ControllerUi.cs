@@ -184,5 +184,15 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         }
 
         public event EventHandler<LightDrumEventArgs> OnLightDrumEvent;
+
+        public void FireControlParameterValueChange(ControlParameterValueChangeEventArgs eventArgs)
+        {
+            if (OnControlParameterValueChange != null)
+            {
+                OnControlParameterValueChange(this, eventArgs);
+            }
+        }
+
+        public event EventHandler<ControlParameterValueChangeEventArgs> OnControlParameterValueChange;
     }
 }

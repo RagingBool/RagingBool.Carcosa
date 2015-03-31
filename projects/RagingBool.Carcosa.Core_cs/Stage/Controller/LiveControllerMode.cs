@@ -131,7 +131,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         public override void ProcessControllerChangeEvent(ControllerChangeEventArgs eventArgs)
         {
-            Controller.SetKeyLightState(eventArgs.ControllerId, eventArgs.Value >= 128);
+            ControllerUi.FireControlParameterValueChange(new ControlParameterValueChangeEventArgs(eventArgs.ControllerId, eventArgs.Value));
         }
     }
 }

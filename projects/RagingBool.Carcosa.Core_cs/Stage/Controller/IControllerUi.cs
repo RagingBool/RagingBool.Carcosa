@@ -35,5 +35,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         event EventHandler<SceneChangedEventArgs> OnSceneChange;
 
         event EventHandler<LightDrumEventArgs> OnLightDrumEvent;
+
+        event EventHandler<ControlParameterValueChangeEventArgs> OnControlParameterValueChange;
     }
 }
