@@ -43,8 +43,18 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         public override void Update(double dt)
         {
-            SetRgbLightToHsi(_lightSetup.RgbStrips[0], GetControl(0), GetControl(1), GetControl(2));
-            SetRgbLightToHsi(_lightSetup.RgbStrips[1], GetControl(4), GetControl(5), GetControl(6));
+            var saturation = GetControl(3);
+            var intensity = GetControl(7);
+
+            var hue0 = GetControl(0);
+            var hue1 = GetControl(1);
+            var hue2 = GetControl(4);
+            var hue3 = GetControl(5);
+
+            SetRgbLightToHsi(_lightSetup.RgbStrips[0], hue0, saturation, intensity);
+            SetRgbLightToHsi(_lightSetup.RgbStrips[1], hue1, saturation, intensity);
+            SetRgbLightToHsi(_lightSetup.RgbLights[0], hue2, saturation, intensity);
+            SetRgbLightToHsi(_lightSetup.RgbLights[1], hue3, saturation, intensity);
         }
 
         public override void HandleSubsceneChange(int newSubscene)
