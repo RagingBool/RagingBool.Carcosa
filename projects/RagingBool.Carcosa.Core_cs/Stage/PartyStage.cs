@@ -18,6 +18,7 @@
 
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage.Controller;
+using RagingBool.Carcosa.Core.Stage.Scenes;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Midi;
@@ -26,12 +27,23 @@ namespace RagingBool.Carcosa.Core.Stage
 {
     internal sealed class PartyStage : IStage
     {
+        private const double SceneUpdateTimeThreshold = 0.01;
+
+        private readonly object _lock = new object();
+
         private readonly IClock _clock;
 
         private readonly ILpd8 _controller;
         private readonly ISnark _snark;
 
+        private IScene _curScene;
+        private int _curSceneId;
+
+        private ManualScene _manualScene;
+
         private readonly ControllerUi _controllerUi;
+
+        private double _lastSceneUpdate;
 
         public PartyStage(IClock clock, ICarcosaWorkspace workspace)
         {
@@ -41,30 +53,122 @@ namespace RagingBool.Carcosa.Core.Stage
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
 
             _controllerUi = new ControllerUi(_clock, _controller);
+
+            _controllerUi.OnSceneChange += OnSceneChange;
+            _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
+            _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
+
+            _manualScene = new ManualScene();
+
+            _curScene = null;
+            _curSceneId = -1;
         }
 
         public void Start()
         {
-            _controller.Connect();
-            _snark.Connect();
+            lock (_lock)
+            {
+                _controller.Connect();
+                _snark.Connect();
 
-            _controllerUi.Start();
+                _controllerUi.Start();
+
+                _lastSceneUpdate = _clock.Time;
+            }
         }
 
         public void Update()
         {
-            _controller.Update();
-            _snark.Update();
+            lock (_lock)
+            {
+                _controller.Update();
+                _snark.Update();
 
-            _controllerUi.Update();
+                _controllerUi.Update();
+                UpdateScene();
+            }
+        }
+
+        private void UpdateScene()
+        {
+            if(_curScene == null)
+            {
+                return;
+            }
+
+            var time = _clock.Time;
+            var dt = time - _lastSceneUpdate;
+
+            if(dt >= SceneUpdateTimeThreshold)
+            {
+                _curScene.Update(dt);
+                _lastSceneUpdate = time;
+            }
         }
 
         public void Stop()
         {
-            _controllerUi.Stop();
+            lock (_lock)
+            {
+                _controllerUi.Stop();
 
-            _controller.Disconnect();
-            _snark.Disconnect();
+                _controller.Disconnect();
+                _snark.Disconnect();
+            }
+        }
+
+        private void SetScene(IScene newScene, int newSceneId)
+        {
+            if(_curScene != null)
+            {
+                _curScene.Exit();
+            }
+
+            _curScene = newScene;
+            _curSceneId = newSceneId;
+
+            if (_curScene != null)
+            {
+                _curScene.Enter();
+            }
+        }
+
+        private void OnSceneChange(object sender, SceneChangedEventArgs eventArgs)
+        {
+            var newSceneId = eventArgs.NewSceneId;
+
+            if (newSceneId != _curSceneId)
+            {
+                switch (newSceneId)
+                {
+                    default:
+                        SetScene(_manualScene, newSceneId);
+                        break;
+                }
+            }
+            else
+            {
+                if (_curScene != null)
+                {
+                    _curScene.HandleSubsceneChange(eventArgs.NewSubsceneId);
+                }
+            }
+        }
+
+        private void OnLightDrumEvent(object sender, LightDrumEventArgs eventArgs)
+        {
+            if (_curScene != null)
+            {
+                _curScene.HandleLightDrumEvent(eventArgs);
+            }
+        }
+
+        private void OnControlParameterValueChange(object sender, ControlParameterValueChangeEventArgs eventArgs)
+        {
+            if (_curScene != null)
+            {
+                _curScene.HandleControlParameterValueChange(eventArgs);
+            }
         }
     }
 }
