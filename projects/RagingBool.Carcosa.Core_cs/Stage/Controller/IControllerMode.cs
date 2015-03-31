@@ -16,19 +16,17 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RagingBool.Carcosa.Devices;
 
-namespace RagingBool.Carcosa.Core
+namespace RagingBool.Carcosa.Core.Stage.Controller
 {
-    public interface IStage
+    internal interface IControllerMode
     {
-        void Start();
-        void Stop();
-
+        void Enter();
+        void Exit();
         void Update();
+
+        void ProcessButtonEventHandler(ButtonEventArgs e);
+        void ProcessControllerChangeEvent(ControllerChangeEventArgs e);
     }
 }

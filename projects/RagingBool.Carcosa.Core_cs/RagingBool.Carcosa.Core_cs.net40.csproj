@@ -100,9 +100,25 @@
   <ItemGroup>
     <Compile Include="Carcosa.cs" />
     <Compile Include="ICarcosa.cs" />
-    <Compile Include="IStage.cs" />
-    <Compile Include="PartyStage1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stage\Controller\Button.cs" />
+    <Compile Include="Stage\Controller\ButtonTriggerBehaviour.cs" />
+    <Compile Include="Stage\Controller\ButtonTriggerEventArgs.cs" />
+    <Compile Include="Stage\Controller\ButtonTriggerType.cs" />
+    <Compile Include="Stage\Controller\ControlParameterValueChangeEventArgs.cs" />
+    <Compile Include="Stage\Controller\ControllerModeBase.cs" />
+    <Compile Include="Stage\Controller\ControllerUi.cs" />
+    <Compile Include="Stage\Controller\IControllerMode.cs" />
+    <Compile Include="Stage\Controller\IControllerUi.cs" />
+    <Compile Include="Stage\Controller\LightDrumEventArgs.cs" />
+    <Compile Include="Stage\Controller\LightDrumPad.cs" />
+    <Compile Include="Stage\Controller\LiveControllerMode.cs" />
+    <Compile Include="Stage\Controller\SceneChangedEventArgs.cs" />
+    <Compile Include="Stage\Controller\SceneSelectControllerMode.cs" />
+    <Compile Include="Stage\Controller\SceneSelectionConfirmControllerMode.cs" />
+    <Compile Include="Stage\Controller\SubsceneSelectorButton.cs" />
+    <Compile Include="Stage\IStage.cs" />
+    <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
     <Compile Include="Workspace\ICarcosaWorkspace.cs" />
