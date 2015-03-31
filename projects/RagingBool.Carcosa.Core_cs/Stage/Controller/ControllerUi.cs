@@ -27,6 +27,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private LiveControllerMode _liveMode;
         private SceneSelectControllerMode _sceneSelectMode;
+        private SceneSelectionConfirmControllerMode _SceneSelectionConfirmMode;
 
         private IControllerMode _mode;
 
@@ -41,6 +42,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
             _liveMode = new LiveControllerMode(this, clock, _controller);
             _sceneSelectMode = new SceneSelectControllerMode(this, clock, _controller);
+            _SceneSelectionConfirmMode = new SceneSelectionConfirmControllerMode(this, clock, _controller);
 
             _mode = null;
         }
@@ -66,14 +68,14 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private void SwitchMode(IControllerMode newMode)
         {
-            if(_mode != null)
+            if (_mode != null)
             {
                 _mode.Exit();
             }
 
             _mode = newMode;
 
-            if(_mode != null)
+            if (_mode != null)
             {
                 _mode.Enter();
             }
@@ -81,7 +83,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private void OnButtonEventHandler(object sender, ButtonEventArgs e)
         {
-            if(_mode != null)
+            if (_mode != null)
             {
                 _mode.ProcessButtonEventHandler(e);
             }
@@ -103,6 +105,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         public void SelectScene(int sceneId)
         {
             _currentSceneId = sceneId;
+            SwitchMode(_SceneSelectionConfirmMode);
         }
 
         public void GoToLiveMode()
