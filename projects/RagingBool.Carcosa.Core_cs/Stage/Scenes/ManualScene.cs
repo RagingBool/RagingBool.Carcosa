@@ -20,38 +20,34 @@ using RagingBool.Carcosa.Core.Stage.Controller;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
-    internal class ManualScene : IScene
+    internal class ManualScene : SceneBase
     {
         public ManualScene()
         {
 
         }
 
-        public void Enter()
+        public override void Enter()
         {
 
         }
 
-        public void Exit()
+        public override void Exit()
         {
 
         }
 
-        public void Update(double dt)
-        {
-        }
-
-        public void HandleSubsceneChange(int newSubscene)
+        public override void Update(double dt)
         {
 
         }
 
-        public void HandleLightDrumEvent(LightDrumEventArgs eventArgs)
+        public override void HandleSubsceneChange(int newSubscene)
         {
 
         }
 
-        public void HandleControlParameterValueChange(ControlParameterValueChangeEventArgs eventArgs)
+        public override void HandleLightDrumEvent(LightDrumEventArgs eventArgs)
         {
 
         }
