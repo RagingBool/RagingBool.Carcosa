@@ -18,11 +18,13 @@
 
 using RagingBool.Carcosa.Devices;
 
-namespace RagingBool.Carcosa.Core.Stage
+namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal sealed class ControllerUi
     {
         private readonly ILpd8 _controller;
+
+
 
         public ControllerUi(ILpd8 controller)
         {

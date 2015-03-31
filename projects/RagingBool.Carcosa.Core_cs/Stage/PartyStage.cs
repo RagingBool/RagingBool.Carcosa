@@ -17,6 +17,7 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Midi;
