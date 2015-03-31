@@ -101,8 +101,10 @@
     <Compile Include="Carcosa.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stage\Controller\ControllerModeBase.cs" />
     <Compile Include="Stage\Controller\ControllerUi.cs" />
     <Compile Include="Stage\Controller\IControllerMode.cs" />
+    <Compile Include="Stage\Controller\LiveControllerMode.cs" />
     <Compile Include="Stage\IStage.cs" />
     <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
