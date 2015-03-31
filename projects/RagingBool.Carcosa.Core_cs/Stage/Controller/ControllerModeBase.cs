@@ -16,17 +16,25 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal abstract class ControllerModeBase : IControllerMode
     {
+        private readonly ControllerUi _controllerUi;
+        private readonly IClock _clock;
         private readonly ILpd8 _controller;
 
-        public ControllerModeBase(ILpd8 controller)
+        private double _lastUpdateTime;
+
+        public ControllerModeBase(ControllerUi controllerUi, IClock clock, ILpd8 controller)
         {
+            _controllerUi = controllerUi;
+            _clock = clock;
             _controller = controller;
+            Fps = 1;
         }
 
         protected ILpd8 Controller
@@ -34,9 +42,17 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             get { return _controller; }
         }
 
+        protected ControllerUi ControllerUi
+        {
+            get { return _controllerUi; }
+        }
+
+        protected double Fps { get; set; }
+
         public virtual void Enter()
         {
             ClearLights();
+            _lastUpdateTime = _clock.Time;
         }
 
         public virtual void Exit()
@@ -45,6 +61,21 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         }
         
         public virtual void Update()
+        {
+            var curTime = _clock.Time;
+            var timeSinceLastUpdate = curTime - _lastUpdateTime;
+
+            if(timeSinceLastUpdate < (1 / Fps))
+            {
+                return;
+            }
+
+            NewFrame();
+
+            _lastUpdateTime = curTime;
+        }
+
+        protected virtual void NewFrame()
         {
 
         }
