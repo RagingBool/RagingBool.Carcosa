@@ -20,53 +20,29 @@ using RagingBool.Carcosa.Devices;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
-    internal sealed class SubsceneSelector
+    internal sealed class SubsceneSelectorButton : Button
     {
-        private readonly ILpd8 _controller;
-
-        private readonly int _subsceneButtonId;
-        private int _phase;
-
-        public SubsceneSelector(ILpd8 controller, int subsceneButtonId)
+        public SubsceneSelectorButton(ILpd8 controller, int subsceneButtonId)
+            : base(controller, subsceneButtonId, ButtonTriggerBehaviour.OnPush)
         {
-            _controller = controller;
-            _subsceneButtonId = subsceneButtonId;
-
             SubsceneIndex = 0;
-            _phase = 0;
         }
 
         public int SubsceneIndex { get; set;}
 
-        public void SelectNextSubscene()
+        protected override bool? RenderFrame(int phases)
         {
-            SubsceneIndex = (SubsceneIndex + 1) % 3;
-        }
-
-        public void NewFrame()
-        {
-            Render();
-
-            _phase = (_phase + 1) % 256;
-        }
-
-        private void Render()
-        {
-            bool isOn = false;
             switch(SubsceneIndex)
             {
                 case 0:
-                    isOn = (_phase % 32) == 0;
-                    break;
+                    return (phases % 32) == 0;
                 case 1:
-                    isOn = ((_phase / 2) % 2) == 0;
-                    break;
+                    return ((phases / 2) % 2) == 0;
                 case 2:
-                    isOn = true;
-                    break;
+                    return true;
+                default:
+                    return false;
             }
-
-            _controller.SetKeyLightState(_subsceneButtonId, isOn);
         }
     }
 }
