@@ -21,9 +21,9 @@ using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Midi;
 
-namespace RagingBool.Carcosa.Core
+namespace RagingBool.Carcosa.Core.Stage
 {
-    internal class PartyStage1 : IStage
+    internal class PartyStage : IStage
     {
         private readonly IClock _clock;
 
@@ -31,7 +31,7 @@ namespace RagingBool.Carcosa.Core
         private readonly ISnark _snark;
         private int _lastController;
 
-        public PartyStage1(IClock clock, ICarcosaWorkspace workspace)
+        public PartyStage(IClock clock, ICarcosaWorkspace workspace)
         {
             _clock = clock;
 

@@ -19,6 +19,7 @@
 using Epicycle.Commons;
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
+using RagingBool.Carcosa.Core.Stage;
 using RagingBool.Carcosa.Core.Workspace;
 using System.Threading;
 
@@ -46,7 +47,7 @@ namespace RagingBool.Carcosa.Core
             _fileSystem = fileSystem;
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
 
-            _stage = new PartyStage1(_clock, _workspace);
+            _stage = new PartyStage(_clock, _workspace);
 
             _updateThread = new Thread(UpdateThreadLoop);
 

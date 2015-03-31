@@ -16,13 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RagingBool.Carcosa.Core
+namespace RagingBool.Carcosa.Core.Stage
 {
     public interface IStage
     {
