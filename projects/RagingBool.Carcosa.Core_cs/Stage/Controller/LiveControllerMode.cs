@@ -126,6 +126,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private void HandleLightDrumTrigger(int lightDrumIndex, ButtonTriggerEventArgs eventArgs)
         {
             _lightDrumPads[lightDrumIndex].HandleTrigger(eventArgs.TriggerType);
+            ControllerUi.FireLightDrumEvent(new LightDrumEventArgs(lightDrumIndex, eventArgs.TriggerType, eventArgs.Velocity));
         }
 
         public override void ProcessControllerChangeEvent(ControllerChangeEventArgs eventArgs)

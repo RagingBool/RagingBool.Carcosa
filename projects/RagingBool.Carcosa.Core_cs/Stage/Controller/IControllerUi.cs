@@ -33,5 +33,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         int SubsceneId { get; }
 
         event EventHandler<SceneChangedEventArgs> OnSceneChange;
+
+        event EventHandler<LightDrumEventArgs> OnLightDrumEvent;
     }
 }

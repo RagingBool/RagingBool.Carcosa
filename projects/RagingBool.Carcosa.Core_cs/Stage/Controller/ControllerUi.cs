@@ -174,5 +174,15 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         }
 
         public event EventHandler<SceneChangedEventArgs> OnSceneChange;
+
+        public void FireLightDrumEvent(LightDrumEventArgs eventArgs)
+        {
+            if(OnLightDrumEvent != null)
+            {
+                OnLightDrumEvent(this, eventArgs);
+            }
+        }
+
+        public event EventHandler<LightDrumEventArgs> OnLightDrumEvent;
     }
 }
