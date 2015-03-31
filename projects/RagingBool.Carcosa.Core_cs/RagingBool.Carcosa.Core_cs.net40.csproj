@@ -105,6 +105,7 @@
     <Compile Include="Stage\Controller\ButtonTriggerBehaviour.cs" />
     <Compile Include="Stage\Controller\ButtonTriggerEventArgs.cs" />
     <Compile Include="Stage\Controller\ButtonTriggerType.cs" />
+    <Compile Include="Stage\Controller\ControlParameterValueChangeEventArgs.cs" />
     <Compile Include="Stage\Controller\ControllerModeBase.cs" />
     <Compile Include="Stage\Controller\ControllerUi.cs" />
     <Compile Include="Stage\Controller\IControllerMode.cs" />
