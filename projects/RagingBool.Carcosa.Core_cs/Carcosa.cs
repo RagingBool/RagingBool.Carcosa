@@ -20,6 +20,7 @@ using Epicycle.Commons;
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Workspace;
+using System.Threading;
 
 namespace RagingBool.Carcosa.Core
 {
@@ -31,6 +32,10 @@ namespace RagingBool.Carcosa.Core
 
         private readonly IStage _stage;
 
+        private readonly Thread _updateThread;
+
+        private bool _isRunning;
+
         public Carcosa(IClock clock, IFileSystem fileSystem, FileSystemPath workspacePath)
         {
             ArgAssert.NotNull(clock, "clock");
@@ -41,9 +46,12 @@ namespace RagingBool.Carcosa.Core
             _fileSystem = fileSystem;
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
 
-            _stage = new PartyStage1(_workspace);
-        }
+            _stage = new PartyStage1(_clock, _workspace);
 
+            _updateThread = new Thread(UpdateThreadLoop);
+
+            _isRunning = false;
+        }
 
         public ICarcosaWorkspace Workspace
         {
@@ -53,11 +61,24 @@ namespace RagingBool.Carcosa.Core
         public void Start()
         {
             _stage.Start();
+            _isRunning = true;
+
+            _updateThread.Start();
         }
 
         public void Stop()
         {
+            _isRunning = false;
             _stage.Stop();
+        }
+
+        private void UpdateThreadLoop()
+        {
+            while(_isRunning)
+            {
+                _stage.Update();
+                Thread.Sleep(10);
+            }
         }
     }
 }

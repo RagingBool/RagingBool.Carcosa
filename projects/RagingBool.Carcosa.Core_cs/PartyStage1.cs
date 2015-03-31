@@ -16,40 +16,51 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
+using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Midi;
-using RagingBool.Carcosa.Core.Workspace;
 
 namespace RagingBool.Carcosa.Core
 {
     internal class PartyStage1 : IStage
     {
+        private readonly IClock _clock;
+
         private readonly ILpd8 _controller;
+        private readonly ISnark _snark;
         private int _lastController;
 
-        public PartyStage1(ICarcosaWorkspace workspace)
+        public PartyStage1(IClock clock, ICarcosaWorkspace workspace)
         {
+            _clock = clock;
+
             _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
 
             _controller.OnButtonEvent += _controller_OnButtonEvent;
             _controller.OnControllerChange += _controller_OnControllerChange;
 
             _lastController = 255;
+
+            _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
         }
 
         public void Start()
         {
             _controller.Connect();
+            _snark.Connect();
         }
 
         public void Update()
         {
-            // Nothing to update for now...
+            _controller.Update();
+            _snark.Update();
         }
 
         public void Stop()
         {
             _controller.Disconnect();
+            _snark.Disconnect();
         }
 
         void _controller_OnButtonEvent(object sender, ButtonEventArgs e)
@@ -63,6 +74,8 @@ namespace RagingBool.Carcosa.Core
         void _controller_OnControllerChange(object sender, ControllerChangeEventArgs e)
         {
             _lastController = e.Value;
+
+            _snark.SetChannel(e.ControllerId, e.Value);
         }
     }
 }

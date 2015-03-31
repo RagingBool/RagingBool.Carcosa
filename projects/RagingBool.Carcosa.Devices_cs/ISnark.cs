@@ -16,16 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Core.Workspace
+namespace RagingBool.Carcosa.Devices
 {
-    public interface ICarcosaWorkspace
+    public interface ISnark : IDevice
     {
-        string WorkspaceName { get; }
-
-        int ControllerMidiInPort { get; }
-
-        int ControllerMidiOutPort { get; }
-
-        string SnarkSerialPortName { get; }
+        int NumChannels { get; }
+        void SetChannel(int id, int value);
     }
 }
