@@ -27,9 +27,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private readonly int _buttonId;
         private readonly ButtonTriggerBehaviour _triggerBehaviour;
 
-        public event EventHandler<ButtonTriggerEventArgs> OnTrigger;
-
         private int _phase;
+        private int _savedVelocity;
 
         public Button(ILpd8 controller, int buttonId, ButtonTriggerBehaviour triggerBehaviour)
         {
@@ -38,7 +37,10 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             _triggerBehaviour = triggerBehaviour;
 
             _phase = 0;
+            _savedVelocity = 0;
         }
+
+        public event EventHandler<ButtonTriggerEventArgs> OnTrigger;
 
         public void NewFrame()
         {
@@ -59,38 +61,41 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
                 return;
             }
 
+            int velocity = eventArgs.Velocity;
+
             switch (_triggerBehaviour)
             {
                 case ButtonTriggerBehaviour.OnPush:
                     if (eventArgs.ButtonEventType == ButtonEventType.Pressed)
                     {
-                        FireEvent(ButtonTriggerType.Trigger);
+                        FireEvent(ButtonTriggerType.Trigger, velocity);
                     }
                     break;
                 case ButtonTriggerBehaviour.OnRelease:
                     if (eventArgs.ButtonEventType == ButtonEventType.Released)
                     {
-                        FireEvent(ButtonTriggerType.Trigger);
+                        FireEvent(ButtonTriggerType.Trigger, velocity);
                     }
                     break;
                 case ButtonTriggerBehaviour.Continues:
                     if (eventArgs.ButtonEventType == ButtonEventType.Pressed)
                     {
-                        FireEvent(ButtonTriggerType.Pressed);
+                        _savedVelocity = velocity;
+                        FireEvent(ButtonTriggerType.Pressed, velocity);
                     }
                     else if (eventArgs.ButtonEventType == ButtonEventType.Released)
                     {
-                        FireEvent(ButtonTriggerType.Released);
+                        FireEvent(ButtonTriggerType.Released, _savedVelocity);
                     }
                     break;
             }
         }
 
-        private void FireEvent(ButtonTriggerType triggerType)
+        private void FireEvent(ButtonTriggerType triggerType, int velocity)
         {
             if(OnTrigger != null)
             {
-                OnTrigger(this, new ButtonTriggerEventArgs(_buttonId, triggerType));
+                OnTrigger(this, new ButtonTriggerEventArgs(_buttonId, triggerType, velocity));
             }
         }
 
