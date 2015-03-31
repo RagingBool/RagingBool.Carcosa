@@ -18,7 +18,7 @@
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
-    internal interface IRgbLight
+    internal interface IRgbLight : ILight
     {
         double Red { get; set; }
         double Green { get; set; }
