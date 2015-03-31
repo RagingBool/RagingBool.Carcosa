@@ -19,6 +19,7 @@
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Stage.Scenes;
+using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Midi;
@@ -39,6 +40,8 @@ namespace RagingBool.Carcosa.Core.Stage
         private IScene _curScene;
         private int _curSceneId;
 
+        private LightSetup _lightSetup;
+
         private ManualScene _manualScene;
 
         private readonly ControllerUi _controllerUi;
@@ -58,7 +61,9 @@ namespace RagingBool.Carcosa.Core.Stage
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
             _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
 
-            _manualScene = new ManualScene();
+            _lightSetup = new LightSetup(_snark);
+
+            _manualScene = new ManualScene(_lightSetup);
 
             _curScene = null;
             _curSceneId = -1;
