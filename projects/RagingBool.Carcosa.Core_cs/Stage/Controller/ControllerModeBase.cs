@@ -42,6 +42,11 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             get { return _controller; }
         }
 
+        protected IClock Clock
+        {
+            get { return _clock; }
+        }
+
         protected ControllerUi ControllerUi
         {
             get { return _controllerUi; }
