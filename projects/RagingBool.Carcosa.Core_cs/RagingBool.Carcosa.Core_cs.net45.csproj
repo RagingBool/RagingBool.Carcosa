@@ -126,6 +126,7 @@
     <Compile Include="Stage\Lights\SnarkRgbLight.cs" />
     <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
+    <Compile Include="Stage\Scenes\LightSetup.cs" />
     <Compile Include="Stage\Scenes\ManualScene.cs" />
     <Compile Include="Stage\Scenes\SceneBasics.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
