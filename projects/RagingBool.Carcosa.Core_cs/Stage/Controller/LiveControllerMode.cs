@@ -38,6 +38,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private readonly Button _sceneSelectorButton;
         private readonly SubsceneSelectorButton _subsceneSelectorButton;
 
+        private int _subsceneId;
+
         public LiveControllerMode(ControllerUi controllerUi, IClock clock, ILpd8 controller)
             : base(controllerUi, clock, controller)
         {
@@ -60,7 +62,16 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             SubsceneId = 0;
         }
 
-        public int SubsceneId { get; private set; }
+        public int SubsceneId
+        {
+            get { return _subsceneId; }
+
+            set
+            {
+                _subsceneId = value;
+                _subsceneSelectorButton.SubsceneId = _subsceneId;
+            }
+        }
 
         private void AddLightDrumButton(int buttonId, bool isContinues)
         {
@@ -102,9 +113,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private void HandleSubsceneSelect(object sender, ButtonTriggerEventArgs eventArgs)
         {
-            SubsceneId = (SubsceneId + 1) % 3;
-
-            _subsceneSelectorButton.SubsceneId = SubsceneId;
+            SubsceneId = (_subsceneId + 1) % 3;
         }
 
         private void HandleLightDrumTrigger(int lightDrumIndex, ButtonTriggerEventArgs eventArgs)
