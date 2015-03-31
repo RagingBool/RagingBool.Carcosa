@@ -21,7 +21,7 @@ using RagingBool.Carcosa.Devices;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
-    internal sealed class ControllerUi
+    internal sealed class ControllerUi : IControllerUi
     {
         private readonly object _lock = new object();
 
@@ -32,8 +32,6 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private SceneSelectionConfirmControllerMode _SceneSelectionConfirmMode;
 
         private IControllerMode _mode;
-
-        private int _currentSceneId;
 
         public ControllerUi(IClock clock, ILpd8 controller)
         {
@@ -53,7 +51,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             lock(_lock)
             {
-                _currentSceneId = -1;
+                SceneId = -1;
                 SelectSceneAndGoToLiveMode(0);
             }
         }
@@ -117,18 +115,19 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public int CurrentSceneId
+        public int SceneId { get; private set; }
+        public int SubsceneId
         {
-            get { return _currentSceneId; }
+            get { return _liveMode.SubsceneId; }
         }
 
         public void SelectSceneAndGoToLiveMode(int newSceneId)
         {
             lock (_lock)
             {
-                if (_currentSceneId != newSceneId)
+                if (SceneId != newSceneId)
                 {
-                    _currentSceneId = newSceneId;
+                    SceneId = newSceneId;
                     SwitchMode(_SceneSelectionConfirmMode);                    
                 }
                 else

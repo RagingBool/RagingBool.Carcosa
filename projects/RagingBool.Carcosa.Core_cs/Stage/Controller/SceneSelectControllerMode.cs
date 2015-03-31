@@ -48,7 +48,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private void Render()
         {
-            var currentSceneId = ControllerUi.CurrentSceneId;
+            var currentSceneId = ControllerUi.SceneId;
 
             Controller.SetKeyLightState(currentSceneId, true);
 
