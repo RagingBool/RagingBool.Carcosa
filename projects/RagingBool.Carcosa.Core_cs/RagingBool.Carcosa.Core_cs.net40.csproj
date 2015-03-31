@@ -109,6 +109,7 @@
     <Compile Include="Stage\Controller\ControllerUi.cs" />
     <Compile Include="Stage\Controller\IControllerMode.cs" />
     <Compile Include="Stage\Controller\IControllerUi.cs" />
+    <Compile Include="Stage\Controller\LightDrumEventArgs.cs" />
     <Compile Include="Stage\Controller\LightDrumPad.cs" />
     <Compile Include="Stage\Controller\LiveControllerMode.cs" />
     <Compile Include="Stage\Controller\SceneChangedEventArgs.cs" />
