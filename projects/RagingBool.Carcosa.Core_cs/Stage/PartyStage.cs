@@ -40,7 +40,7 @@ namespace RagingBool.Carcosa.Core.Stage
             _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
 
-            _controllerUi = new ControllerUi(_controller);
+            _controllerUi = new ControllerUi(_clock, _controller);
         }
 
         public void Start()
