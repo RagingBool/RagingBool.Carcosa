@@ -24,7 +24,9 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
     {
         private readonly ILpd8 _controller;
 
+        private LiveControllerMode _liveMode;
 
+        private IControllerMode _mode;
 
         public ControllerUi(ILpd8 controller)
         {
@@ -32,38 +34,59 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
             _controller.OnButtonEvent += OnButtonEventHandler;
             _controller.OnControllerChange += OnControllerChangeHandler;
+
+            _liveMode = new LiveControllerMode(_controller);
+
+            _mode = null;
         }
 
         public void Start()
         {
-            ClearLights();
+            SwitchMode(_liveMode);
         }
 
         public void Stop()
         {
-            ClearLights();
+            SwitchMode(_liveMode);
         }
 
         public void Update()
         {
-
+            if(_mode != null)
+            {
+                _mode.Update();
+            }
         }
 
-        private void ClearLights()
+        private void SwitchMode(IControllerMode newMode)
         {
-            for(int i = 0; i < _controller.NumberOfButtons; i++)
+            if(_mode != null)
             {
-                _controller.SetKeyLightState(i, false);
+                _mode.Exit();
+            }
+
+            _mode = newMode;
+
+            if(_mode != null)
+            {
+                _mode.Enter();
             }
         }
 
         private void OnButtonEventHandler(object sender, ButtonEventArgs e)
         {
+            if(_mode != null)
+            {
+                _mode.ProcessButtonEventHandler(e);
+            }
         }
 
         private void OnControllerChangeHandler(object sender, ControllerChangeEventArgs e)
         {
-            _controller.SetKeyLightState(e.ControllerId, e.Value >= 128);
+            if (_mode != null)
+            {
+                _mode.ProcessControllerChangeEvent(e);
+            }
         }
     }
 }
