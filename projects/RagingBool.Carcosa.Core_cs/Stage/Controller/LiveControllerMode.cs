@@ -68,8 +68,15 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
             set
             {
+                if(_subsceneId == value)
+                {
+                    return;
+                }
+
                 _subsceneId = value;
                 _subsceneSelectorButton.SubsceneId = _subsceneId;
+
+                ControllerUi.FireOnSceneChange();
             }
         }
 
