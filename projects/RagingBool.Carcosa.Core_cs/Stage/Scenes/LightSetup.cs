@@ -19,23 +19,28 @@
 using Epicycle.Commons.Collections;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.Dmx;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
     internal sealed class LightSetup
     {
+        private readonly IDmxMultiverse _dmxMultiverse;
         private readonly ISnark _snark;
 
         private readonly IList<IRgbLight> _rgbStrips;
         private readonly IList<IMonoLight> _monoStrips;
+        private readonly IList<IRgbLight> _rgbLights;
 
-        public LightSetup(ISnark snark)
+        public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark)
         {
+            _dmxMultiverse = dmxMultiverse;
             _snark = snark;
 
             _rgbStrips = new List<IRgbLight>();
             _monoStrips = new List<IMonoLight>();
+            _rgbLights = new List<IRgbLight>();
 
             _rgbStrips.Add(new SnarkRgbLight(_snark, 0));
             _rgbStrips.Add(new SnarkRgbLight(_snark, 3));
@@ -44,6 +49,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             {
                 _monoStrips.Add(new SnarkMonoLight(_snark, 6 + i));
             }
+
+            _rgbLights.Add(new DmxRgbLight(_dmxMultiverse, 0, 1, 2, 3));
+            _rgbLights.Add(new DmxRgbLight(_dmxMultiverse, 0, 4, 5, 6));
         }
 
         public IReadOnlyList<IRgbLight> RgbStrips
@@ -54,6 +62,11 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         public IReadOnlyList<IMonoLight> MonoStrips
         {
             get { return _monoStrips.AsReadOnlyList(); }
+        }
+
+        public IReadOnlyList<IRgbLight> RgbLights
+        {
+            get { return _rgbLights.AsReadOnlyList(); }
         }
     }
 }

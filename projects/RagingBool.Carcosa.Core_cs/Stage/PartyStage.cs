@@ -19,9 +19,9 @@
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Stage.Scenes;
-using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.Dmx;
 using RagingBool.Carcosa.Devices.Midi;
 
 namespace RagingBool.Carcosa.Core.Stage
@@ -35,6 +35,7 @@ namespace RagingBool.Carcosa.Core.Stage
         private readonly IClock _clock;
 
         private readonly ILpd8 _controller;
+        private readonly IDmxMultiverse _dmxMultiverse;
         private readonly ISnark _snark;
 
         private IScene _curScene;
@@ -53,6 +54,7 @@ namespace RagingBool.Carcosa.Core.Stage
             _clock = clock;
 
             _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
+            _dmxMultiverse = null; // TODO
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
 
             _controllerUi = new ControllerUi(_clock, _controller);
@@ -61,7 +63,7 @@ namespace RagingBool.Carcosa.Core.Stage
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
             _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
 
-            _lightSetup = new LightSetup(_snark);
+            _lightSetup = new LightSetup(_dmxMultiverse, _snark);
 
             _manualScene = new ManualScene(_lightSetup);
 
