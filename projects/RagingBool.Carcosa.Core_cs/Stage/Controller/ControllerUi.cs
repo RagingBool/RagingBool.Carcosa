@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
@@ -25,29 +26,34 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private readonly ILpd8 _controller;
 
         private LiveControllerMode _liveMode;
+        private SceneSelectControllerMode _sceneSelectMode;
 
         private IControllerMode _mode;
 
-        public ControllerUi(ILpd8 controller)
+        private int _currentSceneId;
+
+        public ControllerUi(IClock clock, ILpd8 controller)
         {
             _controller = controller;
 
             _controller.OnButtonEvent += OnButtonEventHandler;
             _controller.OnControllerChange += OnControllerChangeHandler;
 
-            _liveMode = new LiveControllerMode(_controller);
+            _liveMode = new LiveControllerMode(this, clock, _controller);
+            _sceneSelectMode = new SceneSelectControllerMode(this, clock, _controller);
 
             _mode = null;
         }
 
         public void Start()
         {
-            SwitchMode(_liveMode);
+            SelectScene(0);
+            GoToLiveMode();
         }
 
         public void Stop()
         {
-            SwitchMode(_liveMode);
+            SwitchMode(null);
         }
 
         public void Update()
@@ -87,6 +93,26 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             {
                 _mode.ProcessControllerChangeEvent(e);
             }
+        }
+
+        public int CurrentSceneId
+        {
+            get { return _currentSceneId; }
+        }
+
+        public void SelectScene(int sceneId)
+        {
+            _currentSceneId = sceneId;
+        }
+
+        public void GoToLiveMode()
+        {
+            SwitchMode(_liveMode);
+        }
+
+        public void GoToSceneSelectMode()
+        {
+            SwitchMode(_sceneSelectMode);
         }
     }
 }
