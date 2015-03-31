@@ -16,21 +16,34 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal sealed class LiveControllerMode : ControllerModeBase
     {
-        public LiveControllerMode(ILpd8 controller)
-            : base(controller)
-        {
+        private const int ModeSelectButton = 7;
 
-        }
+        public LiveControllerMode(ControllerUi controllerUi, IClock clock, ILpd8 controller)
+            : base(controllerUi, clock, controller) { }
 
         public override void ProcessButtonEventHandler(ButtonEventArgs e)
         {
+            switch(e.ButtonId)
+            {
+                case ModeSelectButton:
+                    if(e.ButtonEventType == ButtonEventType.Released)
+                    {
+                        HandleSceneSelect();
+                    }
+                    break;
+            }
+        }
 
+        private void HandleSceneSelect()
+        {
+            ControllerUi.GoToSceneSelectMode();
         }
 
         public override void ProcessControllerChangeEvent(ControllerChangeEventArgs e)
