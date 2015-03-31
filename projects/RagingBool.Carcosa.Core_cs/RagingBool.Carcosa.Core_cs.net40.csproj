@@ -118,6 +118,7 @@
     <Compile Include="Stage\Controller\SceneSelectionConfirmControllerMode.cs" />
     <Compile Include="Stage\Controller\SubsceneSelectorButton.cs" />
     <Compile Include="Stage\IStage.cs" />
+    <Compile Include="Stage\Lights\ILight.cs" />
     <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
     <Compile Include="Stage\Scenes\ManualScene.cs" />
