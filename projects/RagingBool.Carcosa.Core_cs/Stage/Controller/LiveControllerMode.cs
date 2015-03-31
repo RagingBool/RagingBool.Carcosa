@@ -23,19 +23,43 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal sealed class LiveControllerMode : ControllerModeBase
     {
-        private const int ModeSelectButton = 7;
+        private const int SceneSelectButton = 7;
+        private const int SubsceneSelectButton = 3;
+
+        private readonly SubsceneSelector _subsceneSelector;
 
         public LiveControllerMode(ControllerUi controllerUi, IClock clock, ILpd8 controller)
-            : base(controllerUi, clock, controller) { }
+            : base(controllerUi, clock, controller)
+        {
+            _subsceneSelector = new SubsceneSelector(Controller, SubsceneSelectButton);
+        }
+
+        public override void Enter()
+        {
+            Fps = 60;
+        }
+
+        protected override void NewFrame()
+        {
+            base.NewFrame();
+
+            _subsceneSelector.NewFrame();
+        }
 
         public override void ProcessButtonEventHandler(ButtonEventArgs e)
         {
             switch(e.ButtonId)
             {
-                case ModeSelectButton:
+                case SceneSelectButton:
                     if(e.ButtonEventType == ButtonEventType.Released)
                     {
                         HandleSceneSelect();
+                    }
+                    break;
+                case SubsceneSelectButton:
+                    if(e.ButtonEventType == ButtonEventType.Pressed)
+                    {
+                        HandleSubsceneSelect();
                     }
                     break;
             }
@@ -44,6 +68,11 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private void HandleSceneSelect()
         {
             ControllerUi.GoToSceneSelectMode();
+        }
+
+        private void HandleSubsceneSelect()
+        {
+            _subsceneSelector.SelectNextSubscene();
         }
 
         public override void ProcessControllerChangeEvent(ControllerChangeEventArgs e)
