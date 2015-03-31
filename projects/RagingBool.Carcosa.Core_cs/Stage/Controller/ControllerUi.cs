@@ -23,6 +23,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal sealed class ControllerUi
     {
+        private readonly object _lock = new object();
+
         private readonly ILpd8 _controller;
 
         private LiveControllerMode _liveMode;
@@ -49,13 +51,19 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         public void Start()
         {
-            SelectScene(0);
-            GoToLiveMode();
+            lock(_lock)
+            {
+                SelectScene(0);
+                GoToLiveMode();
+            }
         }
 
         public void Stop()
         {
-            SwitchMode(null);
+            lock (_lock)
+            {
+                SwitchMode(null);
+            }
         }
 
         public void Update()
@@ -68,32 +76,41 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private void SwitchMode(IControllerMode newMode)
         {
-            if (_mode != null)
+            lock (_lock)
             {
-                _mode.Exit();
-            }
+                if (_mode != null)
+                {
+                    _mode.Exit();
+                }
 
-            _mode = newMode;
+                _mode = newMode;
 
-            if (_mode != null)
-            {
-                _mode.Enter();
+                if (_mode != null)
+                {
+                    _mode.Enter();
+                }
             }
         }
 
         private void OnButtonEventHandler(object sender, ButtonEventArgs e)
         {
-            if (_mode != null)
+            lock (_lock)
             {
-                _mode.ProcessButtonEventHandler(e);
+                if (_mode != null)
+                {
+                    _mode.ProcessButtonEventHandler(e);
+                }
             }
         }
 
         private void OnControllerChangeHandler(object sender, ControllerChangeEventArgs e)
         {
-            if (_mode != null)
+            lock (_lock)
             {
-                _mode.ProcessControllerChangeEvent(e);
+                if (_mode != null)
+                {
+                    _mode.ProcessControllerChangeEvent(e);
+                }
             }
         }
 
@@ -104,8 +121,11 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         public void SelectScene(int sceneId)
         {
-            _currentSceneId = sceneId;
-            SwitchMode(_SceneSelectionConfirmMode);
+            lock (_lock)
+            {
+                _currentSceneId = sceneId;
+                SwitchMode(_SceneSelectionConfirmMode);
+            }
         }
 
         public void GoToLiveMode()
