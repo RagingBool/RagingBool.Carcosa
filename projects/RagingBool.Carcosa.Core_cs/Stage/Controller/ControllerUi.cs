@@ -68,9 +68,12 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         public void Update()
         {
-            if(_mode != null)
+            lock (_lock)
             {
-                _mode.Update();
+                if (_mode != null)
+                {
+                    _mode.Update();
+                }
             }
         }
 
