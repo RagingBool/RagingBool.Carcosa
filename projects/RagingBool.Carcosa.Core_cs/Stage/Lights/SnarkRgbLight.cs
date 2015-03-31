@@ -17,7 +17,6 @@
 // ]]]]
 
 using RagingBool.Carcosa.Devices;
-using Epicycle.Commons;
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
@@ -72,14 +71,9 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
 
         private void Update()
         {
-            _snark.SetChannel(_firstChannel + 0, ToByte(_red));
-            _snark.SetChannel(_firstChannel + 1, ToByte(_green));
-            _snark.SetChannel(_firstChannel + 2, ToByte(_blue));
-        }
-
-        private int ToByte(double value)
-        {
-            return BasicMath.Clip(BasicMath.Round(value * 255), 0, 255);
+            _snark.SetChannel(_firstChannel + 0, _red.UnitToByte());
+            _snark.SetChannel(_firstChannel + 1, _green.UnitToByte());
+            _snark.SetChannel(_firstChannel + 2, _blue.UnitToByte());
         }
     }
 }
