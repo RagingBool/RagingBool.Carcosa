@@ -18,6 +18,7 @@
 
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices;
+using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
@@ -26,12 +27,49 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private const int SceneSelectButton = 7;
         private const int SubsceneSelectButton = 3;
 
-        private readonly SubsceneSelector _subsceneSelector;
+        private const int LightDrumButton0 = 1;
+        private const int LightDrumButton1 = 2;
+        private const int LightDrumButton2 = 5;
+        private const int LightDrumButton3 = 6;
+
+        private readonly List<Button> _buttons;
+        private readonly List<LightDrumPad> _lightDrumPads;
+
+        private readonly Button _sceneSelectorButton;
+        private readonly SubsceneSelectorButton _subsceneSelectorButton;
+
+        private int _subsceneIndex;
 
         public LiveControllerMode(ControllerUi controllerUi, IClock clock, ILpd8 controller)
             : base(controllerUi, clock, controller)
         {
-            _subsceneSelector = new SubsceneSelector(Controller, SubsceneSelectButton);
+            _buttons = new List<Button>();
+            _lightDrumPads = new List<LightDrumPad>();
+
+            _sceneSelectorButton = new Button(Controller, SceneSelectButton, ButtonTriggerBehaviour.OnRelease);
+            _sceneSelectorButton.OnTrigger += HandleSceneSelect;
+            _buttons.Add(_sceneSelectorButton);
+
+            _subsceneSelectorButton = new SubsceneSelectorButton(Controller, SubsceneSelectButton);
+            _subsceneSelectorButton.OnTrigger += HandleSubsceneSelect;
+            _buttons.Add(_subsceneSelectorButton);
+
+            AddLightDrumButton(LightDrumButton0, false);
+            AddLightDrumButton(LightDrumButton1, false);
+            AddLightDrumButton(LightDrumButton2, true);
+            AddLightDrumButton(LightDrumButton3, true);
+
+            _subsceneIndex = 0;
+        }
+
+        private void AddLightDrumButton(int buttonId, bool isContinues)
+        {
+            int lightDrumIndex = _lightDrumPads.Count;
+
+            var button = new LightDrumPad(Controller, buttonId, isContinues);
+            button.OnTrigger += (sender, eventArgs) => { HandleLightDrumTrigger(lightDrumIndex, eventArgs); };
+            _buttons.Add(button);
+            _lightDrumPads.Add(button);
         }
 
         public override void Enter()
@@ -43,41 +81,40 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             base.NewFrame();
 
-            _subsceneSelector.NewFrame();
-        }
-
-        public override void ProcessButtonEventHandler(ButtonEventArgs e)
-        {
-            switch(e.ButtonId)
+            foreach (var button in _buttons)
             {
-                case SceneSelectButton:
-                    if(e.ButtonEventType == ButtonEventType.Released)
-                    {
-                        HandleSceneSelect();
-                    }
-                    break;
-                case SubsceneSelectButton:
-                    if(e.ButtonEventType == ButtonEventType.Pressed)
-                    {
-                        HandleSubsceneSelect();
-                    }
-                    break;
+                button.NewFrame();
             }
         }
 
-        private void HandleSceneSelect()
+        public override void ProcessButtonEventHandler(ButtonEventArgs eventArgs)
+        {
+            foreach (var button in _buttons)
+            {
+                button.ProcessButtonEventHandler(eventArgs);
+            }
+        }
+
+        private void HandleSceneSelect(object sender, ButtonTriggerEventArgs eventArgs)
         {
             ControllerUi.GoToSceneSelectMode();
         }
 
-        private void HandleSubsceneSelect()
+        private void HandleSubsceneSelect(object sender, ButtonTriggerEventArgs eventArgs)
         {
-            _subsceneSelector.SelectNextSubscene();
+            _subsceneIndex = (_subsceneIndex + 1) % 3;
+
+            _subsceneSelectorButton.SubsceneIndex = _subsceneIndex;
         }
 
-        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs e)
+        private void HandleLightDrumTrigger(int lightDrumIndex, ButtonTriggerEventArgs eventArgs)
         {
-            Controller.SetKeyLightState(e.ControllerId, e.Value >= 128);
+            _lightDrumPads[lightDrumIndex].HandleTrigger(eventArgs.TriggerType);
+        }
+
+        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs eventArgs)
+        {
+            Controller.SetKeyLightState(eventArgs.ControllerId, eventArgs.Value >= 128);
         }
     }
 }
