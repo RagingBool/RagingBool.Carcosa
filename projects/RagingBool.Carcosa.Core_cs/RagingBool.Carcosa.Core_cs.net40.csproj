@@ -111,6 +111,7 @@
     <Compile Include="Stage\Controller\IControllerUi.cs" />
     <Compile Include="Stage\Controller\LightDrumPad.cs" />
     <Compile Include="Stage\Controller\LiveControllerMode.cs" />
+    <Compile Include="Stage\Controller\SceneChangedEventArgs.cs" />
     <Compile Include="Stage\Controller\SceneSelectControllerMode.cs" />
     <Compile Include="Stage\Controller\SceneSelectionConfirmControllerMode.cs" />
     <Compile Include="Stage\Controller\SubsceneSelectorButton.cs" />
