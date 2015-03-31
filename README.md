@@ -19,3 +19,4 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
 * **Version 0.1.0.0** [NOT RELEASED]
   * Creating a basic WPF app
   * Support for AKAI LPD8 MIDI controller
+  * Support for Snark over serial port
