@@ -122,6 +122,7 @@
     <Compile Include="Stage\Lights\IMonoLight.cs" />
     <Compile Include="Stage\Lights\IRgbLight.cs" />
     <Compile Include="Stage\Lights\LightsUtils.cs" />
+    <Compile Include="Stage\Lights\SnarkMonoLight.cs" />
     <Compile Include="Stage\Lights\SnarkRgbLight.cs" />
     <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
