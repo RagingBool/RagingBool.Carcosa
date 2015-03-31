@@ -18,7 +18,7 @@
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
-    internal class IMonoLight
+    internal interface IMonoLight
     {
         double Intensity { get; set; }
     }
