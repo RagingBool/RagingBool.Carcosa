@@ -42,7 +42,7 @@ namespace RagingBool.Carcosa.Core
 
             _lastController = 255;
 
-            _snark = new SerialSnark(_clock, "COM6", 12, 60);
+            _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
         }
 
         public void Start()

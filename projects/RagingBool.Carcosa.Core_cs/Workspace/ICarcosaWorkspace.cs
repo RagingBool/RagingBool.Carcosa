@@ -25,5 +25,7 @@ namespace RagingBool.Carcosa.Core.Workspace
         int ControllerMidiInPort { get; }
 
         int ControllerMidiOutPort { get; }
+
+        string SnarkSerialPortName { get; }
     }
 }
