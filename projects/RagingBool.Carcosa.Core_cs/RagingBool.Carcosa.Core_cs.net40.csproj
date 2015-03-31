@@ -118,6 +118,7 @@
     <Compile Include="Stage\Controller\SceneSelectionConfirmControllerMode.cs" />
     <Compile Include="Stage\Controller\SubsceneSelectorButton.cs" />
     <Compile Include="Stage\IStage.cs" />
+    <Compile Include="Stage\Lights\DmxRgbLight.cs" />
     <Compile Include="Stage\Lights\ILight.cs" />
     <Compile Include="Stage\Lights\IMonoLight.cs" />
     <Compile Include="Stage\Lights\IRgbLight.cs" />
