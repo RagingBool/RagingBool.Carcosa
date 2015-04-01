@@ -20,7 +20,7 @@ using RagingBool.Carcosa.Devices.Dmx;
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
-    internal sealed class DmxRgbLight : IRgbLight
+    internal sealed class DmxRgbLightUnifiedLeds : IRgbLight
     {
         private readonly IDmxMultiverse _dmxMultiverse;
         private readonly int _universeId;
@@ -30,7 +30,7 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
         private double _green;
         private double _blue;
 
-        public DmxRgbLight(IDmxMultiverse dmxMultiverse, int universeId, int dmxChannel)
+        public DmxRgbLightUnifiedLeds(IDmxMultiverse dmxMultiverse, int universeId, int dmxChannel)
         {
             _dmxMultiverse = dmxMultiverse;
             _universeId = universeId;
@@ -74,12 +74,9 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
         private void Update()
         {
             _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 0, 255);
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 1, 0);
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 2, 0);
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 3, 0);
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 4, _red.UnitToByte());
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 5, _green.UnitToByte());
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 6, _blue.UnitToByte());
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 1, _red.UnitToByte());
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 2, _green.UnitToByte());
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 3, _blue.UnitToByte());
         }
     }
 }
