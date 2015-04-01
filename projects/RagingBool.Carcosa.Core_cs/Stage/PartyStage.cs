@@ -54,7 +54,10 @@ namespace RagingBool.Carcosa.Core.Stage
             _clock = clock;
 
             _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
-            _dmxMultiverse = null; // TODO
+            
+            _dmxMultiverse = new E1_31DmxMultiverse(_clock, 30.0);
+            _dmxMultiverse.AddUniverse(1);
+
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
 
             _controllerUi = new ControllerUi(_clock, _controller);
@@ -76,6 +79,7 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Connect();
+                _dmxMultiverse.Connect();
                 _snark.Connect();
 
                 _controllerUi.Start();
@@ -89,6 +93,7 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Update();
+                _dmxMultiverse.Update();
                 _snark.Update();
 
                 _controllerUi.Update();
@@ -120,6 +125,7 @@ namespace RagingBool.Carcosa.Core.Stage
                 _controllerUi.Stop();
 
                 _controller.Disconnect();
+                _dmxMultiverse.Disconnect();
                 _snark.Disconnect();
             }
         }
