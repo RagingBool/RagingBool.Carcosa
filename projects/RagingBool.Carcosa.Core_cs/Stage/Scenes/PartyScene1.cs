@@ -17,20 +17,44 @@
 // ]]]]
 
 using RagingBool.Carcosa.Core.Stage.Controller;
+using Epicycle.Commons.Time;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
     internal sealed class PartyScene1 : SceneBase
     {
         private readonly LightSetup _lightSetup;
+        private RythmDetector _rythmDetector;
+        private RythmGenerator _rythmGenerator;
+        private int _tickIndex;
 
-        public PartyScene1(LightSetup lightSetup)
+        public PartyScene1(IClock clock, LightSetup lightSetup)
         {
             _lightSetup = lightSetup;
+
+            _rythmDetector = new RythmDetector(clock);
+            _rythmDetector.OnNewBpm += OnNewBpm;
+
+            _rythmGenerator = new RythmGenerator();
+            _rythmGenerator.ResetAndSetBpm(120);
+            _rythmGenerator.OnTick += OnTick;
+
+            _tickIndex = 0;
+        }
+
+        void OnNewBpm(double newBpm)
+        {
+            _rythmGenerator.ResetAndSetBpm(newBpm);
+        }
+
+        void OnTick(int tickIndex)
+        {
+            _tickIndex = tickIndex;
         }
 
         public override void Enter()
         {
+            _rythmGenerator.Reset();
         }
 
         public override void Exit()
@@ -40,6 +64,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         public override void Update(double dt)
         {
+            _rythmGenerator.Update(dt);
+
+            _lightSetup.MonoStrips[0].Intensity = (_tickIndex % 4) == 0 ? 1 : 0;
         }
 
         public override void HandleSubsceneChange(int newSubscene)
@@ -48,6 +75,16 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         public override void HandleLightDrumEvent(LightDrumEventArgs eventArgs)
         {
+            switch(eventArgs.DrumId)
+            {
+                case 4:
+                    _rythmDetector.Reset();
+                    _rythmGenerator.Reset();
+                    break;
+                case 5:
+                    _rythmDetector.Tap();
+                    break;
+            }
         }
     }
 }
