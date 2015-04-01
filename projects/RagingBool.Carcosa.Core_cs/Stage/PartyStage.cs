@@ -156,6 +156,9 @@ namespace RagingBool.Carcosa.Core.Stage
             {
                 switch (newSceneId)
                 {
+                    case 0:
+                        SetScene(_partyScene1, newSceneId);
+                        break;
                     default:
                         SetScene(_manualScene, newSceneId);
                         break;
