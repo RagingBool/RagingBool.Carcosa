@@ -65,12 +65,12 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             var hue4 = GetControl(2);
             var hue5 = GetControl(6);
 
-            SetRgbLightToHsi(_lightSetup.RgbLights[0], hue0, saturation, intensity);
-            SetRgbLightToHsi(_lightSetup.RgbLights[1], hue1, saturation, intensity);
-            SetRgbLightToHsi(_lightSetup.RgbLights[2], hue2, saturation, intensity);
-            SetRgbLightToHsi(_lightSetup.RgbLights[3], hue3, saturation, intensity);
-            SetRgbLightToHsi(_lightSetup.RgbStrips[0], hue4, saturation, intensity);
-            SetRgbLightToHsi(_lightSetup.RgbStrips[1], hue5, saturation, intensity);
+            LightUtils.SetRgbLightToHsi(_lightSetup.RgbLights[0], hue0, saturation, intensity);
+            LightUtils.SetRgbLightToHsi(_lightSetup.RgbLights[1], hue1, saturation, intensity);
+            LightUtils.SetRgbLightToHsi(_lightSetup.RgbLights[2], hue2, saturation, intensity);
+            LightUtils.SetRgbLightToHsi(_lightSetup.RgbLights[3], hue3, saturation, intensity);
+            LightUtils.SetRgbLightToHsi(_lightSetup.RgbStrips[0], hue4, saturation, intensity);
+            LightUtils.SetRgbLightToHsi(_lightSetup.RgbStrips[1], hue5, saturation, intensity);
         }
 
         private void UpdateMonoStrips()
@@ -118,48 +118,6 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                     _isFull = eventArgs.TriggerType == ButtonTriggerType.Pressed;
                     break;
             }
-        }
-
-        private void SetRgbLightToHsi(IRgbLight rgbLight, double hue, double saturation, double intensity)
-        {
-            // Based on a post by Brian Neltner: http://blog.saikoled.com/post/43693602826/why-every-led-light-should-be-using-hsi
-
-            var hueRadians = 3.14159 * hue * 2.0;
-            var normSaturation = saturation;
-            var normIntensity = intensity;
-            
-            var c = normIntensity / 3;
-
-            double redOut, greenOut, blueOut;
-
-            // Math! Thanks in part to Kyle Miller.
-            if (hueRadians < 2.09439)
-            {
-                var r = Math.Cos(hueRadians) / Math.Cos(1.047196667 - hueRadians);
-                redOut = c * (1 + normSaturation * r);
-                greenOut = c * (1 + normSaturation * (1 - r));
-                blueOut = c * (1 - normSaturation);
-            }
-            else if (hueRadians < 4.188787)
-            {
-                var shiftedHue = hueRadians - 2.09439;
-                var r = Math.Cos(shiftedHue) / Math.Cos(1.047196667 - shiftedHue);
-                greenOut = c * (1 + normSaturation * r);
-                blueOut = c * (1 + normSaturation * (1 - r));
-                redOut = c * (1 - normSaturation);
-            }
-            else
-            {
-                var shiftedHue = hueRadians - 4.188787;
-                var r = Math.Cos(shiftedHue) / Math.Cos(1.047196667 - shiftedHue);
-                blueOut = c * (1 + normSaturation * r);
-                redOut = c * (1 + normSaturation * (1 - r));
-                greenOut = c * (1 - normSaturation);
-            }
-
-            rgbLight.Red = redOut;
-            rgbLight.Green = greenOut;
-            rgbLight.Blue = blueOut;
         }
     }
 }
