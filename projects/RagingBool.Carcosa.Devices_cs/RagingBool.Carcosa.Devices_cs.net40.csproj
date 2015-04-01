@@ -59,6 +59,9 @@
     <Compile Include="ButtonEventArgs.cs" />
     <Compile Include="ButtonEventType.cs" />
     <Compile Include="ControllerChangeEventArgs.cs" />
+    <Compile Include="Dmx\E1_31Conncetion.cs" />
+    <Compile Include="Dmx\E1_31DmxMultiverse.cs" />
+    <Compile Include="Dmx\E1_31Utils.cs" />
     <Compile Include="Dmx\IDmxMultiverse.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />

@@ -18,8 +18,10 @@
 
 namespace RagingBool.Carcosa.Devices.Dmx
 {
-    public interface IDmxMultiverse
+    public interface IDmxMultiverse : IDevice
     {
+        void AddUniverse(int universeId);
+
         void SetChannel(int universeId, int channelId, int value);
     }
 }
