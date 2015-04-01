@@ -132,6 +132,7 @@
     <Compile Include="Stage\Scenes\LightUtils.cs" />
     <Compile Include="Stage\Scenes\ManualScene.cs" />
     <Compile Include="Stage\Scenes\PartyScene1.cs" />
+    <Compile Include="Stage\Scenes\RythmGenerator.cs" />
     <Compile Include="Stage\Scenes\SceneBasics.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
