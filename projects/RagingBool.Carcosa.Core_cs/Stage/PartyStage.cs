@@ -43,6 +43,7 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private LightSetup _lightSetup;
 
+        private PartyScene1 _partyScene1;
         private ManualScene _manualScene;
 
         private readonly ControllerUi _controllerUi;
@@ -68,6 +69,7 @@ namespace RagingBool.Carcosa.Core.Stage
 
             _lightSetup = new LightSetup(_dmxMultiverse, _snark);
 
+            _partyScene1 = new PartyScene1(_lightSetup);
             _manualScene = new ManualScene(_lightSetup);
 
             _curScene = null;
