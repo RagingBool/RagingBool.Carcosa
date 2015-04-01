@@ -78,7 +78,7 @@ namespace RagingBool.Carcosa.Core
             while(_isRunning)
             {
                 _stage.Update();
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
     }
