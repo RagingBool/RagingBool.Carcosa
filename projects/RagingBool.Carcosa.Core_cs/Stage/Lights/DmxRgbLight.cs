@@ -24,21 +24,17 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
     {
         private readonly IDmxMultiverse _dmxMultiverse;
         private readonly int _universeId;
-        private readonly int _channelRed;
-        private readonly int _channelGreen;
-        private readonly int _channelBlue;
+        private readonly int _dmxChannel;
 
         private double _red;
         private double _green;
         private double _blue;
 
-        public DmxRgbLight(IDmxMultiverse dmxMultiverse, int universeId, int channelRed, int channelGreen, int channelBlue)
+        public DmxRgbLight(IDmxMultiverse dmxMultiverse, int universeId, int dmxChannel)
         {
             _dmxMultiverse = dmxMultiverse;
             _universeId = universeId;
-            _channelRed = channelRed;
-            _channelGreen = channelGreen;
-            _channelBlue = channelBlue;
+            _dmxChannel = dmxChannel;
 
             _red = 0;
             _green = 0;
@@ -77,9 +73,13 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
 
         private void Update()
         {
-            _dmxMultiverse.SetChannel(_universeId, _channelRed, _red.UnitToByte());
-            _dmxMultiverse.SetChannel(_universeId, _channelGreen, _green.UnitToByte());
-            _dmxMultiverse.SetChannel(_universeId, _channelBlue, _blue.UnitToByte());
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 0, 255);
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 1, 0);
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 2, 0);
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 3, 0);
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 4, _red.UnitToByte());
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 5, _green.UnitToByte());
+            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 6, _blue.UnitToByte());
         }
     }
 }
