@@ -31,6 +31,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private const int LightDrumButton1 = 2;
         private const int LightDrumButton2 = 5;
         private const int LightDrumButton3 = 6;
+        private const int LightDrumButton5 = 0;
+        private const int LightDrumButton6 = 4;
 
         private readonly List<Button> _buttons;
         private readonly List<LightDrumPad> _lightDrumPads;
@@ -58,6 +60,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             AddLightDrumButton(LightDrumButton1, false);
             AddLightDrumButton(LightDrumButton2, true);
             AddLightDrumButton(LightDrumButton3, true);
+            AddLightDrumButton(LightDrumButton5, false);
+            AddLightDrumButton(LightDrumButton6, false);
 
             SubsceneId = 0;
         }
