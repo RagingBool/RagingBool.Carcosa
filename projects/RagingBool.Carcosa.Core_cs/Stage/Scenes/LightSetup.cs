@@ -50,8 +50,8 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                 _monoStrips.Add(new SnarkMonoLight(_snark, 6 + i));
             }
 
-            _rgbLights.Add(new DmxRgbLight(_dmxMultiverse, 0, 1, 2, 3));
-            _rgbLights.Add(new DmxRgbLight(_dmxMultiverse, 0, 4, 5, 6));
+            _rgbLights.Add(new DmxRgbLight(_dmxMultiverse, 1, 0));
+            _rgbLights.Add(new DmxRgbLight(_dmxMultiverse, 1, 10));
         }
 
         public IReadOnlyList<IRgbLight> RgbStrips
