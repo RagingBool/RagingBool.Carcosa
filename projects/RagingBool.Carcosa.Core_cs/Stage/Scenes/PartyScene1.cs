@@ -83,6 +83,24 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             var saturation = GetControl(3);
             var intensity = !_isOff ? (GetControl(7)) : 0.0;
 
+            if (_subsceneId == 1)
+            {
+                if (_tickIndex % 16 == 0)
+                {
+                    intensity = 0.8;
+                }
+            }
+            
+            if (_subsceneId == 2)
+            {
+                if (_tickIndex % 16 == 0)
+                {
+                    saturation = 1;
+                    intensity = 1;
+                }
+            }
+
+
             var hueControl0 = GetControl(0);
             var hueControl1 = GetControl(4);
             var hueControl2 = GetControl(1);
