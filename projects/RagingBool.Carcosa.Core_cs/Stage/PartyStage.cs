@@ -19,9 +19,9 @@
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Stage.Scenes;
-using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.Dmx;
 using RagingBool.Carcosa.Devices.Midi;
 
 namespace RagingBool.Carcosa.Core.Stage
@@ -35,6 +35,7 @@ namespace RagingBool.Carcosa.Core.Stage
         private readonly IClock _clock;
 
         private readonly ILpd8 _controller;
+        private readonly IDmxMultiverse _dmxMultiverse;
         private readonly ISnark _snark;
 
         private IScene _curScene;
@@ -42,6 +43,7 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private LightSetup _lightSetup;
 
+        private PartyScene1 _partyScene1;
         private ManualScene _manualScene;
 
         private readonly ControllerUi _controllerUi;
@@ -53,6 +55,10 @@ namespace RagingBool.Carcosa.Core.Stage
             _clock = clock;
 
             _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
+            
+            _dmxMultiverse = new E1_31DmxMultiverse(_clock, 30.0);
+            _dmxMultiverse.AddUniverse(1);
+
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
 
             _controllerUi = new ControllerUi(_clock, _controller);
@@ -61,8 +67,9 @@ namespace RagingBool.Carcosa.Core.Stage
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
             _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
 
-            _lightSetup = new LightSetup(_snark);
+            _lightSetup = new LightSetup(_dmxMultiverse, _snark);
 
+            _partyScene1 = new PartyScene1(_clock, _lightSetup);
             _manualScene = new ManualScene(_lightSetup);
 
             _curScene = null;
@@ -74,6 +81,7 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Connect();
+                _dmxMultiverse.Connect();
                 _snark.Connect();
 
                 _controllerUi.Start();
@@ -87,6 +95,7 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Update();
+                _dmxMultiverse.Update();
                 _snark.Update();
 
                 _controllerUi.Update();
@@ -118,6 +127,7 @@ namespace RagingBool.Carcosa.Core.Stage
                 _controllerUi.Stop();
 
                 _controller.Disconnect();
+                _dmxMultiverse.Disconnect();
                 _snark.Disconnect();
             }
         }
@@ -146,6 +156,9 @@ namespace RagingBool.Carcosa.Core.Stage
             {
                 switch (newSceneId)
                 {
+                    case 0:
+                        SetScene(_partyScene1, newSceneId);
+                        break;
                     default:
                         SetScene(_manualScene, newSceneId);
                         break;

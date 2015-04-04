@@ -20,3 +20,8 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
   * Creating a basic WPF app
   * Support for AKAI LPD8 MIDI controller
   * Support for Snark over serial port
+  * Support for DMX over E1.31
+  * Very simple hard-coded party mode
+  * KNOW ISSUES
+    * Concurrency problems
+    * Interacting with the MIDI controller sometimes frezzes the software
