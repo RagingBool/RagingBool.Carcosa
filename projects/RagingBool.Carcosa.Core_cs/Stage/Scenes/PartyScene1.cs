@@ -30,7 +30,6 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private int _subsceneId;
 
         private bool _isOff;
-        private int _rythmPhase;
 
         public PartyScene1(IClock clock, LightSetup lightSetup)
         {
