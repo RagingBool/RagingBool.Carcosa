@@ -28,10 +28,14 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
             {
                 var writer = new BinaryWriter(stream);
 
+                
                 writer.Write((byte)channel);
                 writer.Write((byte)0);
 
-                writer.Write(rgbValues.Length);
+                writer.Write((byte)0);
+                writer.Write((byte)(rgbValues.Length));
+                
+                writer.Write(rgbValues);
 
                 return stream.ToArray();
             }
