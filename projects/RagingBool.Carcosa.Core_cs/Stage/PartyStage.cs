@@ -22,6 +22,7 @@ using RagingBool.Carcosa.Core.Stage.Scenes;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Dmx;
+using RagingBool.Carcosa.Devices.Fadecandy;
 using RagingBool.Carcosa.Devices.Midi;
 
 namespace RagingBool.Carcosa.Core.Stage
@@ -37,6 +38,7 @@ namespace RagingBool.Carcosa.Core.Stage
         private readonly ILpd8 _controller;
         private readonly IDmxMultiverse _dmxMultiverse;
         private readonly ISnark _snark;
+        private readonly FadecandyOpenPixelClient _fadecandyClient;
 
         private IScene _curScene;
         private int _curSceneId;
@@ -44,6 +46,7 @@ namespace RagingBool.Carcosa.Core.Stage
         private LightSetup _lightSetup;
 
         private PartyScene1 _partyScene1;
+        private FadecandyScene _fadecandyScene;
         private ManualScene _manualScene;
 
         private readonly ControllerUi _controllerUi;
@@ -59,7 +62,10 @@ namespace RagingBool.Carcosa.Core.Stage
             _dmxMultiverse = new E1_31DmxMultiverse(_clock, 30.0);
             _dmxMultiverse.AddUniverse(1);
 
-            _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 60);
+            _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 50);
+            //var host = "10.0.0.7";
+            var host = "forest";
+            _fadecandyClient = new FadecandyOpenPixelClient(_clock, host, 7890, 9 * 3, 60.0);
 
             _controllerUi = new ControllerUi(_clock, _controller);
 
@@ -67,9 +73,10 @@ namespace RagingBool.Carcosa.Core.Stage
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
             _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
 
-            _lightSetup = new LightSetup(_dmxMultiverse, _snark);
+            _lightSetup = new LightSetup(_dmxMultiverse, _snark, _fadecandyClient);
 
             _partyScene1 = new PartyScene1(_clock, _lightSetup);
+            _fadecandyScene = new FadecandyScene(_lightSetup);
             _manualScene = new ManualScene(_lightSetup);
 
             _curScene = null;
@@ -97,6 +104,7 @@ namespace RagingBool.Carcosa.Core.Stage
                 _controller.Update();
                 _dmxMultiverse.Update();
                 _snark.Update();
+                _fadecandyClient.Update();
 
                 _controllerUi.Update();
                 UpdateScene();
@@ -158,6 +166,9 @@ namespace RagingBool.Carcosa.Core.Stage
                 {
                     case 0:
                         SetScene(_partyScene1, newSceneId);
+                        break;
+                    case 1:
+                        SetScene(_fadecandyScene, newSceneId);
                         break;
                     default:
                         SetScene(_manualScene, newSceneId);

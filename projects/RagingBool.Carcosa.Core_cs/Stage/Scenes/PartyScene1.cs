@@ -16,8 +16,8 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Core.Stage.Controller;
 using Epicycle.Commons.Time;
+using RagingBool.Carcosa.Core.Stage.Controller;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
@@ -156,6 +156,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             LightUtils.SetRgbLightToHsi(_lightSetup.RgbLights[3], hue3, saturation, intensity);
             LightUtils.SetRgbLightToHsi(_lightSetup.RgbStrips[0], hue4, saturation, intensity);
             LightUtils.SetRgbLightToHsi(_lightSetup.RgbStrips[1], hue5, saturation, intensity);
+
+            var gradHue = (hue0 + hue1) / 2;
+            var gradHueOpening = System.Math.Abs(hue3 - hue4);
+            LightUtils.SetHueGradient(_lightSetup.FadecandyStripAll, gradHue, gradHueOpening, saturation, intensity);
         }
 
         public override void HandleSubsceneChange(int newSubscene)

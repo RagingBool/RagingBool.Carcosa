@@ -63,6 +63,8 @@
     <Compile Include="Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="Dmx\E1_31Utils.cs" />
     <Compile Include="Dmx\IDmxMultiverse.cs" />
+    <Compile Include="Fadecandy\FadecandyOpenPixelClient.cs" />
+    <Compile Include="Fadecandy\OpenPixelUtils.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />
     <Compile Include="ISnark.cs" />
