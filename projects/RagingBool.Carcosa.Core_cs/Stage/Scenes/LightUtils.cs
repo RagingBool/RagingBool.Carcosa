@@ -16,14 +16,28 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using System;
+using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
     internal static class LightUtils
     {
+        public static void SetHueGradient(IList<IRgbLight> lights, double midHue, double hueOpening, double saturation, double intensity)
+        {
+            var maxOpening = 0.5;
+            var deltaHue = hueOpening / 2 * maxOpening;
+            var hue1 = midHue - deltaHue;
+            var hue2 = midHue + deltaHue;
+
+            var hueStep = (hue2 - hue1) / (lights.Count - 1);
+            for (int i = 0; i < lights.Count; i++)
+            {
+                LightUtils.SetRgbLightToHsi(lights[i], hue1 + hueStep * i, saturation, intensity);
+            }
+        }
+
         public static void SetRgbLightToHsi(IRgbLight rgbLight, double hue, double saturation, double intensity)
         {
             // Based on a post by Brian Neltner: http://blog.saikoled.com/post/43693602826/why-every-led-light-should-be-using-hsi
