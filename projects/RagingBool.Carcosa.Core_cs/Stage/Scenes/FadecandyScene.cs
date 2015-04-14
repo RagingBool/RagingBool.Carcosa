@@ -26,20 +26,13 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
     {
         private readonly LightSetup _lightSetup;
 
-        private int _monoState;
-        private bool _isOff;
-        private bool _isFull;
-
         public FadecandyScene(LightSetup lightSetup)
         {
             _lightSetup = lightSetup;
-            _monoState = 0;
         }
 
         public override void Enter()
         {
-            _isOff = false;
-            _isFull = false;
         }
 
         public override void Exit()
