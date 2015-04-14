@@ -20,6 +20,7 @@ using Epicycle.Commons.Collections;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Dmx;
+using RagingBool.Carcosa.Devices.Fadecandy;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
@@ -28,15 +29,21 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
     {
         private readonly IDmxMultiverse _dmxMultiverse;
         private readonly ISnark _snark;
+        private readonly FadecandyOpenPixelClient _fadecandyClient;
 
         private readonly IList<IRgbLight> _rgbStrips;
         private readonly IList<IMonoLight> _monoStrips;
         private readonly IList<IRgbLight> _rgbLights;
 
-        public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark)
+        private readonly IList<IRgbLight> _fadecandyStripAll;
+        private readonly IList<IRgbLight> _fadecandyStrip1;
+        private readonly IList<IRgbLight> _fadecandyStrip2;
+
+        public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark, FadecandyOpenPixelClient fadecandyClient)
         {
             _dmxMultiverse = dmxMultiverse;
             _snark = snark;
+            _fadecandyClient = fadecandyClient;
 
             _rgbStrips = new List<IRgbLight>();
             _monoStrips = new List<IMonoLight>();
@@ -54,6 +61,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             _rgbLights.Add(new DmxRgbLightSeparatedLeds(_dmxMultiverse, 1, 10));
             _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxMultiverse, 1, 20));
             _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxMultiverse, 1, 30));
+
+            _fadecandyStripAll = CreateFadecandyStrip(0, 1, 2, 3, 4, 5, 6, 7, 8);
+            _fadecandyStrip1 = CreateFadecandyStrip(0, 2, 4, 6, 8);
+            _fadecandyStrip2 = CreateFadecandyStrip(1, 3, 5, 7);
         }
 
         public IReadOnlyList<IRgbLight> RgbStrips
@@ -69,6 +80,33 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         public IReadOnlyList<IRgbLight> RgbLights
         {
             get { return _rgbLights.AsReadOnlyList(); }
+        }
+
+        public IList<IRgbLight> FadecandyStripAll
+        {
+            get { return _fadecandyStripAll; }
+        }
+
+        public IList<IRgbLight> FadecandyStrip1
+        {
+            get { return _fadecandyStrip1; }
+        }
+
+        public IList<IRgbLight> FadecandyStrip2
+        {
+            get { return _fadecandyStrip2; }
+        }
+
+        private IList<IRgbLight> CreateFadecandyStrip(params int[] indices)
+        {
+            var lights = new List<IRgbLight>();
+
+            foreach (var index in indices)
+            {
+                lights.Add(new FadecandyLed(_fadecandyClient, index));
+            }
+
+            return lights;
         }
     }
 }
