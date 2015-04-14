@@ -17,6 +17,7 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
 ### Version 0.1 
 
 * **Version 0.1.1.0** [NOT RELEASED]
+  * Initial support for Fadecandy server
 
 * **Version 0.1.0.0** [2015-04-04]
   * Creating a basic WPF app
