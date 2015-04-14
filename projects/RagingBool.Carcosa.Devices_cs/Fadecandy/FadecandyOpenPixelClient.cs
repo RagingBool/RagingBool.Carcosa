@@ -16,12 +16,8 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using System.Net.Sockets;
 
 namespace RagingBool.Carcosa.Devices.Fadecandy
@@ -30,28 +26,27 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
     {
         private readonly string _host;
         private readonly int _port;
-
-        private Socket _socket;
+        private readonly IClock _clock;
+        private readonly double _fps;
+        private double _lastUpdateTime;
 
         private TcpClient _tcpClient;
 
         private byte[] _data;
 
-        public FadecandyOpenPixelClient(string host, int port, int chanels)
+        public FadecandyOpenPixelClient(IClock clock, string host, int port, int chanels, double fps)
         {
             _host = host;
             _port = port;
+            _clock = clock;
+            _fps = fps;
 
-            _tcpClient = new TcpClient("host", port);
-
-            /*
-            IPAddress ip = IPAddress.Parse(host);
-            _socket = new Socket(AddressFamily.InterNetwork, ProtocolType.Tcp);
-
-            IPEndPoint ipep = new IPEndPoint(ip, port);
-            _socket.Connect(ipep);*/
+            _tcpClient = new TcpClient(host, port);
+            _tcpClient.NoDelay = true;
 
             _data = new byte[chanels];
+
+            _lastUpdateTime = _clock.Time;
         }
 
         public void SetChannel(int channel, byte value)
@@ -61,9 +56,25 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
 
         public void Update()
         {
+            var curTime = _clock.Time;
+            var timeSinceLastUpdate = curTime - _lastUpdateTime;
+
+            if (timeSinceLastUpdate < (1 / _fps))
+            {
+                return;
+            }
+
             var packet = OpenPixelUtils.buildPacket(0, _data);
 
+            for (var i = 0; i < packet.Length; i++)
+            {
+                Console.Write("{0}, ", packet[i]);
+            }
+            Console.WriteLine();
+
             _tcpClient.GetStream().Write(packet, 0, packet.Length);
+
+            _lastUpdateTime = curTime;
         }
     }
 }
