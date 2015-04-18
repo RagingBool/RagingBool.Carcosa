@@ -30,6 +30,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         private readonly IRgbLight _body;
         private readonly IReadOnlyList<IRgbLight> _eyes;
 
+        private readonly Heartbeat _heartbeat;
         private readonly Oscillator _breathingOsc;
 
         public ForestCritter(ForestEnvironment environment, IRgbLight body, IEnumerable<IRgbLight> eyes)
@@ -48,6 +49,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             Fear = 0.1;
             Love = 0.1;
 
+            _heartbeat = new Heartbeat();
+            _heartbeat.Frequency = 0.7;
+
             _breathingOsc = new Oscillator();
             _breathingOsc.Function = Oscillator.FunctionType.Sin;
             _breathingOsc.Frequency = 0.4;
@@ -65,12 +69,18 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         public void Update(double dt)
         {
+            _heartbeat.Update(dt);
             _breathingOsc.Update(dt);
 
-            var baseIntensity = 0.8;
-            var intensity = baseIntensity + _breathingOsc.Value * 0.2;
+            var heartbeat = _heartbeat.Value;
 
-            LightUtils.SetRgbLightToHsi(_body, PrimaryHue, 1, intensity);
+            var baseIntensity = 0.8;
+            var intensity = baseIntensity + _breathingOsc.Value * 0.1 + heartbeat * 0.05;
+
+            var baseSaturation = _environment.Magic;
+            var saturation = baseSaturation + heartbeat * 0.05;
+
+            LightUtils.SetRgbLightToHsi(_body, PrimaryHue, saturation, intensity);
         }
     }
 }
