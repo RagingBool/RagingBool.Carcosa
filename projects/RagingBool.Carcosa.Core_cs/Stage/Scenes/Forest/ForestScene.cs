@@ -26,12 +26,15 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
     {
         private readonly LightSetup _lightSetup;
 
-        private IList<ForestCritter> _critters;
+        private readonly ForestEnvironment _environment;
+
+        private readonly IList<ForestCritter> _critters;
 
         public ForestScene(LightSetup lightSetup)
         {
             _lightSetup = lightSetup;
 
+            _environment = new ForestEnvironment();
             _critters = new List<ForestCritter>();
 
             InitCritters();
@@ -41,29 +44,31 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         {
             var strip = _lightSetup.FadecandyStripAll;
 
-            var critter = new ForestCritter(strip[0], null);
+            var critter = CreateCritter(strip[0], null);
             critter.PrimaryHue = 0.66;
-            _critters.Add(critter);
 
-            critter = new ForestCritter(strip[1], null);
+            critter = CreateCritter(strip[1], null);
             critter.PrimaryHue = 0.33;
-            _critters.Add(critter);
 
-            critter = new ForestCritter(strip[2], null);
+            critter = CreateCritter(strip[2], null);
             critter.PrimaryHue = 0.87;
-            _critters.Add(critter);
 
-            critter = new ForestCritter(strip[3], null);
+            critter = CreateCritter(strip[3], null);
             critter.PrimaryHue = 0.21;
-            _critters.Add(critter);
 
-            critter = new ForestCritter(strip[4], null);
+            critter = CreateCritter(strip[4], null);
             critter.PrimaryHue = 0.42;
+
+            critter = CreateCritter(strip[5], new IRgbLight[] { strip[6], strip[7] });
+            critter.PrimaryHue = 0.1;
+        }
+
+        private ForestCritter CreateCritter(IRgbLight body, IEnumerable<IRgbLight> eyes)
+        {
+            var critter = new ForestCritter(_environment, body, eyes);
             _critters.Add(critter);
 
-            critter = new ForestCritter(strip[5], new IRgbLight[] { strip[6], strip[7] });
-            critter.PrimaryHue = 0.1;
-            _critters.Add(critter);
+            return critter;
         }
 
         public override void Enter()
@@ -87,8 +92,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         private void UpdateEnvironment()
         {
-            var saturation = GetControl(3);
-            var intensity = GetControl(7);
+            var magic = GetControl(7);
+
+            _environment.Magic = magic;
         }
 
         public override void HandleSubsceneChange(int newSubscene)

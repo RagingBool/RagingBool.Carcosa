@@ -130,6 +130,7 @@
     <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Stage\Scenes\FadecandyScene.cs" />
     <Compile Include="Stage\Scenes\Forest\ForestCritter.cs" />
+    <Compile Include="Stage\Scenes\Forest\ForestEnvironment.cs" />
     <Compile Include="Stage\Scenes\Forest\ForestScene.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
     <Compile Include="Stage\Scenes\LightSetup.cs" />

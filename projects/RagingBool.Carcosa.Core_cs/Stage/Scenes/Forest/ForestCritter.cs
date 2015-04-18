@@ -25,11 +25,13 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 {
     internal class ForestCritter
     {
+        private readonly ForestEnvironment _environment;
         private readonly IRgbLight _body;
         private readonly IReadOnlyList<IRgbLight> _eyes;
 
-        public ForestCritter(IRgbLight body, IEnumerable<IRgbLight> eyes)
+        public ForestCritter(ForestEnvironment environment, IRgbLight body, IEnumerable<IRgbLight> eyes)
         {
+            _environment = environment;
             _body = body;
             _eyes = eyes != null ? eyes.ToList() : EmptyList<IRgbLight>.Instance;
 
