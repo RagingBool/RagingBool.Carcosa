@@ -86,7 +86,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
             foreach(var critter in _critters)
             {
-                critter.Update();
+                critter.Update(dt);
             }
         }
 
