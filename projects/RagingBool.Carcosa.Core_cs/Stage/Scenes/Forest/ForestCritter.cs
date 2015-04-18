@@ -19,9 +19,9 @@
 using Epicycle.Commons.Collections;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Core.Stage.Scenes.Signal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 {
@@ -35,6 +35,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         private readonly Oscillator _breathingOsc;
         private readonly Oscillator _hueOsc1;
         private readonly Oscillator _hueOsc2;
+        private readonly Oscillator _eyesOsc;
 
         public ForestCritter(ForestEnvironment environment, IRgbLight body, IEnumerable<IRgbLight> eyes)
         {
@@ -53,19 +54,19 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             Love = 0.1;
 
             _heartbeat = new Heartbeat();
-            _heartbeat.Frequency = 0.7;
 
             _breathingOsc = new Oscillator();
             _breathingOsc.Function = Oscillator.FunctionType.Sin;
-            _breathingOsc.Frequency = 0.4;
 
             _hueOsc1 = new Oscillator();
             _hueOsc1.Function = Oscillator.FunctionType.Sin;
-            _hueOsc1.Frequency = 0.05;
 
             _hueOsc2 = new Oscillator();
             _hueOsc2.Function = Oscillator.FunctionType.Sin;
-            _hueOsc2.Frequency = 0.31;
+
+            _eyesOsc = new Oscillator();
+            _eyesOsc.Function = Oscillator.FunctionType.SawDown;
+            _eyesOsc.Frequency = 0.12;
         }
 
         public double Vitality { get; set; }
@@ -91,6 +92,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             _breathingOsc.Update(dt);
             _hueOsc1.Update(dt);
             _hueOsc2.Update(dt);
+            _eyesOsc.Update(dt);
 
             var heartbeat = _heartbeat.Value * (0.5 + totalExcitement / 2);
 
@@ -104,6 +106,15 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             var saturation = baseSaturation + heartbeat * 0.1;
 
             LightUtils.SetRgbLightToHsi(_body, hue, saturation, intensity);
+
+            var eyesHue = 0.33;
+            var eyesSat = (saturation * _eyesOsc.Value) * _environment.Excitement;
+            var eyesint = (0.3 + _eyesOsc.Value * 0.4) * _environment.Magic;
+
+            foreach(var eye in _eyes)
+            {
+                LightUtils.SetRgbLightToHsi(eye, eyesHue, eyesSat, eyesint);
+            }
         }
     }
 }
