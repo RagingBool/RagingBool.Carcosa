@@ -19,6 +19,7 @@
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Stage.Scenes;
+using RagingBool.Carcosa.Core.Stage.Scenes.Forest;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Dmx;
@@ -47,6 +48,7 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private PartyScene1 _partyScene1;
         private FadecandyScene _fadecandyScene;
+        private ForestScene _forestScene;
         private ManualScene _manualScene;
 
         private readonly ControllerUi _controllerUi;
@@ -77,6 +79,7 @@ namespace RagingBool.Carcosa.Core.Stage
 
             _partyScene1 = new PartyScene1(_clock, _lightSetup);
             _fadecandyScene = new FadecandyScene(_lightSetup);
+            _forestScene = new ForestScene(_lightSetup);
             _manualScene = new ManualScene(_lightSetup);
 
             _curScene = null;
@@ -169,6 +172,9 @@ namespace RagingBool.Carcosa.Core.Stage
                         break;
                     case 1:
                         SetScene(_fadecandyScene, newSceneId);
+                        break;
+                    case 6:
+                        SetScene(_forestScene, newSceneId);
                         break;
                     default:
                         SetScene(_manualScene, newSceneId);
