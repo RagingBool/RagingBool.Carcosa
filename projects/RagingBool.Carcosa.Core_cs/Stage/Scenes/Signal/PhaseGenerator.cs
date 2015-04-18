@@ -25,7 +25,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Signal
         public PhaseGenerator()
         {
             Phase = 0;
-            Frequency = 0;
+            Frequency = 1;
         }
 
         public double Phase { get; private set; }
