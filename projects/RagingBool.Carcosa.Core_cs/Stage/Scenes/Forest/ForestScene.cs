@@ -26,9 +26,44 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
     {
         private readonly LightSetup _lightSetup;
 
+        private IList<ForestCritter> _critters;
+
         public ForestScene(LightSetup lightSetup)
         {
             _lightSetup = lightSetup;
+
+            _critters = new List<ForestCritter>();
+
+            InitCritters();
+        }
+
+        private void InitCritters()
+        {
+            var strip = _lightSetup.FadecandyStripAll;
+
+            var critter = new ForestCritter(strip[0], null);
+            critter.PrimaryHue = 0.66;
+            _critters.Add(critter);
+
+            critter = new ForestCritter(strip[1], null);
+            critter.PrimaryHue = 0.33;
+            _critters.Add(critter);
+
+            critter = new ForestCritter(strip[2], null);
+            critter.PrimaryHue = 0.87;
+            _critters.Add(critter);
+
+            critter = new ForestCritter(strip[3], null);
+            critter.PrimaryHue = 0.21;
+            _critters.Add(critter);
+
+            critter = new ForestCritter(strip[4], null);
+            critter.PrimaryHue = 0.42;
+            _critters.Add(critter);
+
+            critter = new ForestCritter(strip[5], new IRgbLight[] { strip[6], strip[7] });
+            critter.PrimaryHue = 0.1;
+            _critters.Add(critter);
         }
 
         public override void Enter()
@@ -42,20 +77,18 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         public override void Update(double dt)
         {
-            UpdateStrip(_lightSetup.FadecandyStripAll, 0, 4, 3, 7);
-            //UpdateStrip(_lightSetup.FadecandyStrip1, 0, 4, 3, 7);
-            //UpdateStrip(_lightSetup.FadecandyStrip2, 1, 5, 3, 7);
+            UpdateEnvironment();
+
+            foreach(var critter in _critters)
+            {
+                critter.Update();
+            }
         }
 
-        private void UpdateStrip(IList<IRgbLight> lights, int hue1Knob, int hue2Knob, int satKnob, int intensityKnob)
+        private void UpdateEnvironment()
         {
-            var saturation = GetControl(satKnob);
-            var intensity = GetControl(intensityKnob);
-            
-            var midHue = GetControl(hue1Knob);
-            var hueOpening = GetControl(hue2Knob);
-
-            LightUtils.SetHueGradient(lights, midHue, hueOpening, saturation, intensity);
+            var saturation = GetControl(3);
+            var intensity = GetControl(7);
         }
 
         public override void HandleSubsceneChange(int newSubscene)
