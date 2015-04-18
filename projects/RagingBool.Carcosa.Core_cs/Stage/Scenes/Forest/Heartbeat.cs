@@ -24,7 +24,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
     internal sealed class Heartbeat : IFunction
     {
         private static readonly double PreBeatLevel = 0.4;
-        private static readonly double MainBeatPhase = 0.27;
+        private static readonly double MainBeatPhase = 0.22;
 
         private PhaseGenerator _phaseGenerator;
         private EnvelopeAD _preBeatEnv;
@@ -40,10 +40,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             _mainBeatEnv = new EnvelopeAD();
 
             _preBeatEnv.AttackTime = 0.05;
-            _preBeatEnv.DecayTime = 0.1;
+            _preBeatEnv.DecayTime = 0.05;
 
             _mainBeatEnv.AttackTime = 0.05;
-            _mainBeatEnv.DecayTime = 0.2;
+            _mainBeatEnv.DecayTime = 0.13;
 
             _wasMainBeat = false;
             _lastPhase = 0;

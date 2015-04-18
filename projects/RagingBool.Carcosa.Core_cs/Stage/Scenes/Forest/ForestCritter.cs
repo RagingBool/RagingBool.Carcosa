@@ -79,21 +79,26 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         public void Update(double dt)
         {
+            _heartbeat.Frequency = 0.05 + Excitment * 0.5;
+            _breathingOsc.Frequency = 0.1 + Excitment * 0.4;
+            _hueOsc1.Frequency = 0.05;
+            _hueOsc2.Frequency = 0.31;
+
             _heartbeat.Update(dt);
             _breathingOsc.Update(dt);
             _hueOsc1.Update(dt);
             _hueOsc2.Update(dt);
 
-            var heartbeat = _heartbeat.Value;
+            var heartbeat = _heartbeat.Value * (0.5 + Excitment / 2);
 
             var baseHue = PrimaryHue;
-            var hue = baseHue + (_hueOsc1.Value - 0.5) * 0.1 + (_hueOsc2.Value - 0.5) * 0.04;
+            var hue = baseHue + (_hueOsc1.Value - 0.5) * 0.1 + (_hueOsc2.Value - 0.5) * 0.03;
 
-            var baseIntensity = 0.6 + _environment.Magic / 5;
-            var intensity = baseIntensity + _breathingOsc.Value * 0.1 + heartbeat * 0.02;
+            var baseIntensity = 0.6 + Excitment * 0.15 + _environment.Magic / 5;
+            var intensity = baseIntensity + _breathingOsc.Value * 0.08 + heartbeat * 0.03;
 
-            var baseSaturation = _environment.Magic;
-            var saturation = baseSaturation + heartbeat * 0.05;
+            var baseSaturation = _environment.Magic * 0.4 + Excitment * 0.4;
+            var saturation = baseSaturation + heartbeat * 0.1;
 
             LightUtils.SetRgbLightToHsi(_body, hue, saturation, intensity);
         }
