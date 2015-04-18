@@ -140,6 +140,7 @@
     <Compile Include="Stage\Scenes\RythmDetector.cs" />
     <Compile Include="Stage\Scenes\RythmGenerator.cs" />
     <Compile Include="Stage\Scenes\SceneBasics.cs" />
+    <Compile Include="Stage\Scenes\Signal\PhaseGenerator.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
     <Compile Include="Workspace\ICarcosaWorkspace.cs" />
