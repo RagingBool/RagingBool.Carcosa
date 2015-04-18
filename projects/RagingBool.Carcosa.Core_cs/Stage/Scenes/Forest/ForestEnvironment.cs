@@ -16,17 +16,45 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using RagingBool.Carcosa.Core.Stage.Scenes.Signal;
+
 namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 {
     internal sealed class ForestEnvironment
     {
+        private readonly Oscillator _magicOsc;
+        private readonly Oscillator _excitementOsc;
+
         public ForestEnvironment()
         {
+            BaseMagic = 0;
+            BaseExcitement = 0;
+
             Magic = 0;
             Excitement = 0;
+
+            _magicOsc = new Oscillator();
+            _magicOsc.Function = Oscillator.FunctionType.Sin;
+            _magicOsc.Frequency = 0.05;
+
+            _excitementOsc = new Oscillator();
+            _excitementOsc.Function = Oscillator.FunctionType.Sin;
+            _excitementOsc.Frequency = 0.1;
         }
 
-        public double Magic { get; set; }
-        public double Excitement { get; set; }
+        public double BaseMagic { get; set; }
+        public double BaseExcitement { get; set; }
+
+        public double Magic { get; private set; }
+        public double Excitement { get; private set; }
+
+        public void Update(double dt)
+        {
+            _magicOsc.Update(dt);
+            _excitementOsc.Update(dt);
+
+            Magic = BaseMagic * 0.4 + _magicOsc.Value * 0.6;
+            Excitement = BaseExcitement * 0.4 + _excitementOsc.Value * 0.6;
+        }
     }
 }

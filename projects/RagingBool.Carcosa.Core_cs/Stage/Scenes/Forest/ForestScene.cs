@@ -88,7 +88,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         public override void Update(double dt)
         {
-            UpdateEnvironment();
+            UpdateEnvironment(dt);
 
             foreach(var critter in _critters)
             {
@@ -96,10 +96,11 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             }
         }
 
-        private void UpdateEnvironment()
+        private void UpdateEnvironment(double dt)
         {
-            _environment.Magic = GetControl(7);
-            _environment.Excitement = GetControl(3);
+            _environment.BaseMagic = GetControl(7);
+            _environment.BaseExcitement = GetControl(3);
+            _environment.Update(dt);
         }
 
         public override void HandleSubsceneChange(int newSubscene)
