@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
-    class FadecandyScene : SceneBase
+    internal class FadecandyScene : SceneBase
     {
         private readonly LightSetup _lightSetup;
 
