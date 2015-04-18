@@ -23,8 +23,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         public ForestEnvironment()
         {
             Magic = 0;
+            Excitement = 0;
         }
 
         public double Magic { get; set; }
+        public double Excitement { get; set; }
     }
 }

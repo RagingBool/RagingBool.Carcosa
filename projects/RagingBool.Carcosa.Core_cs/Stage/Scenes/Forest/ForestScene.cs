@@ -98,9 +98,8 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         private void UpdateEnvironment()
         {
-            var magic = GetControl(7);
-
-            _environment.Magic = magic;
+            _environment.Magic = GetControl(7);
+            _environment.Excitement = GetControl(3);
         }
 
         public override void HandleSubsceneChange(int newSubscene)
