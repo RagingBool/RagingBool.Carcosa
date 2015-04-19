@@ -129,6 +129,10 @@
     <Compile Include="Stage\Lights\SnarkRgbLight.cs" />
     <Compile Include="Stage\PartyStage.cs" />
     <Compile Include="Stage\Scenes\FadecandyScene.cs" />
+    <Compile Include="Stage\Scenes\Forest\ForestCritter.cs" />
+    <Compile Include="Stage\Scenes\Forest\ForestEnvironment.cs" />
+    <Compile Include="Stage\Scenes\Forest\ForestScene.cs" />
+    <Compile Include="Stage\Scenes\Forest\Heartbeat.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
     <Compile Include="Stage\Scenes\LightSetup.cs" />
     <Compile Include="Stage\Scenes\LightUtils.cs" />
@@ -137,6 +141,10 @@
     <Compile Include="Stage\Scenes\RythmDetector.cs" />
     <Compile Include="Stage\Scenes\RythmGenerator.cs" />
     <Compile Include="Stage\Scenes\SceneBasics.cs" />
+    <Compile Include="Stage\Scenes\Signal\EnvelopeAD.cs" />
+    <Compile Include="Stage\Scenes\Signal\IFunction.cs" />
+    <Compile Include="Stage\Scenes\Signal\Oscillator.cs" />
+    <Compile Include="Stage\Scenes\Signal\PhaseGenerator.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
     <Compile Include="Workspace\ICarcosaWorkspace.cs" />
