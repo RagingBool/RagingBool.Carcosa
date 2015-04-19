@@ -41,7 +41,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         {
             _environment = environment;
             _body = body;
-            _eyes = eyes != null ? eyes.ToList() : EmptyList<IRgbLight>.Instance;
+            _eyes = eyes != null ? eyes.ToList().AsReadOnlyList() : EmptyList<IRgbLight>.Instance;
 
             Vitality = 0.5;
             PrimaryHue = 0.75;
