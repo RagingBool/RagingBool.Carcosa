@@ -25,6 +25,7 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
   * Support for Snark over serial port
   * Support for DMX over E1.31
   * Very simple hard-coded party mode
+  * Magical Forest POC
   * KNOW ISSUES
     * Concurrency problems
     * Interacting with the MIDI controller sometimes frezzes the software
