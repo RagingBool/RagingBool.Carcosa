@@ -16,7 +16,9 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using Epicycle.Commons.Time;
+using Epicycle.Math.Geometry;
 using RagingBool.Carcosa.Core.Stage.Controller;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
@@ -159,7 +161,35 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
             var gradHue = (hue0 + hue1) / 2;
             var gradHueOpening = System.Math.Abs(hue3 - hue4);
-            LightUtils.SetHueGradientAround(_lightSetup.FadecandyStripAll, gradHue, gradHueOpening, saturation, intensity);
+            //LightUtils.SetHueGradientAround(_lightSetup.FadecandyStripAll, gradHue, gradHueOpening, saturation, intensity);
+
+            RenderGradient(hueControl0, hueControl1, saturation, intensity);
+        }
+
+        private void RenderGradient(double hue1, double hue2, double saturation, double intensity)
+        {
+            var ledMatrix = _lightSetup.LedMatrix;
+            var dimensions = ledMatrix.Dimensions;
+
+            var center = ((Vector2) dimensions) / 2;
+            var r = System.Math.Max(dimensions.X, dimensions.Y) / 3;
+
+            var pixel = ledMatrix[13, 2];
+            pixel.Red = hue1;
+            pixel.Green = hue2;
+            pixel.Blue = 0;
+
+            for(var x = 0; x < dimensions.X; x++)
+            {
+                for(var y = 0; y < dimensions.Y; y++)
+                {
+                    var point = new Vector2(x, y);
+                    var fade = BasicMath.Clip((point - center).Norm / r, 0, 1);
+                    var hue = BasicMath.Interpolate(fade, hue1, hue2);
+
+                    LightUtils.SetRgbLightToHsi(ledMatrix[x, y], hue, saturation, intensity);
+                }
+            }
         }
 
         public override void HandleSubsceneChange(int newSubscene)
