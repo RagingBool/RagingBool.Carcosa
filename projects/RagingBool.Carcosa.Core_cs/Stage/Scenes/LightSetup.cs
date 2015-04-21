@@ -35,6 +35,8 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private readonly IList<IMonoLight> _monoStrips;
         private readonly IList<IRgbLight> _rgbLights;
 
+        private readonly IList<IRgbLight> _dmxRgbStrips;
+
         private readonly IList<IRgbLight> _fadecandyStripAll;
         private readonly IList<IRgbLight> _fadecandyStrip1;
         private readonly IList<IRgbLight> _fadecandyStrip2;
@@ -62,6 +64,12 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxMultiverse, 1, 20));
             _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxMultiverse, 1, 30));
 
+            _dmxRgbStrips = new List<IRgbLight>();
+            for (int i = 0; i < 9; i++)
+            {
+                _dmxRgbStrips.Add(new DmxSimpleRgbLight(_dmxMultiverse, 1, i * 3));
+            }
+
             _fadecandyStripAll = CreateFadecandyStrip(0, 1, 2, 3, 4, 5, 6, 7, 8);
             _fadecandyStrip1 = CreateFadecandyStrip(0, 2, 4, 6, 8);
             _fadecandyStrip2 = CreateFadecandyStrip(1, 3, 5, 7);
@@ -82,19 +90,24 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             get { return _rgbLights.AsReadOnlyList(); }
         }
 
-        public IList<IRgbLight> FadecandyStripAll
+        public IReadOnlyList<IRgbLight> DmxRgbStrips
         {
-            get { return _fadecandyStripAll; }
+            get { return _dmxRgbStrips.AsReadOnlyList(); }
         }
 
-        public IList<IRgbLight> FadecandyStrip1
+        public IReadOnlyList<IRgbLight> FadecandyStripAll
         {
-            get { return _fadecandyStrip1; }
+            get { return _fadecandyStripAll.AsReadOnlyList(); }
         }
 
-        public IList<IRgbLight> FadecandyStrip2
+        public IReadOnlyList<IRgbLight> FadecandyStrip1
         {
-            get { return _fadecandyStrip2; }
+            get { return _fadecandyStrip1.AsReadOnlyList(); }
+        }
+
+        public IReadOnlyList<IRgbLight> FadecandyStrip2
+        {
+            get { return _fadecandyStrip2.AsReadOnlyList(); }
         }
 
         private IList<IRgbLight> CreateFadecandyStrip(params int[] indices)
