@@ -17,6 +17,7 @@
 // ]]]]
 
 using RagingBool.Carcosa.Core.Stage.Scenes.Signal;
+using System;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 {
@@ -53,8 +54,11 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             _magicOsc.Update(dt);
             _excitementOsc.Update(dt);
 
-            Magic = BaseMagic * 0.4 + _magicOsc.Value * 0.6;
-            Excitement = BaseExcitement * 0.4 + _excitementOsc.Value * 0.6;
+            Magic = Math.Min(0 + _magicOsc.Value, 1);
+            Excitement = Math.Min(0 + _excitementOsc.Value, 1);
+
+            //Magic = BaseMagic;
+            //Excitement = BaseExcitement;
         }
     }
 }
