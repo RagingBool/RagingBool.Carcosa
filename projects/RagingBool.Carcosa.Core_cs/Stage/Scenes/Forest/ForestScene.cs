@@ -47,26 +47,45 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             var critter = CreateCritter(strip[0], null);
             critter.Excitment = 0.2;
             critter.PrimaryHue = 0.66;
+            critter.SecondaryHue = 0.86;
 
             critter = CreateCritter(strip[1], null);
             critter.Excitment = 0.3;
             critter.PrimaryHue = 0.33;
+            critter.SecondaryHue = 0.13;
 
             critter = CreateCritter(strip[2], null);
             critter.Excitment = 0.8;
             critter.PrimaryHue = 0.87;
+            critter.SecondaryHue = 0.42;
 
             critter = CreateCritter(strip[3], null);
             critter.Excitment = 0.1;
             critter.PrimaryHue = 0.21;
+            critter.SecondaryHue = 0.56;
 
             critter = CreateCritter(strip[4], null);
             critter.Excitment = 0.43;
             critter.PrimaryHue = 0.42;
+            critter.SecondaryHue = 0.22;
 
             critter = CreateCritter(strip[5], new IRgbLight[] { strip[6], strip[7] });
             critter.Excitment = 0.55;
             critter.PrimaryHue = 0.1;
+            critter.SecondaryHue = 0.4;
+
+            var num = _lightSetup.DmxRgbStrips.Count;
+            var step = 1.0 / num;
+            var i = 0;
+
+            foreach(var x in _lightSetup.DmxRgbStrips)
+            {
+                critter = CreateCritter(x, null);
+                critter.Excitment = i * step;
+                critter.PrimaryHue = i * step;
+                critter.SecondaryHue = 0.4;
+                i++;
+            }
         }
 
         private ForestCritter CreateCritter(IRgbLight body, IEnumerable<IRgbLight> eyes)
