@@ -32,8 +32,8 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
                 writer.Write((byte)channel);
                 writer.Write((byte)0);
 
-                writer.Write((byte)0);
-                writer.Write((byte)(rgbValues.Length));
+                writer.Write((byte)(rgbValues.Length >> 8));
+                writer.Write((byte)(rgbValues.Length & 0xFF));
                 
                 writer.Write(rgbValues);
 
