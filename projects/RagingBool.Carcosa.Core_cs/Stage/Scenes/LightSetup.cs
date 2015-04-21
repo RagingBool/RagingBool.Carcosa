@@ -77,7 +77,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             _fadecandyStrip1 = CreateFadecandyStrip(0, 2, 4, 6, 8);
             _fadecandyStrip2 = CreateFadecandyStrip(1, 3, 5, 7);
 
-            _ledMatrix = CreateFadecandyLedMatrix(0, new Vector2i(60, 10));
+            _ledMatrix = CreateFadecandyLedMatrix(0, new Vector2i(30, 10));
         }
 
         public IReadOnlyList<IRgbLight> RgbStrips
@@ -137,9 +137,19 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             var pixels = new List<IRgbLight>();
             var numPixels = dimensions.X * dimensions.Y;
 
-            for (var i = 0; i < numPixels; i++)
+            for (var y = 0; y < dimensions.Y; y++)
             {
-                pixels.Add(new FadecandyLed(_fadecandyClient, fromChannel + i));
+                var rowStart = y * dimensions.X;
+                if(y >= 2)
+                {
+                    rowStart += dimensions.X * 2;
+                }
+                for (var x = 0; x < dimensions.X; x++)
+                {
+                    var shift = ((y % 2) == 0) ? x : (dimensions.X - x - 1);
+
+                    pixels.Add(new FadecandyLed(_fadecandyClient, fromChannel + rowStart + shift));
+                }
             }
 
             return new LedMatrix(pixels, dimensions);
