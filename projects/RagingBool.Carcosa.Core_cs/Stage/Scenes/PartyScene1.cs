@@ -159,7 +159,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
             var gradHue = (hue0 + hue1) / 2;
             var gradHueOpening = System.Math.Abs(hue3 - hue4);
-            LightUtils.SetHueGradient(_lightSetup.FadecandyStripAll, gradHue, gradHueOpening, saturation, intensity);
+            LightUtils.SetHueGradientAround(_lightSetup.FadecandyStripAll, gradHue, gradHueOpening, saturation, intensity);
         }
 
         public override void HandleSubsceneChange(int newSubscene)
