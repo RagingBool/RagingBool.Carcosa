@@ -71,6 +71,8 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             LightUtils.SetRgbLightToHsi(_lightSetup.RgbLights[3], hue3, saturation, intensity);
             LightUtils.SetRgbLightToHsi(_lightSetup.RgbStrips[0], hue4, saturation, intensity);
             LightUtils.SetRgbLightToHsi(_lightSetup.RgbStrips[1], hue5, saturation, intensity);
+
+            LightUtils.SetHueGradient(_lightSetup.DmxRgbStrips, hue0, hue1, saturation, intensity);
         }
 
         private void UpdateMonoStrips()

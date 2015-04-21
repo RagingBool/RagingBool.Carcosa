@@ -47,7 +47,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             //UpdateStrip(_lightSetup.FadecandyStrip2, 1, 5, 3, 7);
         }
 
-        private void UpdateStrip(IList<IRgbLight> lights, int hue1Knob, int hue2Knob, int satKnob, int intensityKnob)
+        private void UpdateStrip(IReadOnlyList<IRgbLight> lights, int hue1Knob, int hue2Knob, int satKnob, int intensityKnob)
         {
             var saturation = GetControl(satKnob);
             var intensity = GetControl(intensityKnob);
@@ -55,7 +55,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             var midHue = GetControl(hue1Knob);
             var hueOpening = GetControl(hue2Knob);
 
-            LightUtils.SetHueGradient(lights, midHue, hueOpening, saturation, intensity);
+            LightUtils.SetHueGradientAround(lights, midHue, hueOpening, saturation, intensity);
         }
 
         public override void HandleSubsceneChange(int newSubscene)

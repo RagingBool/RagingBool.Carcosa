@@ -31,17 +31,22 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         private readonly IRgbLight _body;
         private readonly IReadOnlyList<IRgbLight> _eyes;
 
+        private readonly Random _random;
+
         private readonly Heartbeat _heartbeat;
         private readonly Oscillator _breathingOsc;
         private readonly Oscillator _hueOsc1;
         private readonly Oscillator _hueOsc2;
         private readonly Oscillator _eyesOsc;
 
+
         public ForestCritter(ForestEnvironment environment, IRgbLight body, IEnumerable<IRgbLight> eyes)
         {
             _environment = environment;
             _body = body;
             _eyes = eyes != null ? eyes.ToList().AsReadOnlyList() : EmptyList<IRgbLight>.Instance;
+
+            _random = new Random();
 
             Vitality = 0.5;
             PrimaryHue = 0.75;
@@ -81,10 +86,11 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         public void Update(double dt)
         {
-            var totalExcitement = Math.Min(Excitment + _environment.Excitement, 1);
+            var totalExcitement = (Excitment + _environment.Excitement) / 2;
 
-            _heartbeat.Frequency = 0.05 + totalExcitement * 0.5;
-            _breathingOsc.Frequency = 0.1 + totalExcitement * 0.4;
+            _heartbeat.Frequency = 0.1 + totalExcitement * 0.2;
+            _breathingOsc.Frequency = 0.2 + totalExcitement * 0.3;
+
             _hueOsc1.Frequency = 0.05;
             _hueOsc2.Frequency = 0.31;
 
@@ -96,14 +102,16 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
             var heartbeat = _heartbeat.Value * (0.5 + totalExcitement / 2);
 
-            var baseHue = PrimaryHue;
-            var hue = baseHue + (_hueOsc1.Value - 0.5) * 0.1 + (_hueOsc2.Value - 0.5) * 0.03;
+            var hueBlend = _heartbeat.Value * 0;
+
+            var baseHue = PrimaryHue * (1 - hueBlend) + SecondaryHue * hueBlend;
+            var hue = baseHue + (_hueOsc1.Value - 0.5) * 0.13 + (_hueOsc2.Value - 0.5) * 0.05;
 
             var baseIntensity = 0.6 + totalExcitement * 0.15 + _environment.Magic / 5;
-            var intensity = baseIntensity + _breathingOsc.Value * 0.08 + heartbeat * 0.03;
+            var intensity = baseIntensity + _breathingOsc.Value * 0.12 + heartbeat * 0.04;
 
             var baseSaturation = _environment.Magic * 0.4 + totalExcitement * 0.4;
-            var saturation = baseSaturation + heartbeat * 0.1;
+            var saturation = baseSaturation + heartbeat * 0.2;
 
             LightUtils.SetRgbLightToHsi(_body, hue, saturation, intensity);
 
