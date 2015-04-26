@@ -20,6 +20,7 @@ using Epicycle.Commons;
 using Epicycle.Commons.Time;
 using Epicycle.Math.Geometry;
 using RagingBool.Carcosa.Core.Stage.Controller;
+using RagingBool.Carcosa.Core.Stage.Scenes.Signal;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
@@ -30,8 +31,12 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private RythmGenerator _rythmGenerator;
         private int _tickIndex;
         private int _subsceneId;
+        private Oscillator _oscillator;
+        private Oscillator _oscillator2;
+        private LedMatrixTestPattern _testPattern;
 
         private bool _isOff;
+        private bool _strobe;
 
         public PartyScene1(IClock clock, LightSetup lightSetup)
         {
@@ -47,6 +52,12 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             _tickIndex = 0;
 
             _subsceneId = 0;
+
+            _oscillator = new Oscillator();
+            _oscillator.Function = Oscillator.FunctionType.SawUp;
+            _oscillator.Frequency = 0.2;
+
+            _testPattern = new LedMatrixTestPattern(_lightSetup.LedMatrix);
         }
 
         void OnNewBpm(double newBpm)
@@ -56,6 +67,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         void OnTick(int tickIndex)
         {
+            _testPattern.Step();
             _tickIndex = tickIndex;
         }
 
@@ -63,6 +75,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         {
             _rythmGenerator.Reset();
             _isOff = false;
+            _strobe = false;
         }
 
         public override void Exit()
@@ -72,14 +85,16 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         public override void Update(double dt)
         {
+            _oscillator.Update(dt);
+
             _rythmGenerator.Update(dt);
 
             _lightSetup.MonoStrips[0].Intensity = (_tickIndex % 4) == 0 ? 1 : 0;
 
-            UpdateRgbLights();
+            UpdateRgbLights(dt);
         }
 
-        private void UpdateRgbLights()
+        private void UpdateRgbLights(double dt)
         {
             var saturation = GetControl(3);
             var intensity = !_isOff ? (GetControl(7)) : 0.0;
@@ -100,7 +115,6 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                     intensity = 1;
                 }
             }
-
 
             var hueControl0 = GetControl(0);
             var hueControl1 = GetControl(4);
@@ -163,7 +177,21 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             var gradHueOpening = System.Math.Abs(hue3 - hue4);
             //LightUtils.SetHueGradientAround(_lightSetup.FadecandyStripAll, gradHue, gradHueOpening, saturation, intensity);
 
-            RenderGradient(hueControl0, hueControl1, saturation, intensity);
+            //RenderGradient(hueControl0, hueControl1, saturation, intensity);
+
+            //_testPattern.Hue0 = hueControl0;
+            //_testPattern.Hue1 = hueControl1;
+            //_testPattern.Hue2 = hueControl2;
+            //_testPattern.Hue3 = hueControl3;
+            _testPattern.Hue0 = 0;
+            _testPattern.Hue1 = 0.25;
+            _testPattern.Hue2 = 0.5;
+            _testPattern.Hue3 = 0.75;
+            _testPattern.Saturation = saturation;
+            _testPattern.Intensity = intensity;
+            _testPattern.Strobe = _strobe;
+
+            _testPattern.Update(dt);
         }
 
         private void RenderGradient(double hue1, double hue2, double saturation, double intensity)
@@ -171,8 +199,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             var ledMatrix = _lightSetup.LedMatrix;
             var dimensions = ledMatrix.Dimensions;
 
-            var center = ((Vector2) dimensions) / 2;
-            var r = System.Math.Max(dimensions.X, dimensions.Y) / 3;
+            var center = ((Vector2) dimensions) / 2.0;
+            var r = System.Math.Max(dimensions.X, dimensions.Y) / 3.0;
+
+            //center += new Vector2(_oscillator.Value * 4, _oscillator.Value * 4);
 
             var pixel = ledMatrix[13, 2];
             pixel.Red = hue1;
@@ -188,6 +218,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                     var hue = BasicMath.Interpolate(fade, hue1, hue2);
 
                     LightUtils.SetRgbLightToHsi(ledMatrix[x, y], hue, saturation, intensity);
+                    //ledMatrix[x, y].Red = 1;
+                    //ledMatrix[x, y].Green = 1;
+                    //ledMatrix[x, y].Blue = 1;
                 }
             }
         }
@@ -203,6 +236,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             {
                 case 2:
                     _isOff = eventArgs.TriggerType == ButtonTriggerType.Pressed;
+                    break;
+                case 3:
+                    _strobe = eventArgs.TriggerType == ButtonTriggerType.Pressed;
                     break;
                 case 4:
                     _rythmDetector.Reset();
