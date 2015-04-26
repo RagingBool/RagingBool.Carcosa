@@ -138,6 +138,7 @@
     <Compile Include="Stage\Scenes\Forest\ForestScene.cs" />
     <Compile Include="Stage\Scenes\Forest\Heartbeat.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
+    <Compile Include="Stage\Scenes\LedMatrixTestPattern.cs" />
     <Compile Include="Stage\Scenes\LightSetup.cs" />
     <Compile Include="Stage\Scenes\LightUtils.cs" />
     <Compile Include="Stage\Scenes\ManualScene.cs" />
