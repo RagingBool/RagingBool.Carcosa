@@ -26,6 +26,7 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
   * Support for DMX over E1.31
   * Very simple hard-coded party mode
   * Magical Forest POC
+  * LED Matrix POC
   * KNOW ISSUES
     * Concurrency problems
     * Interacting with the MIDI controller sometimes frezzes the software
