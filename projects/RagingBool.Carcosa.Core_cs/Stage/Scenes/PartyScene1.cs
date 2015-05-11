@@ -32,7 +32,6 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private int _tickIndex;
         private int _subsceneId;
         private Oscillator _oscillator;
-        private Oscillator _oscillator2;
         private LedMatrixTestPattern _testPattern;
 
         private bool _isOff;

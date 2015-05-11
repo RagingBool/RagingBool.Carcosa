@@ -152,7 +152,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                 }
             }
 
-            return new LedMatrix(pixels, dimensions);
+            return new LedMatrix(pixels.AsReadOnlyList(), dimensions);
         }
     }
 }
