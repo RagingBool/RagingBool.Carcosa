@@ -66,12 +66,6 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
 
             var packet = OpenPixelUtils.buildPacket(0, _data);
 
-            for (var i = 0; i < packet.Length; i++)
-            {
-                Console.Write("{0}, ", packet[i]);
-            }
-            Console.WriteLine();
-
             _tcpClient.GetStream().Write(packet, 0, packet.Length);
 
             _lastUpdateTime = curTime;

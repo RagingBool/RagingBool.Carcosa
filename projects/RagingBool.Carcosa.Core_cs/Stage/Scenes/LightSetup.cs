@@ -17,6 +17,7 @@
 // ]]]]
 
 using Epicycle.Commons.Collections;
+using Epicycle.Math.Geometry;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Dmx;
@@ -41,6 +42,8 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private readonly IList<IRgbLight> _fadecandyStrip1;
         private readonly IList<IRgbLight> _fadecandyStrip2;
 
+        private readonly ILedMatrix _ledMatrix;
+        
         public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark, FadecandyOpenPixelClient fadecandyClient)
         {
             _dmxMultiverse = dmxMultiverse;
@@ -73,6 +76,8 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             _fadecandyStripAll = CreateFadecandyStrip(0, 1, 2, 3, 4, 5, 6, 7, 8);
             _fadecandyStrip1 = CreateFadecandyStrip(0, 2, 4, 6, 8);
             _fadecandyStrip2 = CreateFadecandyStrip(1, 3, 5, 7);
+
+            _ledMatrix = CreateFadecandyLedMatrix(0, new Vector2i(30, 10));
         }
 
         public IReadOnlyList<IRgbLight> RgbStrips
@@ -110,6 +115,11 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             get { return _fadecandyStrip2.AsReadOnlyList(); }
         }
 
+        public ILedMatrix LedMatrix
+        {
+            get { return _ledMatrix; }
+        }
+
         private IList<IRgbLight> CreateFadecandyStrip(params int[] indices)
         {
             var lights = new List<IRgbLight>();
@@ -120,6 +130,29 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
             }
 
             return lights;
+        }
+
+        private ILedMatrix CreateFadecandyLedMatrix(int fromChannel, Vector2i dimensions)
+        {
+            var pixels = new List<IRgbLight>();
+            var numPixels = dimensions.X * dimensions.Y;
+
+            for (var y = 0; y < dimensions.Y; y++)
+            {
+                var rowStart = y * dimensions.X;
+                if(y >= 2)
+                {
+                    rowStart += dimensions.X * 2;
+                }
+                for (var x = 0; x < dimensions.X; x++)
+                {
+                    var shift = ((y % 2) == 0) ? x : (dimensions.X - x - 1);
+
+                    pixels.Add(new FadecandyLed(_fadecandyClient, fromChannel + rowStart + shift));
+                }
+            }
+
+            return new LedMatrix(pixels.AsReadOnlyList(), dimensions);
         }
     }
 }

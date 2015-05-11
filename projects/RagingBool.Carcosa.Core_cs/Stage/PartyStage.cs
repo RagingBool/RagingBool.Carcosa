@@ -65,9 +65,8 @@ namespace RagingBool.Carcosa.Core.Stage
             _dmxMultiverse.AddUniverse(1);
 
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 50);
-            //var host = "10.0.0.7";
             var host = "forest";
-            _fadecandyClient = new FadecandyOpenPixelClient(_clock, host, 7890, 9 * 3, 60.0);
+            _fadecandyClient = new FadecandyOpenPixelClient(_clock, host, 7890, 480 * 3, 60.0);
 
             _controllerUi = new ControllerUi(_clock, _controller);
 

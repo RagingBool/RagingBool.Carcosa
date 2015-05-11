@@ -16,29 +16,30 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System.IO;
+using Epicycle.Math.Geometry;
+using System.Collections.Generic;
 
-namespace RagingBool.Carcosa.Devices.Fadecandy
+namespace RagingBool.Carcosa.Core.Stage.Lights
 {
-    internal sealed class OpenPixelUtils
+    internal sealed class LedMatrix : ILedMatrix
     {
-        public static byte[] buildPacket(int channel, byte[] rgbValues)
+        private readonly Vector2i _dimensions;
+        private readonly IReadOnlyList<IRgbLight> _pixels;
+
+        public LedMatrix(IReadOnlyList<IRgbLight> pixels, Vector2i dimensions)
         {
-            using (var stream = new MemoryStream())
-            {
-                var writer = new BinaryWriter(stream);
+            _pixels = pixels;
+            _dimensions = dimensions;
+        }
 
-                
-                writer.Write((byte)channel);
-                writer.Write((byte)0);
+        public Vector2i Dimensions
+        {
+            get { return _dimensions; }
+        }
 
-                writer.Write((byte)(rgbValues.Length >> 8));
-                writer.Write((byte)(rgbValues.Length & 0xFF));
-                
-                writer.Write(rgbValues);
-
-                return stream.ToArray();
-            }
+        public IRgbLight this[int x, int y]
+        {
+            get { return _pixels[y * _dimensions.X + x]; }
         }
     }
 }

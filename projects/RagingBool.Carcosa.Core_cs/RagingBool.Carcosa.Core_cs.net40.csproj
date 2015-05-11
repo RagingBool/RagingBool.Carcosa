@@ -123,9 +123,11 @@
     <Compile Include="Stage\Lights\DmxSimpleMonoLight.cs" />
     <Compile Include="Stage\Lights\DmxSimpleRgbLight.cs" />
     <Compile Include="Stage\Lights\FadecandyLed.cs" />
+    <Compile Include="Stage\Lights\ILedMatrix.cs" />
     <Compile Include="Stage\Lights\ILight.cs" />
     <Compile Include="Stage\Lights\IMonoLight.cs" />
     <Compile Include="Stage\Lights\IRgbLight.cs" />
+    <Compile Include="Stage\Lights\LedMatrix.cs" />
     <Compile Include="Stage\Lights\LightsUtils.cs" />
     <Compile Include="Stage\Lights\SnarkMonoLight.cs" />
     <Compile Include="Stage\Lights\SnarkRgbLight.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Stage\Scenes\Forest\ForestScene.cs" />
     <Compile Include="Stage\Scenes\Forest\Heartbeat.cs" />
     <Compile Include="Stage\Scenes\IScene.cs" />
+    <Compile Include="Stage\Scenes\LedMatrixTestPattern.cs" />
     <Compile Include="Stage\Scenes\LightSetup.cs" />
     <Compile Include="Stage\Scenes\LightUtils.cs" />
     <Compile Include="Stage\Scenes\ManualScene.cs" />
