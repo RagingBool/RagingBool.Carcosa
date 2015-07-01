@@ -73,7 +73,18 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                 _dmxRgbStrips.Add(new DmxSimpleRgbLight(_dmxMultiverse, 1, i * 3));
             }
 
-            _fadecandyStripAll = CreateFadecandyStrip(0, 1, 2, 3, 4, 5, 6, 7, 8);
+            int s1 = 32*0;
+            int s2 = 32*1;
+            int s3 = 32 * 2;
+            int s7 = 32 * 6;
+            _fadecandyStripAll = CreateFadecandyStrip(
+                s1+0, s1+1, s1+2, s1+3, s1+4, // 0
+                s2+0, s2+1, s2+2, s2+3, s2+4, s2+5, s2+6, s2+7, // 5
+                s3+0, s3+1, s3+2, s3+3, s3+4, // 13
+                s7+0, s7+1, s7+2, s7+3, s7+4 // 18
+                // 23
+                );
+
             _fadecandyStrip1 = CreateFadecandyStrip(0, 2, 4, 6, 8);
             _fadecandyStrip2 = CreateFadecandyStrip(1, 3, 5, 7);
 
