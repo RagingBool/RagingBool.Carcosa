@@ -1,4 +1,4 @@
-# RagingBool.Carcosa 0.1.1.0 [NOT RELEASED]
+# RagingBool.Carcosa 0.1.1.0
 Carcosa is a lighting driving software that is built as part of the Unbirthday Camp.
 
 ***Note***: *This application is in it's 0.X version, that means that it's still in active development and backward compatibility is not guaranteed!*
@@ -16,8 +16,9 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
 ## Release Notes
 ### Version 0.1 
 
-* **Version 0.1.1.0** [NOT RELEASED]
+* **Version 0.1.1.0** [2015-07-01]
   * Initial support for Fadecandy server
+  * Lots of little things for Midburn 2015, some of them very specific
 
 * **Version 0.1.0.0** [2015-04-04]
   * Creating a basic WPF app
