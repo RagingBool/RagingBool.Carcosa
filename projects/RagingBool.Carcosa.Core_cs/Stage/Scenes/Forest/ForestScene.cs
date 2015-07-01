@@ -19,6 +19,8 @@
 using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 {
@@ -30,12 +32,16 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
 
         private readonly IList<ForestCritter> _critters;
 
+        private Random _random;
+
         public ForestScene(LightSetup lightSetup)
         {
             _lightSetup = lightSetup;
 
             _environment = new ForestEnvironment();
             _critters = new List<ForestCritter>();
+
+            _random = new Random();
 
             InitCritters();
         }
@@ -44,6 +50,32 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
         {
             var strip = _lightSetup.FadecandyStripAll;
 
+            CreateRandomCritter(0, false);
+            CreateRandomCritter(1, false);
+            CreateRandomCritter(2, false);
+            CreateRandomCritter(3, false);
+            CreateRandomCritter(4, false);
+
+            CreateRandomCritter(5, false);
+            CreateRandomCritter(6, false);
+            CreateRandomCritter(7, false);
+            CreateRandomCritter(8, false);
+            CreateRandomCritter(9, false);
+            CreateRandomCritter(10, true);
+
+            CreateRandomCritter(13, false);
+            CreateRandomCritter(14, false);
+            CreateRandomCritter(15, false);
+            CreateRandomCritter(16, false);
+            CreateRandomCritter(17, false);
+            
+            CreateRandomCritter(18, false);
+            CreateRandomCritter(19, false);
+            CreateRandomCritter(20, false);
+            CreateRandomCritter(21, false);
+            CreateRandomCritter(22, false);
+
+            /*
             var critter = CreateCritter(strip[0], null);
             critter.Excitment = 0.2;
             critter.PrimaryHue = 0.66;
@@ -72,20 +104,26 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes.Forest
             critter = CreateCritter(strip[5], new IRgbLight[] { strip[6], strip[7] });
             critter.Excitment = 0.55;
             critter.PrimaryHue = 0.1;
-            critter.SecondaryHue = 0.4;
+            critter.SecondaryHue = 0.4;*/
+        }
 
-            var num = _lightSetup.DmxRgbStrips.Count;
-            var step = 1.0 / num;
-            var i = 0;
+        private ForestCritter CreateRandomCritter(int index, bool isBug)
+        {
+            var strip = _lightSetup.FadecandyStripAll;
 
-            foreach(var x in _lightSetup.DmxRgbStrips)
+            IEnumerable<IRgbLight> eyes = null;
+
+            if(isBug)
             {
-                critter = CreateCritter(x, null);
-                critter.Excitment = i * step;
-                critter.PrimaryHue = i * step;
-                critter.SecondaryHue = 0.4;
-                i++;
+                eyes = new IRgbLight[] { strip[index + 1], strip[index + 2] };
             }
+
+            var critter = CreateCritter(strip[index], null);
+            critter.Excitment = _random.NextDouble();
+            critter.PrimaryHue = _random.NextDouble();
+            critter.SecondaryHue = _random.NextDouble();
+
+            return critter;
         }
 
         private ForestCritter CreateCritter(IRgbLight body, IEnumerable<IRgbLight> eyes)
