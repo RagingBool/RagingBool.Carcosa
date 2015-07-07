@@ -18,12 +18,15 @@
 
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices.LightControl.Dmx;
+using System;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.Dmx
 {
     public sealed class E1_31DmxMultiverse : IDmxMultiverse
     {
+        private static readonly string SourceName = "carcosa";
+
         private readonly IClock _clock;
         private readonly double _fps;
         private readonly IDictionary<int, DmxUniverse> _universes;
@@ -87,6 +90,7 @@ namespace RagingBool.Carcosa.Devices.Dmx
             
             private readonly E1_31Conncetion _connection;
             private readonly byte[] _values;
+            private readonly Guid _cid;
 
             public DmxUniverse(int universeId)
             {
@@ -94,6 +98,7 @@ namespace RagingBool.Carcosa.Devices.Dmx
 
                 _connection = new E1_31Conncetion(universeId);
                 _values = new byte[512];
+                _cid = Guid.NewGuid();
 
                 Clear();
             }
@@ -113,7 +118,7 @@ namespace RagingBool.Carcosa.Devices.Dmx
 
             public void Update()
             {
-                var packetData = E1_31ProtocolUtils.CreateDmxPacket(_universeId, _values);
+                var packetData = E1_31ProtocolUtils.CreatePacket(_cid, SourceName, _universeId, _values);
 
                 _connection.SendData(packetData);
             }

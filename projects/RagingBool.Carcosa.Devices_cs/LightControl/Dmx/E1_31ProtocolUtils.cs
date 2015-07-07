@@ -22,13 +22,13 @@ using System.Text;
 
 namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
-    internal static class E1_31ProtocolUtils
+    public static class E1_31ProtocolUtils
     {
-        public static byte[] CreateDmxPacket(int universeId, byte[] values)
+        public static byte[] CreatePacket(Guid cid, string sourceName, int universeId, byte[] values)
         {
             var data = CreateDMPLayer(values);
-            data = FramingLayer(data, (short)universeId);
-            data = RootLayer(data);
+            data = FramingLayer(data, (short)universeId, name: sourceName);
+            data = RootLayer(cid, data);
 
             return data;
         }
@@ -102,9 +102,8 @@ namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 
         }
 
-        private static byte[] RootLayer(byte[] data)
+        private static byte[] RootLayer(Guid cid, byte[] data)
         {
-            Guid uuid1 = Guid.NewGuid();
             // pdu size starts after byte 16 - there are 38 bytes of data in root layer
             // so size is 38 - 16 + framing layer 
             var packet = new byte[38 + data.Length];
@@ -127,7 +126,7 @@ namespace RagingBool.Carcosa.Devices.LightControl.Dmx
             toBytes = Encoding.ASCII.GetBytes("\x00\x00\x00\x04");
             System.Buffer.BlockCopy(toBytes, 0, packet, counter, 4);
             counter = counter + 4;
-            System.Buffer.BlockCopy(uuid1.ToByteArray(), 0, packet, counter, 16);
+            System.Buffer.BlockCopy(cid.ToByteArray(), 0, packet, counter, 16);
             counter += 16;
             System.Buffer.BlockCopy(data, 0, packet, counter, data.Length);
             return packet;
