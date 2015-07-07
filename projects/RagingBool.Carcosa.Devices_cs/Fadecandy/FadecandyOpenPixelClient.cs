@@ -17,7 +17,7 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
-using System;
+using RagingBool.Carcosa.Devices.LightControl.Opc;
 using System.Net.Sockets;
 
 namespace RagingBool.Carcosa.Devices.Fadecandy
@@ -64,7 +64,7 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
                 return;
             }
 
-            var packet = OpenPixelUtils.buildPacket(0, _data);
+            var packet = OpcProtocolUtils.BuildSetPixelColorsCommand(0, _data);
 
             _tcpClient.GetStream().Write(packet, 0, packet.Length);
 

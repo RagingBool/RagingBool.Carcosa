@@ -64,12 +64,12 @@
     <Compile Include="Dmx\E1_31Utils.cs" />
     <Compile Include="Dmx\IDmxMultiverse.cs" />
     <Compile Include="Fadecandy\FadecandyOpenPixelClient.cs" />
-    <Compile Include="Fadecandy\OpenPixelUtils.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />
     <Compile Include="ISnark.cs" />
     <Compile Include="LightControl\Dmx\IDmxMultiverse.cs" />
     <Compile Include="LightControl\Opc\IOpcDevice.cs" />
+    <Compile Include="LightControl\Opc\OpcProtocolUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialSnark.cs" />
   </ItemGroup>
