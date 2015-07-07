@@ -12,7 +12,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices.LightControl
+namespace RagingBool.Carcosa.Devices.LightControl.Opc
 {
     /// <summary>
     /// A lighting control device that communicates using the Open Pixel Control (OPC) protocol.

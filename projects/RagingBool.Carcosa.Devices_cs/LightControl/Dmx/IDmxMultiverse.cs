@@ -16,7 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices.LightControl
+namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
     /// <summary>
     /// A device that controls several indexed DMX512 universes. It only allows sending DMX messages.
