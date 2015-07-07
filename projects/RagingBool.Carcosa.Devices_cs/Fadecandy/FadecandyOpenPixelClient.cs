@@ -18,31 +18,25 @@
 
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Devices.LightControl.Opc;
-using System.Net.Sockets;
 
 namespace RagingBool.Carcosa.Devices.Fadecandy
 {
     public sealed class FadecandyOpenPixelClient
     {
-        private readonly string _host;
-        private readonly int _port;
         private readonly IClock _clock;
         private readonly double _fps;
+        private readonly IOpcDevice _device;
+        
         private double _lastUpdateTime;
-
-        private TcpClient _tcpClient;
 
         private byte[] _data;
 
         public FadecandyOpenPixelClient(IClock clock, string host, int port, int chanels, double fps)
         {
-            _host = host;
-            _port = port;
             _clock = clock;
             _fps = fps;
 
-            _tcpClient = new TcpClient(host, port);
-            _tcpClient.NoDelay = true;
+            _device = new OpcDevice(host, port);
 
             _data = new byte[chanels];
 
@@ -64,9 +58,7 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
                 return;
             }
 
-            var packet = OpcProtocolUtils.BuildSetPixelColorsCommand(0, _data);
-
-            _tcpClient.GetStream().Write(packet, 0, packet.Length);
+            _device.SendRgbFrame(0, _data);
 
             _lastUpdateTime = curTime;
         }
