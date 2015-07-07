@@ -16,128 +16,168 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using System;
-using System.Linq;
+using System.IO;
 using System.Text;
 
 namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
+    // TODO: Use Epicycle streams when available
+
+    /// <summary>
+    /// Implementation of the E1.31 (DMX512 over ACN) protocol.
+    /// More info can be found here: http://tsp.plasa.org/tsp/documents/published_docs.php
+    /// </summary>
     public static class E1_31ProtocolUtils
     {
-        public static byte[] CreatePacket(Guid cid, string sourceName, int universeId, byte[] values)
-        {
-            var data = CreateDMPLayer(values);
-            data = FramingLayer(data, (short)universeId, name: sourceName);
-            data = RootLayer(cid, data);
+        private const int PropertyValuesLengthOverhead = 1;
+        private const int DmpLayerLengthOverhead = PropertyValuesLengthOverhead + 10;
+        private const int E1_31FramingLayerLengthOverhead = DmpLayerLengthOverhead + 77;
+        private const int RootLayerLengthOverhead = E1_31FramingLayerLengthOverhead + 22;
 
-            return data;
+        public const byte DefaulPriority = 100;
+
+        private static readonly byte[] RootLayer_Prefix = new byte[]
+        {
+            0x00, 0x10, // Preamble Size
+            0x00, 0x00, // Post-amble Size
+            0x41, 0x53, 0x43, 0x2D, 0x45, 0x31, 0x2E, 0x31, 0x37, 0x00, 0x00, 0x00, // ACN Packet Identifier
+        };
+
+        private static readonly byte[] RootLayer_Vector = new byte[]
+        {
+            0x00, 0x00, 0x00, 0x04
+        };
+
+        private static readonly byte[] E1_31FramingLayer_Vector = new byte[]
+        {
+            0x00, 0x00, 0x00, 0x02
+        };
+
+        private static readonly byte[] DmpLayer_Fields = new byte[]
+        {
+            0x02,       // Vector
+            0xA1,       // Address Type & Data Type
+            0x00, 0x00, // First Property Address 
+            0x00, 0x01  // Address Increment
+        };
+
+        /// <summary>
+        /// Generates a E1.31 packet according to the specification.
+        /// </summary>
+        /// <param name="componentIdentifier">A unique GUID that identifies this device</param>
+        /// <param name="sourceName">A text ID of the current device</param>
+        /// <param name="universeId">The universe ID (must be 0 to 65535, note that 0 and 64000-65535 are reserved)</param>
+        /// <param name="propeties">The DMX values (length must be between 0 and 512)</param>
+        /// <returns></returns>
+        public static byte[] CreatePacket(Guid componentIdentifier, string sourceName, int universeId, byte[] propeties)
+        {
+            ArgAssert.NotNull(componentIdentifier, "componentIdentifier");
+            ArgAssert.NotNull(sourceName, "sourceName");
+            ArgAssert.InRange(universeId, "universeId", 0, 65535);
+            ArgAssert.NotNull(propeties, "propeties");
+            ArgAssert.InRange(propeties.Length, "propeties.Length", 0, 512);
+
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryWriter(stream))
+            {
+                var propetiesLength = propeties.Length;
+
+                WriteRootLayerHeader(writer, propetiesLength, componentIdentifier);
+                WriteE1_31FramingLayerHeader(writer, propetiesLength, sourceName, universeId);
+                WriteDmpLayerHeader(writer, propetiesLength);
+                WriteProperties(writer, propeties);
+
+                return stream.ToArray();
+            }
         }
 
-        private static byte[] CreateDMPLayer(byte[] data)
+        private static void WriteRootLayerHeader(BinaryWriter writer, int propertiesLength, Guid componentIdentifier)
         {
-            var arr = new byte[11 + data.Length];
-            //packet length
-            Tuple<byte, byte> size_bytes = length_as_low12(10 + 1 + data.Length);
-            arr[0] = size_bytes.Item1;
-            arr[1] = size_bytes.Item2;
-            // vector
-            arr[2] = 0x02;
-            // # address type & data type
-            arr[3] = 0xa1;
-            // # startcode
-            arr[4] = 0x00;
-            arr[5] = 0x00;
-            //increment value
-            arr[6] = 0x00;
-            arr[7] = 0x01;
-            ushort number = Convert.ToUInt16(1 + data.Length);
-            byte upper = (byte)(number >> 8);
-            byte lower = (byte)(number & 0xff);
-            arr[8] = upper;
-            arr[9] = lower;
-            // DMX 512 startcode
-            arr[10] = 0x00;
-            //DMX 512 data
-            var byte_data = new byte[data.Length];
-            byte_data = data.Select(x => (byte)x).ToArray();
-            Array.Copy(byte_data, 0, arr, 11, data.Length);
-            // packet.extend(self.data)
-            return arr;
+            // Preamble Size; Post-amble Size; ACN Packet Identifier
+            writer.Write(RootLayer_Prefix);
+
+            // Flags and Length
+            WriteFlagsAndLength(writer, propertiesLength + RootLayerLengthOverhead);
+
+            // Vector
+            writer.Write(RootLayer_Vector);
+
+            // CID (Component Identifier)
+            writer.Write(componentIdentifier.ToByteArray());
         }
 
-        private static byte[] FramingLayer(byte[] data, short universe, short priority = 100, uint sequence = 0, string name = "lumos")
+        private static void WriteE1_31FramingLayerHeader(BinaryWriter writer, int propertiesLength, string sourceName, int universeId)
         {
-            var packet = new byte[77 + data.Length];
-            Tuple<byte, byte> size_bytes = length_as_low12(77 + data.Length);
-            packet[0] = size_bytes.Item1;
-            packet[1] = size_bytes.Item2;
-            //vector
-            packet[2] = 0x00;
-            packet[3] = 0x00;
-            packet[4] = 0x00;
-            packet[5] = 0x02;
-            byte[] name_bytes = Encoding.ASCII.GetBytes(name);
-            System.Buffer.BlockCopy(name_bytes, 0, packet, 6, name_bytes.Length);
-            //the length of the name is 64 according to the protocol s
-            int arr_counter = 6 + 64;
-            packet[arr_counter] = (byte)priority;
-            arr_counter += 1;
-            packet[arr_counter] = 0x00;
-            arr_counter += 1;
-            packet[arr_counter] = 0x00;
-            arr_counter += 1;
-            packet[arr_counter] = (byte)sequence;
-            //options
-            arr_counter += 1;
-            packet[arr_counter] = 0;
-            //universe
-            arr_counter += 1;
-            byte[] byte_universe = BitConverter.GetBytes(universe);
-            packet[arr_counter] = byte_universe[1];
-            arr_counter += 1;
-            packet[arr_counter] = byte_universe[0];
-            arr_counter += 1;
-            System.Buffer.BlockCopy(data, 0, packet, arr_counter, data.Length);
-            return packet;
+            // Flags and Length
+            WriteFlagsAndLength(writer, propertiesLength + E1_31FramingLayerLengthOverhead);
 
+            // Vector
+            writer.Write(E1_31FramingLayer_Vector);
+
+            // Source Name
+            WriteStringUtf8FixedSize(writer, sourceName, 64);
+
+            // Priority
+            writer.Write((byte)DefaulPriority);
+            
+            // Reserved
+            writer.Write((byte)0);
+            writer.Write((byte)0);
+
+            // Sequence Number
+            writer.Write((byte)0); // TODO: Understand this better
+
+            // Options
+            writer.Write((byte)0); // Preview_Data = FALSE; Stream_Terminated = FALSE
+
+            // Universe
+            WriteUint16(writer, (ushort)universeId);
         }
 
-        private static byte[] RootLayer(Guid cid, byte[] data)
+        private static void WriteDmpLayerHeader(BinaryWriter writer, int propertiesLength)
         {
-            // pdu size starts after byte 16 - there are 38 bytes of data in root layer
-            // so size is 38 - 16 + framing layer 
-            var packet = new byte[38 + data.Length];
+            // Flags and Length
+            WriteFlagsAndLength(writer, propertiesLength + DmpLayerLengthOverhead);
 
-            System.Buffer.BlockCopy("\x00\x10\x00\x00".ToCharArray(), 0, packet, 0, 4);
-            Array.Reverse(packet, 0, 4);
-            int counter = 4;
-            int str_length = "ASC-E1.17\x00\x00\x00".Length;
-            byte[] toBytes = Encoding.ASCII.GetBytes("ASC-E1.17\x00\x00\x00");
-            System.Buffer.BlockCopy(toBytes, 0, packet, 4, str_length);
-            counter += str_length;
-            //pdu size starts after byte 16 - there are 38 bytes of data in root layer
-            // so size is 38 - 16 + framing layer
-            Tuple<byte, byte> size_bytes = length_as_low12(38 - 16 + data.Length);
-            packet[counter] = size_bytes.Item1;
-            counter++;
-            packet[counter] = size_bytes.Item2;
-            counter++;
-            //vector
-            toBytes = Encoding.ASCII.GetBytes("\x00\x00\x00\x04");
-            System.Buffer.BlockCopy(toBytes, 0, packet, counter, 4);
-            counter = counter + 4;
-            System.Buffer.BlockCopy(cid.ToByteArray(), 0, packet, counter, 16);
-            counter += 16;
-            System.Buffer.BlockCopy(data, 0, packet, counter, data.Length);
-            return packet;
+            // Vector; Address Type & Data Type; First Property Address; Address Increment
+            writer.Write(DmpLayer_Fields);
+
+            // Property value count
+            WriteUint16(writer, (ushort)(propertiesLength + PropertyValuesLengthOverhead));
         }
 
-        private static Tuple<byte, byte> length_as_low12(int i)
+        private static void WriteProperties(BinaryWriter writer, byte[] properties)
         {
-            ushort number = Convert.ToUInt16(0x7000 | i);
-            byte upper = (byte)(number >> 8);
-            byte lower = (byte)(number & 0xff);
-            return Tuple.Create(upper, lower);
+            // DMX512-A START Code
+            writer.Write((byte)0);
+
+            // Data
+            writer.Write(properties);
+        }
+
+        private static void WriteFlagsAndLength(BinaryWriter writer, int length)
+        {
+            WriteUint16(writer, (ushort)(0x7000 | (ushort)length));
+        }
+
+        private static void WriteUint16(BinaryWriter writer, ushort value)
+        {
+            writer.Write((byte)(value >> 8));
+            writer.Write((byte)(value & 0xFF));
+        }
+
+        private static void WriteStringUtf8FixedSize(BinaryWriter writer, string s, int fixedSize)
+        {
+            var data = Encoding.UTF8.GetBytes(s);
+            writer.Write(data);
+
+            var padding = fixedSize - data.Length;
+            for (var i = 0; i < padding; i++)
+            {
+                writer.Write((byte)0x00);
+            }
         }
     }
 }
