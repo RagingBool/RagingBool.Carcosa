@@ -17,6 +17,7 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using RagingBool.Carcosa.Devices.LightControl.Dmx;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.Dmx
@@ -112,7 +113,7 @@ namespace RagingBool.Carcosa.Devices.Dmx
 
             public void Update()
             {
-                var packetData = E1_31Utils.CreateDmxPacket(_universeId, _values);
+                var packetData = E1_31ProtocolUtils.CreateDmxPacket(_universeId, _values);
 
                 _connection.SendData(packetData);
             }

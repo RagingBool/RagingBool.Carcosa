@@ -20,9 +20,9 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace RagingBool.Carcosa.Devices.Dmx
+namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
-    internal static class E1_31Utils
+    internal static class E1_31ProtocolUtils
     {
         public static byte[] CreateDmxPacket(int universeId, byte[] values)
         {

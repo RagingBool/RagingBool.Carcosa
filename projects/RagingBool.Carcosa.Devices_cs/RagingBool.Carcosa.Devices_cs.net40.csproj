@@ -61,12 +61,12 @@
     <Compile Include="ControllerChangeEventArgs.cs" />
     <Compile Include="Dmx\E1_31Conncetion.cs" />
     <Compile Include="Dmx\E1_31DmxMultiverse.cs" />
-    <Compile Include="Dmx\E1_31Utils.cs" />
     <Compile Include="Dmx\IDmxMultiverse.cs" />
     <Compile Include="Fadecandy\FadecandyOpenPixelClient.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />
     <Compile Include="ISnark.cs" />
+    <Compile Include="LightControl\Dmx\E1_31ProtocolUtils.cs" />
     <Compile Include="LightControl\Dmx\IDmxMultiverse.cs" />
     <Compile Include="LightControl\Opc\IOpcDevice.cs" />
     <Compile Include="LightControl\Opc\OpcProtocolUtils.cs" />
