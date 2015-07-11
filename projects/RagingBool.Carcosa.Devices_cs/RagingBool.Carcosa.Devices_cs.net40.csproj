@@ -65,6 +65,7 @@
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />
     <Compile Include="ISnark.cs" />
+    <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31MulticastConncetion.cs" />
     <Compile Include="LightControl\Dmx\E1_31ProtocolUtils.cs" />
