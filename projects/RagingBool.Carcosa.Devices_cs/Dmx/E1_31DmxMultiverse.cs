@@ -88,7 +88,7 @@ namespace RagingBool.Carcosa.Devices.Dmx
         {
             private readonly int _universeId;
             
-            private readonly E1_31Conncetion _connection;
+            private readonly E1_31MulticastConncetion _connection;
             private readonly byte[] _values;
             private readonly Guid _cid;
 
@@ -96,7 +96,7 @@ namespace RagingBool.Carcosa.Devices.Dmx
             {
                 _universeId = universeId;
 
-                _connection = new E1_31Conncetion(universeId);
+                _connection = new E1_31MulticastConncetion(universeId);
                 _values = new byte[512];
                 _cid = Guid.NewGuid();
 
