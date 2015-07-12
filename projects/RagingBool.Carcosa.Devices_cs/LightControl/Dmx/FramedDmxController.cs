@@ -22,18 +22,28 @@ namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
     public sealed class FramedDmxController : IFramedLightController
     {
-        private readonly IDmxUniverse _dmxUniverse;
+        public const int DmxDefaultFrameSize = 512;
 
-        public FramedDmxController(IDmxUniverse dmxUniverse)
+        private readonly IDmxUniverse _dmxUniverse;
+        private readonly int _frameSize;
+
+        public FramedDmxController(IDmxUniverse dmxUniverse, int frameSize = DmxDefaultFrameSize)
         {
             ArgAssert.NotNull(dmxUniverse, "dmxUniverse");
+            ArgAssert.AtLeast(frameSize, "frameSize", 0);
 
             _dmxUniverse = dmxUniverse;
+            _frameSize = frameSize;
         }
 
         public IDmxUniverse DmxUniverse
         {
             get { return _dmxUniverse; }
+        }
+
+        public int FrameSize
+        {
+            get { return _frameSize; }
         }
 
         public void SendFrame(byte[] values)

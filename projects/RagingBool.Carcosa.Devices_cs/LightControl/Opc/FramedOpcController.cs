@@ -24,14 +24,17 @@ namespace RagingBool.Carcosa.Devices.LightControl.Opc
     {
         private readonly IOpcController _opcController;
         private readonly int _channel;
+        private readonly int _frameSize;
 
-        public FramedOpcController(IOpcController opcController, int channel)
+        public FramedOpcController(IOpcController opcController, int channel, int frameSize)
         {
             ArgAssert.NotNull(opcController, "opcController");
             ArgAssert.InRange(channel, "channel", 0, 0xFF);
+            ArgAssert.AtLeast(frameSize, "frameSize", 0);
 
             _opcController = opcController;
             _channel = channel;
+            _frameSize = frameSize;
         }
 
         public IOpcController OpcController
@@ -42,6 +45,11 @@ namespace RagingBool.Carcosa.Devices.LightControl.Opc
         public int Channel
         {
             get { return _channel; }
+        }
+
+        public int FrameSize
+        {
+            get { return _frameSize; }
         }
 
         public void SendFrame(byte[] values)

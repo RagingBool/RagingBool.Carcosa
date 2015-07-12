@@ -24,19 +24,34 @@ namespace RagingBool.Carcosa.Devices.LightControl.Opc
     [TestFixture]
     public class FramedOpcControllerTest
     {
+        private Mock<IOpcController> _opcControllerMock;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _opcControllerMock = new Mock<IOpcController>(MockBehavior.Strict);
+        }
+
+        [Test]
+        public void FrameSize_returns_correct_value()
+        {
+            var frameSize = 15;
+
+            var framedOpcController = new FramedOpcController(_opcControllerMock.Object, 123, frameSize);
+            Assert.That(framedOpcController.FrameSize, Is.EqualTo(frameSize));
+        }
+
         [Test]
         public void SendFrame_calls_parent_SendRgbFrame()
         {
             var channel = 123;
             var values = new byte[] { 1, 2, 3 };
-            var opcControllerMock = new Mock<IOpcController>(MockBehavior.Strict);
 
-            opcControllerMock.Setup(m => m.SendRgbFrame((byte)channel, values)).Verifiable();
+            var framedOpcController = new FramedOpcController(_opcControllerMock.Object, channel, 15);
 
-            var framedOpcController = new FramedOpcController(opcControllerMock.Object, channel);
-
+            _opcControllerMock.Setup(m => m.SendRgbFrame((byte)channel, values)).Verifiable();
             framedOpcController.SendFrame(values);
-            opcControllerMock.VerifyAll();
+            _opcControllerMock.VerifyAll();
         }
     }
 }

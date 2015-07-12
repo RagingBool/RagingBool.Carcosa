@@ -24,18 +24,34 @@ namespace RagingBool.Carcosa.Devices.LightControl.Dmx
     [TestFixture]
     public class FramedDmxControllerTest
     {
+        private Mock<IDmxUniverse> _dmxUniverseMock;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _dmxUniverseMock = new Mock<IDmxUniverse>(MockBehavior.Strict);
+        }
+
+        [Test]
+        public void FrameSize_returns_correct_value()
+        {
+            var frameSize = 15;
+
+            var framedDmxController = new FramedDmxController(_dmxUniverseMock.Object, frameSize);
+            Assert.That(framedDmxController.FrameSize, Is.EqualTo(frameSize));
+        }
+
         [Test]
         public void SendFrame_calls_parent_SendFrame()
         {
             var values = new byte[] { 1, 2, 3 };
-            var dmxUniverseMock = new Mock<IDmxUniverse>(MockBehavior.Strict);
 
-            dmxUniverseMock.Setup(m => m.SendFrame(values)).Verifiable();
+            _dmxUniverseMock.Setup(m => m.SendFrame(values)).Verifiable();
 
-            var framedDmxController = new FramedDmxController(dmxUniverseMock.Object);
+            var framedDmxController = new FramedDmxController(_dmxUniverseMock.Object);
 
             framedDmxController.SendFrame(values);
-            dmxUniverseMock.VerifyAll();
+            _dmxUniverseMock.VerifyAll();
         }
     }
 }

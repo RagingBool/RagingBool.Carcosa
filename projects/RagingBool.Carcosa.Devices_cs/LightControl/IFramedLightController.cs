@@ -20,6 +20,7 @@ namespace RagingBool.Carcosa.Devices.LightControl
 {
     public interface IFramedLightController
     {
+        int FrameSize { get; }
         void SendFrame(byte[] values);
     }
 }
