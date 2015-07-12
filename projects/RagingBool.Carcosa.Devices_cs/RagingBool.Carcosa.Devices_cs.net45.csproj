@@ -69,8 +69,10 @@
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31MulticastConncetion.cs" />
     <Compile Include="LightControl\Dmx\E1_31ProtocolUtils.cs" />
+    <Compile Include="LightControl\Dmx\FramedDmxController.cs" />
     <Compile Include="LightControl\Dmx\IDmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\IDmxUniverse.cs" />
+    <Compile Include="LightControl\IFramedLightController.cs" />
     <Compile Include="LightControl\Opc\IOpcController.cs" />
     <Compile Include="LightControl\Opc\OpcDevice.cs" />
     <Compile Include="LightControl\Opc\OpcProtocolUtils.cs" />

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LightControl\Dmx\E1_31ProtocolUtilsTest.cs" />
+    <Compile Include="LightControl\Dmx\FramedDmxControllerTest.cs" />
     <Compile Include="LightControl\Opc\OpcProtocolUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
