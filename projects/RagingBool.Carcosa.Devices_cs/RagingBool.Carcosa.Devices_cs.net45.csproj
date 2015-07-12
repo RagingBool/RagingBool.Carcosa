@@ -56,12 +56,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonEventArgs.cs" />
-    <Compile Include="ButtonEventType.cs" />
-    <Compile Include="ControllerChangeEventArgs.cs" />
     <Compile Include="IDevice.cs" />
-    <Compile Include="ILpd8.cs" />
     <Compile Include="IUpdatable.cs" />
+    <Compile Include="InputControl\ButtonEventArgs.cs" />
+    <Compile Include="InputControl\ButtonEventType.cs" />
+    <Compile Include="InputControl\ControllerChangeEventArgs.cs" />
+    <Compile Include="InputControl\Lpd8\ILpd8.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />

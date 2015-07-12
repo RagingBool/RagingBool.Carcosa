@@ -16,7 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {

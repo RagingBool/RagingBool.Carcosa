@@ -18,6 +18,8 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using RagingBool.Carcosa.Devices.InputControl;
+using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
 
 namespace RagingBool.Carcosa.Devices.Midi

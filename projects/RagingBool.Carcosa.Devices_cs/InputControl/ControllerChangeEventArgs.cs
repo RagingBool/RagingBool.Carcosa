@@ -18,7 +18,7 @@
 
 using System;
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Devices.InputControl
 {
     public sealed class ControllerChangeEventArgs : EventArgs
     {
