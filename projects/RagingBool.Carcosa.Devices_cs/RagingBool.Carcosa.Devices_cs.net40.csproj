@@ -78,6 +78,7 @@
     <Compile Include="LightControl\Opc\OpcProtocolUtils.cs" />
     <Compile Include="LightControl\Opc\SerialOpcDevice.cs" />
     <Compile Include="MaxFrequencyUpdater.cs" />
+    <Compile Include="MultipleUpdatables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
