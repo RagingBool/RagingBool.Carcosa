@@ -22,7 +22,6 @@ using RagingBool.Carcosa.Core.Stage.Scenes;
 using RagingBool.Carcosa.Core.Stage.Scenes.Forest;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using RagingBool.Carcosa.Devices.LightControl;
 using RagingBool.Carcosa.Devices.LightControl.Dmx;
 using RagingBool.Carcosa.Devices.LightControl.Opc;
@@ -39,7 +38,7 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private readonly IClock _clock;
 
-        private readonly ILpd8 _controller;
+        private readonly MidiLpd8 _controller;
 
         private readonly E1_31DmxMultiverse _e1_31DmxMultiverse;
         private readonly IBufferedLightController _dmxUniverse1;

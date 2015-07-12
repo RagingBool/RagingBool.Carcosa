@@ -18,7 +18,7 @@
 
 namespace RagingBool.Carcosa.Devices
 {
-    public interface IDevice : IUpdatable
+    public interface IDevice
     {
         void Connect();
         void Disconnect();

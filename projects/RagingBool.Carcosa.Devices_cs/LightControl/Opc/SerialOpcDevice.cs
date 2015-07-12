@@ -58,11 +58,6 @@ namespace RagingBool.Carcosa.Devices.LightControl.Opc
             _serialPort = null;
         }
 
-        public void Update()
-        {
-            // Nothing to do here...
-        }
-
         public void SendRgbFrame(byte channel, byte[] rgbValues)
         {
             SendData(OpcProtocolUtils.BuildSetPixelColorsCommand(channel, rgbValues));

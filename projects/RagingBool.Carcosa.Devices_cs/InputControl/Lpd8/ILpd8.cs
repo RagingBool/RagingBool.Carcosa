@@ -20,7 +20,7 @@ using System;
 
 namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
 {
-    public interface ILpd8 : IDevice
+    public interface ILpd8
     {
         int NumberOfButtons { get; }
         int NumberOfControllers { get; }

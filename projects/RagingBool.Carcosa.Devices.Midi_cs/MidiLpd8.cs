@@ -24,7 +24,7 @@ using System;
 
 namespace RagingBool.Carcosa.Devices.Midi
 {
-    public sealed class MidiLpd8 : ILpd8
+    public sealed class MidiLpd8 : ILpd8, IDevice, IUpdatable
     {
         public static readonly int FixedNumberOfButtons = 8;
         public static readonly int FixedNumberOfKnobs = 8;
