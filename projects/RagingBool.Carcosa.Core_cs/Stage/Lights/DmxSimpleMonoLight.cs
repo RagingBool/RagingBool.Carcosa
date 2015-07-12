@@ -16,21 +16,21 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices.Dmx;
+using RagingBool.Carcosa.Devices.LightControl;
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
     internal sealed class DmxSimpleMonoLight : IMonoLight
     {
-        private readonly IDmxMultiverse _dmxMultiverse;
+        private readonly IBufferedLightController _dmxUniverse;
         private readonly int _universeId;
         private readonly int _dmxChannel;
 
         private double _intensity;
 
-        public DmxSimpleMonoLight(IDmxMultiverse dmxMultiverse, int universeId, int dmxChannel)
+        public DmxSimpleMonoLight(IBufferedLightController dmxUniverse, int universeId, int dmxChannel)
         {
-            _dmxMultiverse = dmxMultiverse;
+            _dmxUniverse = dmxUniverse;
             _universeId = universeId;
             _dmxChannel = dmxChannel;
 
@@ -49,7 +49,7 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
 
         private void Update()
         {
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel, _intensity.UnitToByte());
+            _dmxUniverse[_dmxChannel] = (byte)_intensity.UnitToByte();
         }
     }
 }

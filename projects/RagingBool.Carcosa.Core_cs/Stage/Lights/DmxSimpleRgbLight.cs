@@ -16,24 +16,22 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices.Dmx;
+using RagingBool.Carcosa.Devices.LightControl;
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
     internal sealed class DmxSimpleRgbLight : IRgbLight
     {
-        private readonly IDmxMultiverse _dmxMultiverse;
-        private readonly int _universeId;
+        private readonly IBufferedLightController _dmxUniverse;
         private readonly int _dmxChannel;
 
         private double _red;
         private double _green;
         private double _blue;
 
-        public DmxSimpleRgbLight(IDmxMultiverse dmxMultiverse, int universeId, int dmxChannel)
+        public DmxSimpleRgbLight(IBufferedLightController dmxUniverse, int dmxChannel)
         {
-            _dmxMultiverse = dmxMultiverse;
-            _universeId = universeId;
+            _dmxUniverse = dmxUniverse;
             _dmxChannel = dmxChannel;
 
             _red = 0;
@@ -74,9 +72,9 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
         private void Update()
         {
             var c = 0.25;
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 0, (_red * c).UnitToByte());
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 1, (_green * c).UnitToByte());
-            _dmxMultiverse.SetChannel(_universeId, _dmxChannel + 2, (_blue * c).UnitToByte());
+            _dmxUniverse[_dmxChannel + 0] = (byte)(_red * c).UnitToByte();
+            _dmxUniverse[_dmxChannel + 1] = (byte)(_green * c).UnitToByte();
+            _dmxUniverse[_dmxChannel + 2] = (byte)(_blue * c).UnitToByte();
         }
     }
 }

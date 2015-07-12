@@ -20,7 +20,6 @@ using Epicycle.Commons.Collections;
 using Epicycle.Math.Geometry;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Devices;
-using RagingBool.Carcosa.Devices.Dmx;
 using RagingBool.Carcosa.Devices.LightControl;
 using System.Collections.Generic;
 
@@ -28,7 +27,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 {
     internal sealed class LightSetup
     {
-        private readonly IDmxMultiverse _dmxMultiverse;
+        private readonly IBufferedLightController _dmxUniverse1;
         private readonly ISnark _snark;
         private readonly IBufferedLightController _fadecandyContoller;
 
@@ -44,9 +43,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         private readonly ILedMatrix _ledMatrix;
 
-        public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark, IBufferedLightController fadecandyContoller)
+        public LightSetup(IBufferedLightController dmxUniverse1, ISnark snark, IBufferedLightController fadecandyContoller)
         {
-            _dmxMultiverse = dmxMultiverse;
+            _dmxUniverse1 = dmxUniverse1;
             _snark = snark;
             _fadecandyContoller = fadecandyContoller;
 
@@ -62,15 +61,15 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                 _monoStrips.Add(new SnarkMonoLight(_snark, 6 + i));
             }
 
-            _rgbLights.Add(new DmxRgbLightSeparatedLeds(_dmxMultiverse, 1, 0));
-            _rgbLights.Add(new DmxRgbLightSeparatedLeds(_dmxMultiverse, 1, 10));
-            _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxMultiverse, 1, 20));
-            _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxMultiverse, 1, 30));
+            _rgbLights.Add(new DmxRgbLightSeparatedLeds(_dmxUniverse1, 0));
+            _rgbLights.Add(new DmxRgbLightSeparatedLeds(_dmxUniverse1, 10));
+            _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxUniverse1, 20));
+            _rgbLights.Add(new DmxRgbLightUnifiedLeds(_dmxUniverse1, 30));
 
             _dmxRgbStrips = new List<IRgbLight>();
             for (int i = 0; i < 9; i++)
             {
-                _dmxRgbStrips.Add(new DmxSimpleRgbLight(_dmxMultiverse, 1, i * 3));
+                _dmxRgbStrips.Add(new DmxSimpleRgbLight(_dmxUniverse1, i * 3));
             }
 
             int s1 = 32*0;
