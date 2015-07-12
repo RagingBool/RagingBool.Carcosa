@@ -25,7 +25,7 @@ namespace RagingBool.Carcosa.Devices.Fadecandy
     {
         private readonly IClock _clock;
         private readonly double _fps;
-        private readonly IOpcDevice _device;
+        private readonly IOpcController _device;
         
         private double _lastUpdateTime;
 

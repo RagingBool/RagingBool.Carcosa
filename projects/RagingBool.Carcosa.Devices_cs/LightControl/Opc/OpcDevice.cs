@@ -22,7 +22,7 @@ namespace RagingBool.Carcosa.Devices.LightControl.Opc
 {
     // TODO: Test
 
-    public sealed class OpcDevice : IOpcDevice
+    public sealed class OpcDevice : IOpcController, IDevice
     {
         private readonly string _host;
         private readonly int _port;

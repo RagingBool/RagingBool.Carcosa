@@ -16,14 +16,13 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-
 namespace RagingBool.Carcosa.Devices.LightControl.Opc
 {
     /// <summary>
     /// A lighting control device that communicates using the Open Pixel Control (OPC) protocol.
     /// More information about OPC can be found here: http://openpixelcontrol.org/
     /// </summary>
-    public interface IOpcDevice : IDevice
+    public interface IOpcController
     {
         /// <summary>
         /// Send a frame.
