@@ -72,7 +72,7 @@ namespace RagingBool.Carcosa.Devices.LightControl.Dmx
             // Nothing to do...
         }
 
-        public IDmxUniverse getUniverse(int universeId)
+        public IDmxUniverse GetUniverse(int universeId)
         {
             if (!_universes.ContainsKey(universeId))
             {

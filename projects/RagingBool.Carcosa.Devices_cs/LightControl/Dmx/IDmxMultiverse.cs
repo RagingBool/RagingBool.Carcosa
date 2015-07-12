@@ -28,6 +28,6 @@ namespace RagingBool.Carcosa.Devices.LightControl.Dmx
         /// Sends a whole frame of DMX512 data
         /// </summary>
         /// <param name="universeId">The index of the DMX512 universe.</param>
-        IDmxUniverse getUniverse(int universeId);
+        IDmxUniverse GetUniverse(int universeId);
     }
 }
