@@ -74,7 +74,7 @@
     <Compile Include="LightControl\IFramedLightController.cs" />
     <Compile Include="LightControl\Opc\FramedOpcController.cs" />
     <Compile Include="LightControl\Opc\IOpcController.cs" />
-    <Compile Include="LightControl\Opc\OpcDevice.cs" />
+    <Compile Include="LightControl\Opc\NetworkOpcDevice.cs" />
     <Compile Include="LightControl\Opc\OpcProtocolUtils.cs" />
     <Compile Include="LightControl\Opc\SerialOpcDevice.cs" />
     <Compile Include="MaxFrequencyUpdater.cs" />

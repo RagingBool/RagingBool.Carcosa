@@ -48,7 +48,7 @@ namespace RagingBool.Carcosa.Core.Stage
         private readonly IBufferedLightController _snarkController;
         private readonly MaxFrequencyUpdater _snarkUpdater;
 
-        private readonly OpcDevice _fadecandy;
+        private readonly NetworkOpcDevice _fadecandy;
         private readonly IBufferedLightController _fadecandyContoller;
         private readonly MaxFrequencyUpdater _fadecandyUpdater;
 
@@ -83,7 +83,7 @@ namespace RagingBool.Carcosa.Core.Stage
             _snarkUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 50.0);
 
             var host = "forest";
-            _fadecandy = new OpcDevice(host, 7890);
+            _fadecandy = new NetworkOpcDevice(host, 7890);
             _fadecandyContoller = new BufferedLightController(new FramedOpcController(_fadecandy, 0, 480 * 3));
             _fadecandyUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 60.0);
 
