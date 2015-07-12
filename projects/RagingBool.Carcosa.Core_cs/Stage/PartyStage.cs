@@ -39,10 +39,14 @@ namespace RagingBool.Carcosa.Core.Stage
         private readonly IClock _clock;
 
         private readonly ILpd8 _controller;
+
+        private readonly E1_31DmxMultiverse _e1_31DmxMultiverse;
         private readonly IBufferedLightController _dmxUniverse1;
         private readonly MaxFrequencyUpdater _dmxMultiverseUpdater1;
 
         private readonly ISnark _snark;
+
+        private readonly OpcDevice _fadecandy;
         private readonly IBufferedLightController _fadecandyContoller;
         private readonly MaxFrequencyUpdater _fadecandyUpdater;
 
@@ -68,18 +72,15 @@ namespace RagingBool.Carcosa.Core.Stage
             
             var componentIdentifier = Guid.NewGuid();
             var sourceName = "test";
-            var dmxMultiverse = new E1_31DmxMultiverse(new int[] { 1 }, componentIdentifier, sourceName);
-            dmxMultiverse.Connect();
-            _dmxUniverse1 = new BufferedLightController(new FramedDmxController(dmxMultiverse.GetUniverse(1)));
+            _e1_31DmxMultiverse = new E1_31DmxMultiverse(new int[] { 1 }, componentIdentifier, sourceName);
+            _dmxUniverse1 = new BufferedLightController(new FramedDmxController(_e1_31DmxMultiverse.GetUniverse(1)));
             _dmxMultiverseUpdater1 = new MaxFrequencyUpdater(_dmxUniverse1, _clock, 30.0);
 
             _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 50);
             var host = "forest";
 
-            var opcDevice = new OpcDevice(host, 7890);
-            opcDevice.Connect();
-
-            _fadecandyContoller = new BufferedLightController(new FramedOpcController(opcDevice, 0, 480 * 3));
+            _fadecandy = new OpcDevice(host, 7890);
+            _fadecandyContoller = new BufferedLightController(new FramedOpcController(_fadecandy, 0, 480 * 3));
             _fadecandyUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 60.0);
 
             _controllerUi = new ControllerUi(_clock, _controller);
@@ -104,7 +105,10 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Connect();
+
+                _e1_31DmxMultiverse.Connect();
                 _snark.Connect();
+                _fadecandy.Connect();
 
                 _controllerUi.Start();
 
