@@ -21,10 +21,9 @@ using System.Collections.Generic;
 namespace RagingBool.Carcosa.Devices.LightControl
 {
     // TODO: Use Epicycle fixed-length list interface when available
-    public interface IBufferedLightController : IEnumerable<byte>
+    public interface IBufferedLightController : IUpdatable, IEnumerable<byte>
     {
         int FrameSize { get; }
         byte this[int index] { get; set; }
-        void Update();
     }
 }
