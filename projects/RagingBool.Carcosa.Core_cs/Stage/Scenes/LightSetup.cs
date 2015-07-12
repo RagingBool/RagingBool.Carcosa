@@ -21,7 +21,7 @@ using Epicycle.Math.Geometry;
 using RagingBool.Carcosa.Core.Stage.Lights;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.Dmx;
-using RagingBool.Carcosa.Devices.Fadecandy;
+using RagingBool.Carcosa.Devices.LightControl;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
@@ -30,7 +30,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
     {
         private readonly IDmxMultiverse _dmxMultiverse;
         private readonly ISnark _snark;
-        private readonly FadecandyOpenPixelClient _fadecandyClient;
+        private readonly IBufferedLightController _fadecandyContoller;
 
         private readonly IList<IRgbLight> _rgbStrips;
         private readonly IList<IMonoLight> _monoStrips;
@@ -43,12 +43,12 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private readonly IList<IRgbLight> _fadecandyStrip2;
 
         private readonly ILedMatrix _ledMatrix;
-        
-        public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark, FadecandyOpenPixelClient fadecandyClient)
+
+        public LightSetup(IDmxMultiverse dmxMultiverse, ISnark snark, IBufferedLightController fadecandyContoller)
         {
             _dmxMultiverse = dmxMultiverse;
             _snark = snark;
-            _fadecandyClient = fadecandyClient;
+            _fadecandyContoller = fadecandyContoller;
 
             _rgbStrips = new List<IRgbLight>();
             _monoStrips = new List<IMonoLight>();
@@ -137,7 +137,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
             foreach (var index in indices)
             {
-                lights.Add(new FadecandyLed(_fadecandyClient, index));
+                lights.Add(new FadecandyLed(_fadecandyContoller, index));
             }
 
             return lights;
@@ -159,7 +159,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
                 {
                     var shift = ((y % 2) == 0) ? x : (dimensions.X - x - 1);
 
-                    pixels.Add(new FadecandyLed(_fadecandyClient, fromChannel + rowStart + shift));
+                    pixels.Add(new FadecandyLed(_fadecandyContoller, fromChannel + rowStart + shift));
                 }
             }
 
