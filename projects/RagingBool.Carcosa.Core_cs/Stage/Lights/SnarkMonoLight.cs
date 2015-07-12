@@ -16,20 +16,20 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.LightControl;
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
     internal sealed class SnarkMonoLight : IMonoLight
     {
-        private readonly ISnark _snark;
+        private readonly IBufferedLightController _lightController;
         private readonly int _channel;
 
         private double _intensity;
 
-        public SnarkMonoLight(ISnark snark, int channel)
+        public SnarkMonoLight(IBufferedLightController lightController, int channel)
         {
-            _snark = snark;
+            _lightController = lightController;
             _channel = channel;
 
             _intensity = 0;
@@ -47,7 +47,7 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
 
         private void Update()
         {
-            _snark.SetChannel(_channel, _intensity.UnitToByte());
+            _lightController[_channel] = (byte) _intensity.UnitToByte();
         }
     }
 }

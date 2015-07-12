@@ -19,7 +19,6 @@
 using Epicycle.Commons.Collections;
 using Epicycle.Math.Geometry;
 using RagingBool.Carcosa.Core.Stage.Lights;
-using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.LightControl;
 using System.Collections.Generic;
 
@@ -28,7 +27,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
     internal sealed class LightSetup
     {
         private readonly IBufferedLightController _dmxUniverse1;
-        private readonly ISnark _snark;
+        private readonly IBufferedLightController _snark;
         private readonly IBufferedLightController _fadecandyContoller;
 
         private readonly IList<IRgbLight> _rgbStrips;
@@ -43,7 +42,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         private readonly ILedMatrix _ledMatrix;
 
-        public LightSetup(IBufferedLightController dmxUniverse1, ISnark snark, IBufferedLightController fadecandyContoller)
+        public LightSetup(IBufferedLightController dmxUniverse1, IBufferedLightController snark, IBufferedLightController fadecandyContoller)
         {
             _dmxUniverse1 = dmxUniverse1;
             _snark = snark;
