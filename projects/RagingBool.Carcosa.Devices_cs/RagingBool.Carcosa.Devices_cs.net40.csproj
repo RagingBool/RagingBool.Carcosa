@@ -65,6 +65,7 @@
     <Compile Include="IDevice.cs" />
     <Compile Include="ILpd8.cs" />
     <Compile Include="ISnark.cs" />
+    <Compile Include="LightControl\BufferedLightController.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31MulticastConncetion.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="LightControl\Dmx\FramedDmxController.cs" />
     <Compile Include="LightControl\Dmx\IDmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\IDmxUniverse.cs" />
+    <Compile Include="LightControl\IBufferedLightController.cs" />
     <Compile Include="LightControl\IFramedLightController.cs" />
     <Compile Include="LightControl\Opc\FramedOpcController.cs" />
     <Compile Include="LightControl\Opc\IOpcController.cs" />
