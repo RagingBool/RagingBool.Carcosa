@@ -68,6 +68,7 @@
     <Compile Include="LightControl\Opc\FramedOpcControllerTest.cs" />
     <Compile Include="LightControl\Opc\OpcProtocolUtilsTest.cs" />
     <Compile Include="MaxFrequencyUpdaterTest.cs" />
+    <Compile Include="MultipleDevicesTest.cs" />
     <Compile Include="MultipleUpdatablesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
