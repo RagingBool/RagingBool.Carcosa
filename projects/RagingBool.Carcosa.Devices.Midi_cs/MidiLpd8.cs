@@ -18,6 +18,7 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
@@ -109,7 +110,7 @@ namespace RagingBool.Carcosa.Devices.Midi
                 }
                 else if (OnButtonEvent != null)
                 {
-                    var buttonEventType = midiChannelMessage.Command == MidiChannelCommand.NoteOn ? ButtonEventType.Pressed : ButtonEventType.Released;
+                    var buttonEventType = midiChannelMessage.Command == MidiChannelCommand.NoteOn ? KeyEventType.Pressed : KeyEventType.Released;
                     var keyId = midiChannelMessage.Parameter1 - 36;
                     var velocity = midiChannelMessage.Parameter2 * 2;
 

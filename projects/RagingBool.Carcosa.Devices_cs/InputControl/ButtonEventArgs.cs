@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Keyboard;
 using System;
 
 namespace RagingBool.Carcosa.Devices.InputControl
@@ -24,9 +25,9 @@ namespace RagingBool.Carcosa.Devices.InputControl
     {
         private readonly int _buttonId;
         private readonly int _velocity;
-        private readonly ButtonEventType _eventType;
+        private readonly KeyEventType _eventType;
 
-        public ButtonEventArgs(int buttonId, int velocity, ButtonEventType eventType)
+        public ButtonEventArgs(int buttonId, int velocity, KeyEventType eventType)
         {
             _buttonId = buttonId;
             _velocity = velocity;
@@ -43,7 +44,7 @@ namespace RagingBool.Carcosa.Devices.InputControl
             get { return _velocity; }
         }
 
-        public ButtonEventType ButtonEventType
+        public KeyEventType ButtonEventType
         {
             get { return _eventType; }
         }
