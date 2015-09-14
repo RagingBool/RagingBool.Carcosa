@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Akka.Actor;
 using Epicycle.Commons;
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
@@ -35,6 +36,8 @@ namespace RagingBool.Carcosa.Core
 
         private readonly Thread _updateThread;
 
+        private readonly ActorSystem _actorSystem;
+
         private bool _isRunning;
 
         public Carcosa(IClock clock, IFileSystem fileSystem, FileSystemPath workspacePath)
@@ -50,6 +53,8 @@ namespace RagingBool.Carcosa.Core
             _stage = new PartyStage(_clock, _workspace);
 
             _updateThread = new Thread(UpdateThreadLoop);
+
+            _actorSystem = ActorSystem.Create("Carcosa");
 
             _isRunning = false;
         }
@@ -71,6 +76,12 @@ namespace RagingBool.Carcosa.Core
         {
             _isRunning = false;
             _stage.Stop();
+            _actorSystem.Shutdown();
+        }
+
+        public void AwaitTermination()
+        {
+            _actorSystem.AwaitTermination();
         }
 
         private void UpdateThreadLoop()
