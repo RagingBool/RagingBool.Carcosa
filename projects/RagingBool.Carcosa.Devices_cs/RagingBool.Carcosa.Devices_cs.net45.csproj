@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="IDevice.cs" />
     <Compile Include="IUpdatable.cs" />
-    <Compile Include="InputControl\ControllerChangeEventArgs.cs" />
     <Compile Include="InputControl\KeyVelocity.cs" />
     <Compile Include="InputControl\Lpd8\ILpd8.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />

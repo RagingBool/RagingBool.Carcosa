@@ -18,6 +18,7 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
@@ -105,7 +106,7 @@ namespace RagingBool.Carcosa.Devices.Midi
                         var controllerId = midiChannelMessage.Parameter1 - 1;
                         var value = midiChannelMessage.Parameter2 * 2;
 
-                        OnControllerChange(this, new ControllerChangeEventArgs(controllerId, value));
+                        OnControllerChange(this, new ControllerChangeEventArgs<int, int>(controllerId, value));
                     }
                 }
                 else if (OnButtonEvent != null)
@@ -122,7 +123,7 @@ namespace RagingBool.Carcosa.Devices.Midi
         }
 
         public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
-        public event EventHandler<ControllerChangeEventArgs> OnControllerChange;
+        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
         {
