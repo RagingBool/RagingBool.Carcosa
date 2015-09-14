@@ -44,9 +44,9 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
 
         public LightSetup(IBufferedLightController dmxUniverse1, IBufferedLightController snark, IBufferedLightController fadecandyContoller)
         {
-            _dmxUniverse1 = dmxUniverse1;
-            _snark = snark;
-            _fadecandyContoller = fadecandyContoller;
+            _dmxUniverse1 = dmxUniverse1 ?? new BufferedLightController(new DummyFramedLightController(10000));
+            _snark = snark ?? new BufferedLightController(new DummyFramedLightController(10000));
+            _fadecandyContoller = fadecandyContoller ?? new BufferedLightController(new DummyFramedLightController(10000));
 
             _rgbStrips = new List<IRgbLight>();
             _monoStrips = new List<IMonoLight>();

@@ -27,6 +27,7 @@ using RagingBool.Carcosa.Devices.LightControl.Dmx;
 using RagingBool.Carcosa.Devices.LightControl.Opc;
 using RagingBool.Carcosa.Devices.Midi;
 using System;
+using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 
 namespace RagingBool.Carcosa.Core.Stage
 {
@@ -38,19 +39,21 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private readonly IClock _clock;
 
-        private readonly MidiLpd8 _controller;
+        private IDevice _controllerDevice;
+        private IUpdatable _controllerUpdatable;
+        private ILpd8 _controller;
 
-        private readonly E1_31DmxMultiverse _e1_31DmxMultiverse;
-        private readonly IBufferedLightController _dmxUniverse1;
-        private readonly MaxFrequencyUpdater _dmxMultiverseUpdater1;
+        private E1_31DmxMultiverse _e1_31DmxMultiverse;
+        private IBufferedLightController _dmxUniverseController1;
+        private MaxFrequencyUpdater _dmxMultiverseUpdater1;
 
-        private readonly SerialOpcDevice _snark;
-        private readonly IBufferedLightController _snarkController;
-        private readonly MaxFrequencyUpdater _snarkUpdater;
+        private SerialOpcDevice _snark;
+        private IBufferedLightController _snarkController;
+        private MaxFrequencyUpdater _snarkUpdater;
 
-        private readonly NetworkOpcDevice _fadecandy;
-        private readonly IBufferedLightController _fadecandyContoller;
-        private readonly MaxFrequencyUpdater _fadecandyUpdater;
+        private NetworkOpcDevice _fadecandy;
+        private IBufferedLightController _fadecandyContoller;
+        private MaxFrequencyUpdater _fadecandyUpdater;
 
         private IScene _curScene;
         private int _curSceneId;
@@ -70,22 +73,10 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             _clock = clock;
 
-            _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
-            
-            var componentIdentifier = Guid.NewGuid();
-            var sourceName = "test";
-            _e1_31DmxMultiverse = new E1_31DmxMultiverse(new int[] { 1 }, componentIdentifier, sourceName);
-            _dmxUniverse1 = new BufferedLightController(new FramedDmxController(_e1_31DmxMultiverse.GetUniverse(1)));
-            _dmxMultiverseUpdater1 = new MaxFrequencyUpdater(_dmxUniverse1, _clock, 30.0);
-
-            _snark = new SerialOpcDevice(workspace.SnarkSerialPortName);
-            _snarkController = new BufferedLightController(new FramedOpcController(_snark, 0, 12));
-            _snarkUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 50.0);
-
-            var host = "forest";
-            _fadecandy = new NetworkOpcDevice(host, 7890);
-            _fadecandyContoller = new BufferedLightController(new FramedOpcController(_fadecandy, 0, 480 * 3));
-            _fadecandyUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 60.0);
+            InitController(workspace, false);
+            InitDMX(workspace, false);
+            InitForestOpcDevice(workspace, false);
+            InitSnark(workspace, false);
 
             _controllerUi = new ControllerUi(_clock, _controller);
 
@@ -93,7 +84,7 @@ namespace RagingBool.Carcosa.Core.Stage
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
             _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
 
-            _lightSetup = new LightSetup(_dmxUniverse1, _snarkController, _fadecandyContoller);
+            _lightSetup = new LightSetup(_dmxUniverseController1, _snarkController, _fadecandyContoller);
 
             _partyScene1 = new PartyScene1(_clock, _lightSetup);
             _fadecandyScene = new FadecandyScene(_lightSetup);
@@ -104,15 +95,98 @@ namespace RagingBool.Carcosa.Core.Stage
             _curSceneId = -1;
         }
 
+        private void InitController(ICarcosaWorkspace workspace, bool isOn)
+        {
+            if (isOn)
+            {
+                var controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
+
+                _controller = controller;
+                _controllerUpdatable = controller;
+                _controllerDevice = controller;
+            }
+            else
+            {
+                _controller = new DummyLpd8();
+                _controllerUpdatable = null;
+                _controllerDevice = null;
+            }
+        }
+
+        private void InitDMX(ICarcosaWorkspace workspace, bool isOn)
+        {
+            if(isOn)
+            {
+                var componentIdentifier = Guid.NewGuid();
+                var sourceName = "test";
+                _e1_31DmxMultiverse = new E1_31DmxMultiverse(new int[] { 1 }, componentIdentifier, sourceName);
+                _dmxUniverseController1 = new BufferedLightController(new FramedDmxController(_e1_31DmxMultiverse.GetUniverse(1)));
+                _dmxMultiverseUpdater1 = new MaxFrequencyUpdater(_dmxUniverseController1, _clock, 30.0);
+            }
+            else
+            {
+                _e1_31DmxMultiverse = null;
+                _dmxUniverseController1 = null;
+                _dmxMultiverseUpdater1 = null;
+            }
+        }
+
+        private void InitForestOpcDevice(ICarcosaWorkspace workspace, bool isOn)
+        {
+            if(isOn)
+            {
+                var host = "forest";
+                _fadecandy = new NetworkOpcDevice(host, 7890);
+                _fadecandyContoller = new BufferedLightController(new FramedOpcController(_fadecandy, 0, 480 * 3));
+                _fadecandyUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 60.0);
+            }
+            else
+            {
+                _fadecandy = null;
+                _fadecandyContoller = null;
+                _fadecandyUpdater = null;
+            }
+        }
+
+        private void InitSnark(ICarcosaWorkspace workspace, bool isOn)
+        {
+            if(isOn)
+            {
+                _snark = new SerialOpcDevice(workspace.SnarkSerialPortName);
+                _snarkController = new BufferedLightController(new FramedOpcController(_snark, 0, 12));
+                _snarkUpdater = new MaxFrequencyUpdater(_snarkController, _clock, 50.0);
+            }
+            else
+            {
+                _snark = null;
+                _snarkController = null;
+                _snarkUpdater = null;
+            }
+        }
+
         public void Start()
         {
             lock (_lock)
             {
-                _controller.Connect();
+                if (_controllerDevice != null)
+                {
+                    _controllerDevice.Connect();
+                }
 
-                _e1_31DmxMultiverse.Connect();
-                _snark.Connect();
-                _fadecandy.Connect();
+                if (_e1_31DmxMultiverse != null)
+                {
+                    _e1_31DmxMultiverse.Connect();
+                }
+
+                if (_snark != null)
+                {
+                    _snark.Connect();
+                }
+
+                if(_fadecandy != null)
+                {
+                    _fadecandy.Connect();
+                }
 
                 _controllerUi.Start();
 
@@ -124,10 +198,25 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
-                _controller.Update();
-                _dmxMultiverseUpdater1.Update();
-                _snarkUpdater.Update();
-                _fadecandyUpdater.Update();
+                if (_controllerUpdatable != null)
+                {
+                    _controllerUpdatable.Update();
+                }
+
+                if (_dmxMultiverseUpdater1 != null)
+                {
+                    _dmxMultiverseUpdater1.Update();
+                }
+
+                if (_snarkUpdater != null)
+                {
+                    _snarkUpdater.Update();
+                }
+
+                if(_fadecandy != null)
+                {
+                    _fadecandyUpdater.Update();
+                }
 
                 _controllerUi.Update();
                 UpdateScene();
@@ -157,8 +246,15 @@ namespace RagingBool.Carcosa.Core.Stage
             {
                 _controllerUi.Stop();
 
-                _controller.Disconnect();
-                _snark.Disconnect();
+                if (_controllerDevice != null)
+                {
+                    _controllerDevice.Disconnect();
+                }
+
+                if(_snark != null)
+                {
+                    _snark.Disconnect();                    
+                }
             }
         }
 
