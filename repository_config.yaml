@@ -14,9 +14,9 @@ dotnet_frameworks:
  - net45
 
 nuget_dependencies:
- - Epicycle.Commons-cs.0.1.6.0
- - Epicycle.Math-cs.0.1.5.0
- - Epicycle.Graphics-cs.0.1.5.0
+ - Epicycle.Commons-cs.0.1.8.0
+ - Epicycle.Math-cs.0.1.6.0
+ - Epicycle.Graphics-cs.0.1.6.0
 
 description: |
    Carcosa is a lighting driving software that is built as part of the Unbirthday Camp.
