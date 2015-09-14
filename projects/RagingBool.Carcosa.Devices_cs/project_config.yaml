@@ -3,4 +3,5 @@ assemblyinfo_guid: c8dee19e-f1f2-4d3f-86bf-f0a02b52b6ff
 
 external_libs:
  - Epicycle.Commons-cs
+ - Epicycle.Input-cs
  - YamlDotNet

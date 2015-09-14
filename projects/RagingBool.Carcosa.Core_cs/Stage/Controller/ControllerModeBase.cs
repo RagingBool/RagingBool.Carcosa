@@ -17,6 +17,8 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 
@@ -94,7 +96,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public abstract void ProcessButtonEventHandler(ButtonEventArgs e);
-        public abstract void ProcessControllerChangeEvent(ControllerChangeEventArgs e);
+        public abstract void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e);
+        public abstract void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e);
     }
 }

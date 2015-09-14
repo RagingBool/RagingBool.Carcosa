@@ -18,6 +18,8 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
@@ -104,24 +106,24 @@ namespace RagingBool.Carcosa.Devices.Midi
                         var controllerId = midiChannelMessage.Parameter1 - 1;
                         var value = midiChannelMessage.Parameter2 * 2;
 
-                        OnControllerChange(this, new ControllerChangeEventArgs(controllerId, value));
+                        OnControllerChange(this, new ControllerChangeEventArgs<int, int>(controllerId, value));
                     }
                 }
                 else if (OnButtonEvent != null)
                 {
-                    var buttonEventType = midiChannelMessage.Command == MidiChannelCommand.NoteOn ? ButtonEventType.Pressed : ButtonEventType.Released;
+                    var buttonEventType = midiChannelMessage.Command == MidiChannelCommand.NoteOn ? KeyEventType.Pressed : KeyEventType.Released;
                     var keyId = midiChannelMessage.Parameter1 - 36;
                     var velocity = midiChannelMessage.Parameter2 * 2;
 
                     SendState();
 
-                    OnButtonEvent(this, new ButtonEventArgs(keyId, velocity, buttonEventType));
+                    OnButtonEvent(this, new KeyEventArgs<int, KeyVelocity>(keyId, buttonEventType, new KeyVelocity(velocity)));
                 }
             }
         }
 
-        public event EventHandler<ButtonEventArgs> OnButtonEvent;
-        public event EventHandler<ControllerChangeEventArgs> OnControllerChange;
+        public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
+        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
         {

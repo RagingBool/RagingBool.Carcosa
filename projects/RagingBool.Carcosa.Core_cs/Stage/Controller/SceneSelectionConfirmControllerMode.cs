@@ -17,6 +17,8 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 
@@ -64,12 +66,12 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             Controller.SetKeyLightState(currentSceneId, _isOn);
         }
 
-        public override void ProcessButtonEventHandler(ButtonEventArgs e)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e)
         {
             // Nothing to do here...
         }
 
-        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs e)
+        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e)
         {
             // Nothing to do here...
         }

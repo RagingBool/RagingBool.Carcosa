@@ -18,6 +18,7 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
 
 * **Version 0.2.0.0** [NOT RELEASED]
   * Devices infrastructure refactoring and rewriting resulting in a much more cleaner light control protocols implementation
+  * Utilizing Epicycle.Input
   * Upgrading Epicycle libs
 
 * **Version 0.1.1.0** [2015-07-01]

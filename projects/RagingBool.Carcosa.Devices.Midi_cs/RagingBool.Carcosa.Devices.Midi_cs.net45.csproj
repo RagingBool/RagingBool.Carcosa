@@ -51,6 +51,9 @@
     <Reference Include="Epicycle.Commons_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.8.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
+    <Reference Include="Epicycle.Input_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Input-cs.0.1.3.0\lib\net45\Epicycle.Input_cs.dll</HintPath>
+    </Reference>
     <Reference Include="CannedBytes">
       <HintPath>..\..\externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.dll</HintPath>
     </Reference>

@@ -18,9 +18,15 @@
 
 namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public enum ButtonEventType
+    public struct KeyVelocity
     {
-        Pressed,
-        Released,
+        public readonly int _velocity;
+
+        public KeyVelocity(int velocity)
+        {
+            _velocity = velocity;
+        }
+
+        public int Velocity { get { return _velocity; } }
     }
 }

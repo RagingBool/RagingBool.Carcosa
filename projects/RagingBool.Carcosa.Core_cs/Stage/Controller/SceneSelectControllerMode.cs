@@ -17,6 +17,8 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 
@@ -64,15 +66,15 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public override void ProcessButtonEventHandler(ButtonEventArgs e)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e)
         {
-            if(e.ButtonEventType == ButtonEventType.Released)
+            if(e.EventType == KeyEventType.Released)
             {
-                ControllerUi.SelectSceneAndGoToLiveMode(e.ButtonId);
+                ControllerUi.SelectSceneAndGoToLiveMode(e.KeyId);
             }
         }
 
-        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs e)
+        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e)
         {
             // Nothing to do here...
         }    

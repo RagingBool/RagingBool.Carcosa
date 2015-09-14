@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
@@ -55,36 +56,36 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             _phase = (_phase + 1) % 256;
         }
 
-        public void ProcessButtonEventHandler(ButtonEventArgs eventArgs)
+        public void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> eventArgs)
         {
-            if (eventArgs.ButtonId != _buttonId)
+            if (eventArgs.KeyId != _buttonId)
             {
                 return;
             }
 
-            int velocity = eventArgs.Velocity;
+            int velocity = eventArgs.AdditionalData.Velocity;
 
             switch (_triggerBehaviour)
             {
                 case ButtonTriggerBehaviour.OnPush:
-                    if (eventArgs.ButtonEventType == ButtonEventType.Pressed)
+                    if (eventArgs.EventType == KeyEventType.Pressed)
                     {
                         FireEvent(ButtonTriggerType.Trigger, velocity);
                     }
                     break;
                 case ButtonTriggerBehaviour.OnRelease:
-                    if (eventArgs.ButtonEventType == ButtonEventType.Released)
+                    if (eventArgs.EventType == KeyEventType.Released)
                     {
                         FireEvent(ButtonTriggerType.Trigger, velocity);
                     }
                     break;
                 case ButtonTriggerBehaviour.Continues:
-                    if (eventArgs.ButtonEventType == ButtonEventType.Pressed)
+                    if (eventArgs.EventType == KeyEventType.Pressed)
                     {
                         _savedVelocity = velocity;
                         FireEvent(ButtonTriggerType.Pressed, velocity);
                     }
-                    else if (eventArgs.ButtonEventType == ButtonEventType.Released)
+                    else if (eventArgs.EventType == KeyEventType.Released)
                     {
                         FireEvent(ButtonTriggerType.Released, _savedVelocity);
                     }
