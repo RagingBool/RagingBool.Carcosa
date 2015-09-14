@@ -23,7 +23,6 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
     internal sealed class DmxRgbLightSeparatedLeds : IRgbLight
     {
         private readonly IBufferedLightController _dmxUniverse;
-        private readonly int _universeId;
         private readonly int _dmxChannel;
 
         private double _red;
