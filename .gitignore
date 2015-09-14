@@ -61,3 +61,4 @@ bin
 *.suo
 externals/NuGet
 *.csproj.user
+projects/Playground
