@@ -10,4 +10,5 @@ external_libs:
  - Epicycle.Math-cs
  - Epicycle.Graphics-cs
  - Akka
+ - Newtonsoft.Json
  - YamlDotNet
