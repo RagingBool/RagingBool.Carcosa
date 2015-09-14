@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Keyboard;
 using System;
 
 namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
@@ -25,7 +26,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         int NumberOfButtons { get; }
         int NumberOfControllers { get; }
 
-        event EventHandler<ButtonEventArgs> OnButtonEvent;
+        event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
         event EventHandler<ControllerChangeEventArgs> OnControllerChange;
 
         void SetKeyLightState(int id, bool newState);

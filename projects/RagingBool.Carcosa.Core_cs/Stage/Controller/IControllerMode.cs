@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
@@ -26,7 +27,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         void Exit();
         void Update();
 
-        void ProcessButtonEventHandler(ButtonEventArgs e);
+        void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e);
         void ProcessControllerChangeEvent(ControllerChangeEventArgs e);
     }
 }

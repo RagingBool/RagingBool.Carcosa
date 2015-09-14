@@ -65,11 +65,11 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public override void ProcessButtonEventHandler(ButtonEventArgs e)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e)
         {
-            if(e.ButtonEventType == KeyEventType.Released)
+            if(e.EventType == KeyEventType.Released)
             {
-                ControllerUi.SelectSceneAndGoToLiveMode(e.ButtonId);
+                ControllerUi.SelectSceneAndGoToLiveMode(e.KeyId);
             }
         }
 

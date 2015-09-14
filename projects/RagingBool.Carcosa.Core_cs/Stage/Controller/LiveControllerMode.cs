@@ -17,6 +17,7 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System.Collections.Generic;
@@ -110,7 +111,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public override void ProcessButtonEventHandler(ButtonEventArgs eventArgs)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> eventArgs)
         {
             foreach (var button in _buttons)
             {

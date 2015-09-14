@@ -17,6 +17,7 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
@@ -98,7 +99,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        private void OnButtonEventHandler(object sender, ButtonEventArgs e)
+        private void OnButtonEventHandler(object sender, KeyEventArgs<int, KeyVelocity> e)
         {
             lock (_lock)
             {

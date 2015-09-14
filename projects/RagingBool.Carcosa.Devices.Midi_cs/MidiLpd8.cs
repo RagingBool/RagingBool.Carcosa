@@ -116,12 +116,12 @@ namespace RagingBool.Carcosa.Devices.Midi
 
                     SendState();
 
-                    OnButtonEvent(this, new ButtonEventArgs(keyId, velocity, buttonEventType));
+                    OnButtonEvent(this, new KeyEventArgs<int, KeyVelocity>(keyId, buttonEventType, new KeyVelocity(velocity)));
                 }
             }
         }
 
-        public event EventHandler<ButtonEventArgs> OnButtonEvent;
+        public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
         public event EventHandler<ControllerChangeEventArgs> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
