@@ -107,6 +107,9 @@
     <Reference Include="Epicycle.Commons_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
+    <Reference Include="Epicycle.Input_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Input-cs.0.1.3.0\lib\net45\Epicycle.Input_cs.dll</HintPath>
+    </Reference>
     <Reference Include="Epicycle.Graphics.Platform.SystemDrawing_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Graphics-cs.0.1.5.0\lib\net45\Epicycle.Graphics.Platform.SystemDrawing_cs.dll</HintPath>
     </Reference>
@@ -126,6 +129,7 @@
       <HintPath>..\..\externals\NuGet\YamlDotNet.3.5.0\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -60,7 +60,7 @@ namespace RagingBool.Carcosa.App
 
         private void OnKeyEvent(object sender, KeyEventArgs e)
         {
-            _keyboardManager.KeyboardEvent(e);
+            _keyboardManager.ProcessWpfKeyboardEvent(e);
         }
     }
 }

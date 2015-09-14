@@ -16,15 +16,70 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input;
+using Epicycle.Input.Keyboard;
+using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace RagingBool.Carcosa.App
 {
-    public class WpfKeyboardManager
+    public class WpfKeyboardManager : IKeyboard<Key, Unit>
     {
-        public void KeyboardEvent(KeyEventArgs eventArgs)
-        {
+        private readonly Dictionary<Key, KeyState> _keyStates;
 
+        public WpfKeyboardManager()
+        {
+            _keyStates = new Dictionary<Key, KeyState>();
+        }
+
+        public event EventHandler<KeyEventArgs<Key, Unit>> OnKeyEvent;
+
+        public KeyState GetKeyState(Key keyId)
+        {
+            if(!_keyStates.ContainsKey(keyId))
+            {
+                return KeyState.Released;
+            }
+
+            return _keyStates[keyId];
+        }
+
+        public void ProcessWpfKeyboardEvent(System.Windows.Input.KeyEventArgs eventArgs)
+        {
+            var keyId = eventArgs.Key;
+            var eventType = CalcEventType(eventArgs);
+
+            var prevState = GetKeyState(keyId);
+            var newState = eventType != KeyEventType.Released ? KeyState.Pressed : KeyState.Released;
+
+            _keyStates[keyId] = newState;
+
+            if (OnKeyEvent != null && eventType == KeyEventType.Repeat || prevState != newState)
+            {
+                var outgoingEvent = new KeyEventArgs<Key, Unit>(keyId, eventType, Unit.Instance);
+                OnKeyEvent(this, outgoingEvent);
+            }
+        }
+
+        private static KeyEventType CalcEventType(System.Windows.Input.KeyEventArgs eventArgs)
+        {
+            if(eventArgs.IsRepeat)
+            {
+                return KeyEventType.Repeat;
+            }
+            
+            if(eventArgs.IsDown)
+            {
+                return KeyEventType.Pressed;
+            }
+
+            if(eventArgs.IsUp)
+            {
+                return KeyEventType.Released;
+            }
+
+            throw new ArgumentException("Illegal key event!");
         }
     }
 }
