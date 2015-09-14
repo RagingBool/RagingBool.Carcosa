@@ -26,5 +26,7 @@ namespace RagingBool.Carcosa.Core
         void Stop();
 
         ICarcosaWorkspace Workspace { get; }
+
+        void AwaitTermination();
     }
 }

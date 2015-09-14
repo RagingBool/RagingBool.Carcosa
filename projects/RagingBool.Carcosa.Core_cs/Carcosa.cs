@@ -79,6 +79,11 @@ namespace RagingBool.Carcosa.Core
             _actorSystem.Shutdown();
         }
 
+        public void AwaitTermination()
+        {
+            _actorSystem.AwaitTermination();
+        }
+
         private void UpdateThreadLoop()
         {
             while(_isRunning)
