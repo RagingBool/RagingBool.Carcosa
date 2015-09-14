@@ -45,6 +45,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
 
+    <Reference Include="Akka">
+      <HintPath>..\..\externals\NuGet\Akka.1.0.4\lib\net45\Akka.dll</HintPath>
+    </Reference>
     <Reference Include="Epicycle.Commons.TestUtils_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.8.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>

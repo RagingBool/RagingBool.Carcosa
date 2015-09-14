@@ -9,4 +9,5 @@ external_libs:
  - Epicycle.Commons-cs
  - Epicycle.Math-cs
  - Epicycle.Graphics-cs
+ - Akka
  - YamlDotNet
