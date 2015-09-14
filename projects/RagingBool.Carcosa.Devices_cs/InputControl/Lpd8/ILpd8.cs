@@ -16,11 +16,18 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+using System;
+
+namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
 {
-    public interface IDevice
+    public interface ILpd8
     {
-        void Connect();
-        void Disconnect();
+        int NumberOfButtons { get; }
+        int NumberOfControllers { get; }
+
+        event EventHandler<ButtonEventArgs> OnButtonEvent;
+        event EventHandler<ControllerChangeEventArgs> OnControllerChange;
+
+        void SetKeyLightState(int id, bool newState);
     }
 }

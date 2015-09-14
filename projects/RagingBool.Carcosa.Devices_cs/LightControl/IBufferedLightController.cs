@@ -16,11 +16,14 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+using System.Collections.Generic;
+
+namespace RagingBool.Carcosa.Devices.LightControl
 {
-    public interface IDevice
+    // TODO: Use Epicycle fixed-length list interface when available
+    public interface IBufferedLightController : IUpdatable, IEnumerable<byte>
     {
-        void Connect();
-        void Disconnect();
+        int FrameSize { get; }
+        byte this[int index] { get; set; }
     }
 }

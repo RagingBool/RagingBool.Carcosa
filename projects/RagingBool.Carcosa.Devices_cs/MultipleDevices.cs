@@ -16,18 +16,37 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
+using Epicycle.Commons;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RagingBool.Carcosa.Devices
 {
-    public interface ILpd8 : IDevice
-    {
-        int NumberOfButtons { get; }
-        int NumberOfControllers { get; }
+    public sealed class MultipleDevices : IDevice
+    {        
+        private readonly IList<IDevice> _devices;
 
-        event EventHandler<ButtonEventArgs> OnButtonEvent;
-        event EventHandler<ControllerChangeEventArgs> OnControllerChange;
+        public MultipleDevices(IEnumerable<IDevice> devices)
+        {
+            ArgAssert.NotNull(devices, "devices");
 
-        void SetKeyLightState(int id, bool newState);
+            _devices = devices.ToList();
+        }
+
+        public void Connect()
+        {
+            foreach (var device in _devices)
+            {
+                device.Connect();
+            }
+        }
+
+        public void Disconnect()
+        {
+            foreach (var device in _devices)
+            {
+                device.Disconnect();
+            }
+        }
     }
 }

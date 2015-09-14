@@ -16,12 +16,10 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices.Dmx
+namespace RagingBool.Carcosa.Devices
 {
-    public interface IDmxMultiverse : IDevice
+    public interface IUpdatable
     {
-        void AddUniverse(int universeId);
-
-        void SetChannel(int universeId, int channelId, int value);
+        void Update();
     }
 }

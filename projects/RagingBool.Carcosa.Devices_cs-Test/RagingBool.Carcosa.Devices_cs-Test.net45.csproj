@@ -62,6 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LightControl\BufferedLightControllerTest.cs" />
+    <Compile Include="LightControl\Dmx\E1_31ProtocolUtilsTest.cs" />
+    <Compile Include="LightControl\Dmx\FramedDmxControllerTest.cs" />
+    <Compile Include="LightControl\Opc\FramedOpcControllerTest.cs" />
+    <Compile Include="LightControl\Opc\OpcProtocolUtilsTest.cs" />
+    <Compile Include="MaxFrequencyUpdaterTest.cs" />
+    <Compile Include="MultipleDevicesTest.cs" />
+    <Compile Include="MultipleUpdatablesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,11 +16,18 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
-    public interface IDevice
+    /// <summary>
+    /// A device that controls several indexed DMX512 universes. It only allows sending DMX messages.
+    /// More information about the protocol can be found here: https://en.wikipedia.org/wiki/DMX512
+    /// </summary>
+    public interface IDmxMultiverse
     {
-        void Connect();
-        void Disconnect();
+        /// <summary>
+        /// Sends a whole frame of DMX512 data
+        /// </summary>
+        /// <param name="universeId">The index of the DMX512 universe.</param>
+        IDmxUniverse GetUniverse(int universeId);
     }
 }

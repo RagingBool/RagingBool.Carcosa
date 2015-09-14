@@ -16,28 +16,28 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System.IO;
+using Epicycle.Commons;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace RagingBool.Carcosa.Devices.Fadecandy
+namespace RagingBool.Carcosa.Devices
 {
-    internal sealed class OpenPixelUtils
+    public sealed class MultipleUpdatables: IUpdatable
     {
-        public static byte[] buildPacket(int channel, byte[] rgbValues)
+        private readonly IList<IUpdatable> _updatables;
+
+        public MultipleUpdatables(IEnumerable<IUpdatable> updatables)
         {
-            using (var stream = new MemoryStream())
+            ArgAssert.NotNull(updatables, "updatables");
+
+            _updatables = updatables.ToList();
+        }
+
+        public void Update()
+        {
+            foreach (var updateable in _updatables)
             {
-                var writer = new BinaryWriter(stream);
-
-                
-                writer.Write((byte)channel);
-                writer.Write((byte)0);
-
-                writer.Write((byte)(rgbValues.Length >> 8));
-                writer.Write((byte)(rgbValues.Length & 0xFF));
-                
-                writer.Write(rgbValues);
-
-                return stream.ToArray();
+                updateable.Update();
             }
         }
     }

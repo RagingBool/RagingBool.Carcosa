@@ -16,7 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Devices.InputControl
 {
     public enum ButtonEventType
     {

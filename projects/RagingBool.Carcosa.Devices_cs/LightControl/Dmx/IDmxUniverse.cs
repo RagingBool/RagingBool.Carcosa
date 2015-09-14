@@ -16,29 +16,18 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
-    public sealed class ControllerChangeEventArgs : EventArgs
+    /// <summary>
+    /// A device that controls a DMX512 univers. It only allows sending DMX messages.
+    /// More information about the protocol can be found here: https://en.wikipedia.org/wiki/DMX512
+    /// </summary>
+    public interface IDmxUniverse
     {
-        private readonly int _controllerId;
-        private readonly int _value;
-
-        public ControllerChangeEventArgs(int controllerId, int value)
-        {
-            _controllerId = controllerId;
-            _value = value;
-        }
-
-        public int ControllerId
-        {
-            get { return _controllerId; }
-        }
-
-        public int Value
-        {
-            get { return _value; }
-        }
+        /// <summary>
+        /// Sends a whole frame of DMX512 data
+        /// </summary>
+        /// <param name="values">The DMX channel data. Each byte represents a channel. Expected to be exactly 512.</param>
+        void SendFrame(byte[] values);
     }
 }

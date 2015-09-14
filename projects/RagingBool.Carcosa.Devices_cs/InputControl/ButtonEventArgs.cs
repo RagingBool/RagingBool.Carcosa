@@ -16,11 +16,36 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+using System;
+
+namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public interface IDevice
+    public sealed class ButtonEventArgs : EventArgs
     {
-        void Connect();
-        void Disconnect();
+        private readonly int _buttonId;
+        private readonly int _velocity;
+        private readonly ButtonEventType _eventType;
+
+        public ButtonEventArgs(int buttonId, int velocity, ButtonEventType eventType)
+        {
+            _buttonId = buttonId;
+            _velocity = velocity;
+            _eventType = eventType;
+        }
+
+        public int ButtonId
+        {
+            get { return _buttonId; }
+        }
+
+        public int Velocity
+        {
+            get { return _velocity; }
+        }
+
+        public ButtonEventType ButtonEventType
+        {
+            get { return _eventType; }
+        }
     }
 }

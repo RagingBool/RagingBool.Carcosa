@@ -22,9 +22,11 @@ using RagingBool.Carcosa.Core.Stage.Scenes;
 using RagingBool.Carcosa.Core.Stage.Scenes.Forest;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
-using RagingBool.Carcosa.Devices.Dmx;
-using RagingBool.Carcosa.Devices.Fadecandy;
+using RagingBool.Carcosa.Devices.LightControl;
+using RagingBool.Carcosa.Devices.LightControl.Dmx;
+using RagingBool.Carcosa.Devices.LightControl.Opc;
 using RagingBool.Carcosa.Devices.Midi;
+using System;
 
 namespace RagingBool.Carcosa.Core.Stage
 {
@@ -36,10 +38,19 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private readonly IClock _clock;
 
-        private readonly ILpd8 _controller;
-        private readonly IDmxMultiverse _dmxMultiverse;
-        private readonly ISnark _snark;
-        private readonly FadecandyOpenPixelClient _fadecandyClient;
+        private readonly MidiLpd8 _controller;
+
+        private readonly E1_31DmxMultiverse _e1_31DmxMultiverse;
+        private readonly IBufferedLightController _dmxUniverse1;
+        private readonly MaxFrequencyUpdater _dmxMultiverseUpdater1;
+
+        private readonly SerialOpcDevice _snark;
+        private readonly IBufferedLightController _snarkController;
+        private readonly MaxFrequencyUpdater _snarkUpdater;
+
+        private readonly NetworkOpcDevice _fadecandy;
+        private readonly IBufferedLightController _fadecandyContoller;
+        private readonly MaxFrequencyUpdater _fadecandyUpdater;
 
         private IScene _curScene;
         private int _curSceneId;
@@ -61,12 +72,20 @@ namespace RagingBool.Carcosa.Core.Stage
 
             _controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
             
-            _dmxMultiverse = new E1_31DmxMultiverse(_clock, 30.0);
-            _dmxMultiverse.AddUniverse(1);
+            var componentIdentifier = Guid.NewGuid();
+            var sourceName = "test";
+            _e1_31DmxMultiverse = new E1_31DmxMultiverse(new int[] { 1 }, componentIdentifier, sourceName);
+            _dmxUniverse1 = new BufferedLightController(new FramedDmxController(_e1_31DmxMultiverse.GetUniverse(1)));
+            _dmxMultiverseUpdater1 = new MaxFrequencyUpdater(_dmxUniverse1, _clock, 30.0);
 
-            _snark = new SerialSnark(_clock, workspace.SnarkSerialPortName, 12, 50);
+            _snark = new SerialOpcDevice(workspace.SnarkSerialPortName);
+            _snarkController = new BufferedLightController(new FramedOpcController(_snark, 0, 12));
+            _snarkUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 50.0);
+
             var host = "forest";
-            _fadecandyClient = new FadecandyOpenPixelClient(_clock, host, 7890, 480 * 3, 60.0);
+            _fadecandy = new NetworkOpcDevice(host, 7890);
+            _fadecandyContoller = new BufferedLightController(new FramedOpcController(_fadecandy, 0, 480 * 3));
+            _fadecandyUpdater = new MaxFrequencyUpdater(_fadecandyContoller, _clock, 60.0);
 
             _controllerUi = new ControllerUi(_clock, _controller);
 
@@ -74,7 +93,7 @@ namespace RagingBool.Carcosa.Core.Stage
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
             _controllerUi.OnControlParameterValueChange += OnControlParameterValueChange;
 
-            _lightSetup = new LightSetup(_dmxMultiverse, _snark, _fadecandyClient);
+            _lightSetup = new LightSetup(_dmxUniverse1, _snarkController, _fadecandyContoller);
 
             _partyScene1 = new PartyScene1(_clock, _lightSetup);
             _fadecandyScene = new FadecandyScene(_lightSetup);
@@ -90,8 +109,10 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Connect();
-                _dmxMultiverse.Connect();
+
+                _e1_31DmxMultiverse.Connect();
                 _snark.Connect();
+                _fadecandy.Connect();
 
                 _controllerUi.Start();
 
@@ -104,9 +125,9 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controller.Update();
-                _dmxMultiverse.Update();
-                _snark.Update();
-                _fadecandyClient.Update();
+                _dmxMultiverseUpdater1.Update();
+                _snarkUpdater.Update();
+                _fadecandyUpdater.Update();
 
                 _controllerUi.Update();
                 UpdateScene();
@@ -137,7 +158,6 @@ namespace RagingBool.Carcosa.Core.Stage
                 _controllerUi.Stop();
 
                 _controller.Disconnect();
-                _dmxMultiverse.Disconnect();
                 _snark.Disconnect();
             }
         }

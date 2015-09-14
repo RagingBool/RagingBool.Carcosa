@@ -16,40 +16,39 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices.LightControl;
+using Epicycle.Commons;
 
-namespace RagingBool.Carcosa.Core.Stage.Lights
+namespace RagingBool.Carcosa.Devices.LightControl.Dmx
 {
-    internal sealed class DmxSimpleMonoLight : IMonoLight
+    public sealed class FramedDmxController : IFramedLightController
     {
-        private readonly IBufferedLightController _dmxUniverse;
-        private readonly int _universeId;
-        private readonly int _dmxChannel;
+        public const int DmxDefaultFrameSize = 512;
 
-        private double _intensity;
+        private readonly IDmxUniverse _dmxUniverse;
+        private readonly int _frameSize;
 
-        public DmxSimpleMonoLight(IBufferedLightController dmxUniverse, int universeId, int dmxChannel)
+        public FramedDmxController(IDmxUniverse dmxUniverse, int frameSize = DmxDefaultFrameSize)
         {
+            ArgAssert.NotNull(dmxUniverse, "dmxUniverse");
+            ArgAssert.AtLeast(frameSize, "frameSize", 0);
+
             _dmxUniverse = dmxUniverse;
-            _universeId = universeId;
-            _dmxChannel = dmxChannel;
-
-            _intensity = 0;
+            _frameSize = frameSize;
         }
 
-        public double Intensity
+        public IDmxUniverse DmxUniverse
         {
-            get { return _intensity; }
-            set
-            {
-                _intensity = value;
-                Update();
-            }
+            get { return _dmxUniverse; }
         }
 
-        private void Update()
+        public int FrameSize
         {
-            _dmxUniverse[_dmxChannel] = (byte)_intensity.UnitToByte();
+            get { return _frameSize; }
+        }
+
+        public void SendFrame(byte[] values)
+        {
+            _dmxUniverse.SendFrame(values);
         }
     }
 }

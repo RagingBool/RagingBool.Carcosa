@@ -56,20 +56,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonEventArgs.cs" />
-    <Compile Include="ButtonEventType.cs" />
-    <Compile Include="ControllerChangeEventArgs.cs" />
-    <Compile Include="Dmx\E1_31Conncetion.cs" />
-    <Compile Include="Dmx\E1_31DmxMultiverse.cs" />
-    <Compile Include="Dmx\E1_31Utils.cs" />
-    <Compile Include="Dmx\IDmxMultiverse.cs" />
-    <Compile Include="Fadecandy\FadecandyOpenPixelClient.cs" />
-    <Compile Include="Fadecandy\OpenPixelUtils.cs" />
     <Compile Include="IDevice.cs" />
-    <Compile Include="ILpd8.cs" />
-    <Compile Include="ISnark.cs" />
+    <Compile Include="IUpdatable.cs" />
+    <Compile Include="InputControl\ButtonEventArgs.cs" />
+    <Compile Include="InputControl\ButtonEventType.cs" />
+    <Compile Include="InputControl\ControllerChangeEventArgs.cs" />
+    <Compile Include="InputControl\Lpd8\ILpd8.cs" />
+    <Compile Include="LightControl\BufferedLightController.cs" />
+    <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
+    <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />
+    <Compile Include="LightControl\Dmx\E1_31MulticastConncetion.cs" />
+    <Compile Include="LightControl\Dmx\E1_31ProtocolUtils.cs" />
+    <Compile Include="LightControl\Dmx\FramedDmxController.cs" />
+    <Compile Include="LightControl\Dmx\IDmxMultiverse.cs" />
+    <Compile Include="LightControl\Dmx\IDmxUniverse.cs" />
+    <Compile Include="LightControl\IBufferedLightController.cs" />
+    <Compile Include="LightControl\IFramedLightController.cs" />
+    <Compile Include="LightControl\Opc\FramedOpcController.cs" />
+    <Compile Include="LightControl\Opc\IOpcController.cs" />
+    <Compile Include="LightControl\Opc\NetworkOpcDevice.cs" />
+    <Compile Include="LightControl\Opc\OpcProtocolUtils.cs" />
+    <Compile Include="LightControl\Opc\SerialOpcDevice.cs" />
+    <Compile Include="MaxFrequencyUpdater.cs" />
+    <Compile Include="MultipleDevices.cs" />
+    <Compile Include="MultipleUpdatables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialSnark.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

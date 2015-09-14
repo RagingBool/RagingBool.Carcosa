@@ -17,7 +17,8 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
-using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl;
+using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller

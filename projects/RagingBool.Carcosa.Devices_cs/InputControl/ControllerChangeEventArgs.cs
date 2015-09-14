@@ -16,11 +16,29 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+using System;
+
+namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public interface IDevice
+    public sealed class ControllerChangeEventArgs : EventArgs
     {
-        void Connect();
-        void Disconnect();
+        private readonly int _controllerId;
+        private readonly int _value;
+
+        public ControllerChangeEventArgs(int controllerId, int value)
+        {
+            _controllerId = controllerId;
+            _value = value;
+        }
+
+        public int ControllerId
+        {
+            get { return _controllerId; }
+        }
+
+        public int Value
+        {
+            get { return _value; }
+        }
     }
 }

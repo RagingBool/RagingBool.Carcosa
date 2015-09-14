@@ -16,36 +16,31 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
+using Moq;
+using NUnit.Framework;
 
 namespace RagingBool.Carcosa.Devices
 {
-    public sealed class ButtonEventArgs : EventArgs
+    [TestFixture]
+    public class MultipleUpdatablesTest
     {
-        private readonly int _buttonId;
-        private readonly int _velocity;
-        private readonly ButtonEventType _eventType;
-
-        public ButtonEventArgs(int buttonId, int velocity, ButtonEventType eventType)
+        [Test]
+        public void Update_updates_all_the_child_updatables()
         {
-            _buttonId = buttonId;
-            _velocity = velocity;
-            _eventType = eventType;
-        }
+            var updatableMock1 = new Mock<IUpdatable>();
+            var updatableMock2 = new Mock<IUpdatable>();
+            var updatableMock3 = new Mock<IUpdatable>();
 
-        public int ButtonId
-        {
-            get { return _buttonId; }
-        }
+            var multipleUpdatables = new MultipleUpdatables(new IUpdatable[] { 
+                updatableMock1.Object,
+                updatableMock2.Object,
+                updatableMock3.Object});
 
-        public int Velocity
-        {
-            get { return _velocity; }
-        }
+            multipleUpdatables.Update();
 
-        public ButtonEventType ButtonEventType
-        {
-            get { return _eventType; }
+            updatableMock1.Verify(m => m.Update(), Times.Once);
+            updatableMock2.Verify(m => m.Update(), Times.Once);
+            updatableMock3.Verify(m => m.Update(), Times.Once);
         }
     }
 }

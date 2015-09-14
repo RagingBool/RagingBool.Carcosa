@@ -16,21 +16,21 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices.Fadecandy;
+using RagingBool.Carcosa.Devices.LightControl;
 
 namespace RagingBool.Carcosa.Core.Stage.Lights
 {
     public sealed class FadecandyLed : IRgbLight
     {
-        private readonly FadecandyOpenPixelClient _fadecandyClient;
+        private readonly IBufferedLightController _fadecandyController;
         private readonly int _index;
         private double _red;
         private double _green;
         private double _blue;
 
-        public FadecandyLed(FadecandyOpenPixelClient fadecandyClient, int index)
+        public FadecandyLed(IBufferedLightController fadecandyController, int index)
         {
-            _fadecandyClient = fadecandyClient;
+            _fadecandyController = fadecandyController;
             _index = index;
 
             _red = 0;
@@ -72,9 +72,9 @@ namespace RagingBool.Carcosa.Core.Stage.Lights
         {
             var pos = _index * 3;
 
-            _fadecandyClient.SetChannel(pos + 0, (byte)_red.UnitToByte());
-            _fadecandyClient.SetChannel(pos + 1, (byte)_green.UnitToByte());
-            _fadecandyClient.SetChannel(pos + 2, (byte)_blue.UnitToByte());
+            _fadecandyController[pos + 0] = (byte)_red.UnitToByte();
+            _fadecandyController[pos + 1] = (byte)_green.UnitToByte();
+            _fadecandyController[pos + 2] = (byte)_blue.UnitToByte();
         }
     }
 }

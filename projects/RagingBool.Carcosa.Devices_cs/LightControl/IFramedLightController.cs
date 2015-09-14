@@ -16,11 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Devices.LightControl
 {
-    public interface ISnark : IDevice
+    public interface IFramedLightController
     {
-        int NumChannels { get; }
-        void SetChannel(int id, int value);
+        int FrameSize { get; }
+        void SendFrame(byte[] values);
     }
 }

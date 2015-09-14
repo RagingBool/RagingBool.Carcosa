@@ -16,57 +16,57 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using Epicycle.Commons.Time;
-using System;
-using System.Net.Sockets;
 
-namespace RagingBool.Carcosa.Devices.Fadecandy
+namespace RagingBool.Carcosa.Devices
 {
-    public sealed class FadecandyOpenPixelClient
+    public sealed class MaxFrequencyUpdater : IUpdatable
     {
-        private readonly string _host;
-        private readonly int _port;
+        private readonly IUpdatable _updatable;
         private readonly IClock _clock;
-        private readonly double _fps;
-        private double _lastUpdateTime;
+        private readonly double _maxFrequency;
 
-        private TcpClient _tcpClient;
+        private double? _lastUpdateTime;
 
-        private byte[] _data;
-
-        public FadecandyOpenPixelClient(IClock clock, string host, int port, int chanels, double fps)
+        public MaxFrequencyUpdater(IUpdatable updatable, IClock clock, double maxFrequency)
         {
-            _host = host;
-            _port = port;
+            ArgAssert.NotNull(updatable, "updatable");
+            ArgAssert.NotNull(clock, "clock");
+            ArgAssert.GreaterThan(maxFrequency, "maxFrequency", 0);
+
+            _updatable = updatable;
             _clock = clock;
-            _fps = fps;
+            _maxFrequency = maxFrequency;
 
-            _tcpClient = new TcpClient(host, port);
-            _tcpClient.NoDelay = true;
-
-            _data = new byte[chanels];
-
-            _lastUpdateTime = _clock.Time;
+            _lastUpdateTime = null;
         }
 
-        public void SetChannel(int channel, byte value)
+        public IUpdatable Updatable
         {
-            _data[channel] = value;
+            get { return _updatable; }
+        }
+
+        public IClock Clock
+        {
+            get { return _clock; }
+        }
+
+        public double MaxFrequency
+        {
+            get { return _maxFrequency; }
         }
 
         public void Update()
         {
             var curTime = _clock.Time;
-            var timeSinceLastUpdate = curTime - _lastUpdateTime;
 
-            if (timeSinceLastUpdate < (1 / _fps))
+            if(_lastUpdateTime.HasValue && (curTime - _lastUpdateTime.Value) < (1.0 / _maxFrequency))
             {
                 return;
             }
 
-            var packet = OpenPixelUtils.buildPacket(0, _data);
-
-            _tcpClient.GetStream().Write(packet, 0, packet.Length);
+            _updatable.Update();
 
             _lastUpdateTime = curTime;
         }
