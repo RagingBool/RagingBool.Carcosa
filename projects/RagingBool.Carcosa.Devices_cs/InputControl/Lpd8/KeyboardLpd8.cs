@@ -20,15 +20,13 @@ using Epicycle.Commons;
 using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RagingBool.Carcosa.App.Control
+namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
 {
-    internal sealed class KeyboardLpd8<TKeyId> : ILpd8
+    public sealed class KeyboardLpd8<TKeyId> : ILpd8
     {
         private const int MinControllerValue = 0;
         private const int MaxControllerValue = 255;
@@ -47,7 +45,7 @@ namespace RagingBool.Carcosa.App.Control
         public KeyboardLpd8(
             IKeyboard<TKeyId, Unit> keyboardManager,
             IEnumerable<TKeyId> buttonKeys,
-            int defaultVelocity, int highVelocity, 
+            int defaultVelocity, int highVelocity,
             TKeyId highVelocityKey,
             IEnumerable<TKeyId> controllerKeys,
             IEnumerable<TKeyId> faderKeys,
@@ -95,12 +93,12 @@ namespace RagingBool.Carcosa.App.Control
 
             var count = faderKeys.Count();
 
-            if(count <= 0)
+            if (count <= 0)
             {
                 return;
             }
 
-            if(count == 1)
+            if (count == 1)
             {
                 throw new ArgumentException("There can not be one fader key");
             }
@@ -109,7 +107,7 @@ namespace RagingBool.Carcosa.App.Control
 
             var curValue = low;
 
-            foreach(var key in faderKeys)
+            foreach (var key in faderKeys)
             {
                 _absoluteFaderKeys[key] = curValue;
 
@@ -193,7 +191,7 @@ namespace RagingBool.Carcosa.App.Control
                         var eventType = e.EventType;
 
                         KeyVelocity velocity;
-                        if(eventType == KeyEventType.Pressed)
+                        if (eventType == KeyEventType.Pressed)
                         {
                             var isHighVelocity = Parent._keyboardManager.GetKeyState(Parent._highVelocityKey) == KeyState.Pressed;
                             velocity = isHighVelocity ? Parent._highVelocity : Parent._defaultVelocity;

@@ -18,8 +18,8 @@
 
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using RagingBool.Carcosa.App.Control;
 using RagingBool.Carcosa.Devices.InputControl;
+using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using System;
 using System.ComponentModel;
 using System.Windows;
