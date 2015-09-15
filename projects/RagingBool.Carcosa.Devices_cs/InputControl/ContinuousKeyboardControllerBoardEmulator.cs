@@ -38,8 +38,7 @@ namespace RagingBool.Carcosa.Devices.InputControl
             IKeyboard<TKeyId, TAdditionalKeyEventData> baseKeyboard,
             IDictionary<TKeyId, TControllerId> controllerKeyMapping,
             IEnumerable<TKeyId> valueKeys,
-            TKeyId smallAdvanceForwardKey, TKeyId smallAdvanceBackwardKey,
-            TKeyId bigAdvanceForwardKey, TKeyId bigAdvanceBackwardKey,
+            TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> valueChangeKeysConfig,
             double smallValueStep, double bigValueStep)
 
             : base(
@@ -47,8 +46,7 @@ namespace RagingBool.Carcosa.Devices.InputControl
                 DefaultValue,
                 controllerKeyMapping,
                 GenerateValueKeysMapping(valueKeys),
-                smallAdvanceForwardKey, smallAdvanceBackwardKey,
-                bigAdvanceForwardKey, bigAdvanceBackwardKey)
+                valueChangeKeysConfig)
         {
             _smallValueStep = smallValueStep;
             _bigValueStep = bigValueStep;

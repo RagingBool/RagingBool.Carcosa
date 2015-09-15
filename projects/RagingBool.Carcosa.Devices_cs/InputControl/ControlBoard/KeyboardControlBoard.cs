@@ -38,8 +38,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             TKeyId highVelocityKey,
             IEnumerable<TKeyId> controllerKeys,
             IEnumerable<TKeyId> controllerValueKeys,
-            TKeyId controllerSmallAdvanceForwardKey, TKeyId controllerSmallAdvanceBackwardKey,
-            TKeyId controllerBigAdvanceForwardKey, TKeyId controllerBigAdvanceBackwardKey,
+            TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> controllerValueChangeKeysConfig,
             double controllerSmallValueStep, double controllerBigValueStep)
         {
             _keyboardManager = keyboardManager;
@@ -59,8 +58,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
                 keyboardManager,
                 CreateKeyMapping(controllerKeys),
                 controllerValueKeys,
-                controllerSmallAdvanceForwardKey, controllerSmallAdvanceBackwardKey,
-                controllerBigAdvanceForwardKey, controllerBigAdvanceBackwardKey,
+                controllerValueChangeKeysConfig,
                 controllerSmallValueStep, controllerBigValueStep
                 );
         }

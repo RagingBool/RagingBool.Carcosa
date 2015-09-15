@@ -28,10 +28,7 @@ namespace RagingBool.Carcosa.Devices.InputControl
         private readonly IKeyboard<TKeyId, TAdditionalKeyEventData> _baseKeyboard;
         private readonly IDictionary<TKeyId, TControllerId> _controllerKeyMapping;
         private readonly IDictionary<TKeyId, TControllerValue> _valueKeysMapping;
-        private readonly TKeyId _smallAdvanceForwardKey;
-        private readonly TKeyId _smallAdvanceBackwardKey;
-        private readonly TKeyId _bigAdvanceForwardKey;
-        private readonly TKeyId _bigAdvanceBackwardKey;
+        TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> _valueChangeKeysConfig;
 
         private readonly IDictionary<TControllerId, bool> _armedControllers;
 
@@ -40,18 +37,14 @@ namespace RagingBool.Carcosa.Devices.InputControl
             TControllerValue defaultValue,
             IDictionary<TKeyId, TControllerId> controllerKeyMapping,
             IDictionary<TKeyId, TControllerValue> valueKeysMapping,
-            TKeyId smallAdvanceForwardKey, TKeyId smallAdvanceBackwardKey,
-            TKeyId bigAdvanceForwardKey, TKeyId bigAdvanceBackwardKey)
+            TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> valueChangeKeysConfig)
 
             : base(defaultValue)
         {
             _baseKeyboard = baseKeyboard;
             _controllerKeyMapping = controllerKeyMapping;
             _valueKeysMapping = valueKeysMapping;
-            _smallAdvanceForwardKey = smallAdvanceForwardKey;
-            _smallAdvanceBackwardKey = smallAdvanceBackwardKey;
-            _bigAdvanceForwardKey = bigAdvanceForwardKey;
-            _bigAdvanceBackwardKey = bigAdvanceBackwardKey;
+            _valueChangeKeysConfig = valueChangeKeysConfig;
 
             _armedControllers = new Dictionary<TControllerId, bool>();
             foreach(var controllerId in _controllerKeyMapping.Values)
@@ -85,19 +78,19 @@ namespace RagingBool.Carcosa.Devices.InputControl
             }
             else if (eventType == KeyEventType.Pressed || eventType == KeyEventType.Repeat)
             {
-                if (key.Equals(_smallAdvanceForwardKey))
+                if (key.Equals(_valueChangeKeysConfig.SlowMovementKeysConfiguration.PositiveDirectionKeyId))
                 {
                     AdvanceValueForArmedControllers(true, false);
                 }
-                else if (key.Equals(_smallAdvanceBackwardKey))
+                else if (key.Equals(_valueChangeKeysConfig.SlowMovementKeysConfiguration.NegativeDirectionKeyId))
                 {
                     AdvanceValueForArmedControllers(false, false);
                 }
-                else if (key.Equals(_bigAdvanceForwardKey))
+                else if (key.Equals(_valueChangeKeysConfig.FastMovementKeysConfiguration.PositiveDirectionKeyId))
                 {
                     AdvanceValueForArmedControllers(true, true);
                 }
-                else if (key.Equals(_bigAdvanceBackwardKey))
+                else if (key.Equals(_valueChangeKeysConfig.FastMovementKeysConfiguration.NegativeDirectionKeyId))
                 {
                     AdvanceValueForArmedControllers(false, true);
                 }

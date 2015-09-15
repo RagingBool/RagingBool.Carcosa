@@ -55,6 +55,10 @@ namespace RagingBool.Carcosa.App
 
         private void InitKeyboardControlBoard()
         {
+            var controllerValueChangeKeysConfig = new TwoSpeedBidirectionalMovementKeysConfiguration<Key>(
+                slowPositiveDirectionKeyId: Key.Right, slowNegativeDirectionKeyId: Key.Left,
+                fastPositiveDirectionKeyId: Key.Up, fastNegativeDirectionKeyId: Key.Down);
+
             _keyboardControlBoard = new KeyboardControlBoard<Key>(
                 _keyboardManager,
                 buttonKeys: new Key[] { Key.Z, Key.X, Key.C, Key.V, Key.A, Key.S, Key.D, Key.F},
@@ -63,8 +67,7 @@ namespace RagingBool.Carcosa.App
                 highVelocityKey: Key.LeftShift,
                 controllerKeys: new Key[] { Key.M, Key.OemComma, Key.OemPeriod, Key.OemQuestion, Key.K, Key.L, Key.Oem1, Key.OemQuotes },
                 controllerValueKeys: new Key[] { Key.Oem3, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
-                controllerSmallAdvanceForwardKey: Key.Right, controllerSmallAdvanceBackwardKey: Key.Left,
-                controllerBigAdvanceForwardKey: Key.Up, controllerBigAdvanceBackwardKey: Key.Down,
+                controllerValueChangeKeysConfig: controllerValueChangeKeysConfig,
                 controllerSmallValueStep: 1.0 / 1000, controllerBigValueStep: 1.0 / 100);
 
             _keyboardControlBoard.Buttons.OnKeyEvent += OnButtonEvent;
