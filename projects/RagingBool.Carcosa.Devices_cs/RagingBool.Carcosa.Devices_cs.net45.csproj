@@ -65,6 +65,8 @@
     <Compile Include="InputControl\ControlBoard\DummyControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\IControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoard.cs" />
+    <Compile Include="InputControl\DummyKeyboard.cs" />
+    <Compile Include="InputControl\KeyboardBase.cs" />
     <Compile Include="InputControl\TimedKey.cs" />
     <Compile Include="InputControl\TimedKeyVelocity.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />
