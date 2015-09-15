@@ -100,7 +100,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        private void OnButtonEventHandler(object sender, KeyEventArgs<int, KeyVelocity> e)
+        private void OnButtonEventHandler(object sender, KeyEventArgs<int, TimedKeyVelocity> e)
         {
             lock (_lock)
             {

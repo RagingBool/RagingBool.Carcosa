@@ -66,7 +66,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e)
         {
             if(e.EventType == KeyEventType.Released)
             {

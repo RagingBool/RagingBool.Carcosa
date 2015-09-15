@@ -70,7 +70,7 @@ namespace RagingBool.Carcosa.App
             _keyboardLpd8.OnControllerChange += OnControllerChange;
         }
 
-        private void OnButtonEvent(object sender, KeyEventArgs<int, KeyVelocity> e)
+        private void OnButtonEvent(object sender, KeyEventArgs<int, TimedKeyVelocity> e)
         {
             System.Console.WriteLine("Key: {0} - {1} ({2})", e.KeyId, e.EventType, e.AdditionalData.Velocity);
         }

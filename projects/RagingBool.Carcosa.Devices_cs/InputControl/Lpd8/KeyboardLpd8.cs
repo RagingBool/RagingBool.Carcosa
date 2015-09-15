@@ -17,7 +17,6 @@
 // ]]]]
 
 using Epicycle.Commons;
-using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using System;
@@ -32,8 +31,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         private const int MaxControllerValue = 255;
 
         private readonly IKeyboard<TKeyId, TimedKey> _keyboardManager;
-        private readonly KeyVelocity _defaultVelocity;
-        private readonly KeyVelocity _highVelocity;
+        private readonly int _defaultVelocity;
+        private readonly int _highVelocity;
         private readonly TKeyId _highVelocityKey;
 
         private readonly List<Button> _buttons;
@@ -61,8 +60,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
             {
                 _buttons.Add(new Button(this, _buttons.Count, buttonKey));
             }
-            _defaultVelocity = new KeyVelocity(defaultVelocity);
-            _highVelocity = new KeyVelocity(highVelocity);
+            _defaultVelocity = defaultVelocity;
+            _highVelocity = highVelocity;
             _highVelocityKey = highVelocityKey;
 
             // Init controllers
@@ -145,7 +144,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         public int NumberOfButtons { get { return 0; } }
         public int NumberOfControllers { get { return 0; } }
 
-        public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
+        public event EventHandler<KeyEventArgs<int, TimedKeyVelocity>> OnButtonEvent;
         public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
@@ -174,7 +173,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         private class Button : ControlBase
         {
             private readonly TKeyId _keyId;
-            private KeyVelocity _pressVelocity;
+            private int _pressVelocity;
 
             public Button(KeyboardLpd8<TKeyId> parent, int controlId, TKeyId keyId)
                 : base(parent, controlId)
@@ -190,7 +189,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
                     {
                         var eventType = e.EventType;
 
-                        KeyVelocity velocity;
+                        int velocity;
                         if (eventType == KeyEventType.Pressed)
                         {
                             var isHighVelocity = Parent._keyboardManager.GetKeyState(Parent._highVelocityKey) == KeyState.Pressed;
@@ -202,7 +201,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
                             velocity = _pressVelocity;
                         }
 
-                        var outEvent = new KeyEventArgs<int, KeyVelocity>(ControlId, eventType, velocity);
+                        var timedKeyVelocity = new TimedKeyVelocity(e.AdditionalData.Time, velocity);
+                        var outEvent = new KeyEventArgs<int, TimedKeyVelocity>(ControlId, eventType, timedKeyVelocity);
 
                         Parent.OnButtonEvent(Parent, outEvent);
                     }

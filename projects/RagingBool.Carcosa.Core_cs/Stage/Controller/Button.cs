@@ -56,7 +56,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             _phase = (_phase + 1) % 256;
         }
 
-        public void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> eventArgs)
+        public void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> eventArgs)
         {
             if (eventArgs.KeyId != _buttonId)
             {

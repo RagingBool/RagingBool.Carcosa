@@ -18,6 +18,7 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -31,6 +32,7 @@ namespace RagingBool.Carcosa.Devices.Midi
         public static readonly int FixedNumberOfButtons = 8;
         public static readonly int FixedNumberOfKnobs = 8;
 
+        private readonly IClock _clock;
         private readonly int _midiInDeviceId;
         private readonly int _midiOutDeviceId;
 
@@ -41,8 +43,9 @@ namespace RagingBool.Carcosa.Devices.Midi
 
         private bool[] _buttonLightsState;
 
-        public MidiLpd8(int midiInDeviceId, int midiOutDeviceId)
+        public MidiLpd8(IClock clock, int midiInDeviceId, int midiOutDeviceId)
         {
+            _clock = clock;
             _midiInDeviceId = midiInDeviceId;
             _midiOutDeviceId = midiOutDeviceId;
 
@@ -93,6 +96,7 @@ namespace RagingBool.Carcosa.Devices.Midi
 
         private void ShortMessageReceived(int data)
         {
+            var time = _clock.Time;
             var message = _midiMessageFactory.CreateShortMessage(data);
 
             if (message is MidiChannelMessage)
@@ -117,12 +121,13 @@ namespace RagingBool.Carcosa.Devices.Midi
 
                     SendState();
 
-                    OnButtonEvent(this, new KeyEventArgs<int, KeyVelocity>(keyId, buttonEventType, new KeyVelocity(velocity)));
+                    var timedKeyVelocity = new TimedKeyVelocity(time, velocity);
+                    OnButtonEvent(this, new KeyEventArgs<int, TimedKeyVelocity>(keyId, buttonEventType, timedKeyVelocity));
                 }
             }
         }
 
-        public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
+        public event EventHandler<KeyEventArgs<int, TimedKeyVelocity>> OnButtonEvent;
         public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)

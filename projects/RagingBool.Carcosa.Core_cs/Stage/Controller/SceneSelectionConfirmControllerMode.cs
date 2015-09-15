@@ -66,7 +66,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             Controller.SetKeyLightState(currentSceneId, _isOn);
         }
 
-        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e)
         {
             // Nothing to do here...
         }

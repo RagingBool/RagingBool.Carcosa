@@ -22,12 +22,12 @@ using RagingBool.Carcosa.Core.Stage.Scenes;
 using RagingBool.Carcosa.Core.Stage.Scenes.Forest;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 using RagingBool.Carcosa.Devices.LightControl;
 using RagingBool.Carcosa.Devices.LightControl.Dmx;
 using RagingBool.Carcosa.Devices.LightControl.Opc;
 using RagingBool.Carcosa.Devices.Midi;
 using System;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 
 namespace RagingBool.Carcosa.Core.Stage
 {
@@ -99,7 +99,7 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             if (isOn)
             {
-                var controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
+                var controller = new MidiLpd8(_clock, workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
 
                 _controller = controller;
                 _controllerUpdatable = controller;

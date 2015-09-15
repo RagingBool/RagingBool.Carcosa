@@ -96,7 +96,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public abstract void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e);
+        public abstract void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
         public abstract void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e);
     }
 }

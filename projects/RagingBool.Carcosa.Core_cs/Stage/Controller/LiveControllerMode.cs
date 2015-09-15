@@ -112,7 +112,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> eventArgs)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> eventArgs)
         {
             foreach (var button in _buttons)
             {
