@@ -18,14 +18,18 @@
 
 namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public struct KeyVelocity
+    public struct TimedKeyVelocity
     {
+        private readonly double _time;
         public readonly int _velocity;
 
-        public KeyVelocity(int velocity)
+        public TimedKeyVelocity(double time, int velocity)
         {
+            _time = time;
             _velocity = velocity;
         }
+
+        public double Time { get { return _time; } }
 
         public int Velocity { get { return _velocity; } }
     }

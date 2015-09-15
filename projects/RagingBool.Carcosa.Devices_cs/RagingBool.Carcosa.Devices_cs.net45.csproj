@@ -61,11 +61,11 @@
   <ItemGroup>
     <Compile Include="IDevice.cs" />
     <Compile Include="IUpdatable.cs" />
-    <Compile Include="InputControl\KeyVelocity.cs" />
     <Compile Include="InputControl\Lpd8\DummyLpd8.cs" />
     <Compile Include="InputControl\Lpd8\ILpd8.cs" />
     <Compile Include="InputControl\Lpd8\KeyboardLpd8.cs" />
     <Compile Include="InputControl\TimedKey.cs" />
+    <Compile Include="InputControl\TimedKeyVelocity.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />
