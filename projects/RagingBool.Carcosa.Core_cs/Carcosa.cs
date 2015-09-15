@@ -22,7 +22,9 @@ using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage;
 using RagingBool.Carcosa.Core.Workspace;
+using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace RagingBool.Carcosa.Core
@@ -39,6 +41,9 @@ namespace RagingBool.Carcosa.Core
 
         private readonly OverlappingControlBoards _controlBoards;
 
+        private IList<IDevice> _devices;
+        private IList<RagingBool.Carcosa.Devices.IUpdatable> _updatables;
+
         private readonly ActorSystem _actorSystem;
 
         private bool _isRunning;
@@ -52,6 +57,9 @@ namespace RagingBool.Carcosa.Core
             _clock = clock;
             _fileSystem = fileSystem;
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
+
+            _devices = new List<IDevice>();
+            _updatables = new List<RagingBool.Carcosa.Devices.IUpdatable>();
 
             _controlBoards = new OverlappingControlBoards();
             _stage = new PartyStage(_clock, _workspace, _controlBoards);
@@ -70,6 +78,11 @@ namespace RagingBool.Carcosa.Core
 
         public void Start()
         {
+            foreach(var device in _devices)
+            {
+                device.Connect();
+            }
+
             _stage.Start();
             _isRunning = true;
 
@@ -78,6 +91,11 @@ namespace RagingBool.Carcosa.Core
 
         public void Stop()
         {
+            foreach (var device in _devices)
+            {
+                device.Disconnect();
+            } 
+            
             _isRunning = false;
             _stage.Stop();
             _actorSystem.Shutdown();
@@ -86,6 +104,16 @@ namespace RagingBool.Carcosa.Core
         public void AwaitTermination()
         {
             _actorSystem.AwaitTermination();
+        }
+
+        public void RegisterDevice(IDevice device)
+        {
+            _devices.Add(device);
+        }
+
+        public void RegisterUpdatable(RagingBool.Carcosa.Devices.IUpdatable updatable)
+        {
+            _updatables.Add(updatable);
         }
 
         public void RegisterControlBoard(IControlBoard controlBoard)
@@ -97,6 +125,11 @@ namespace RagingBool.Carcosa.Core
         {
             while(_isRunning)
             {
+                foreach (var updatable in _updatables)
+                {
+                    updatable.Update();
+                }
+
                 _stage.Update();
                 Thread.Sleep(10);
             }
