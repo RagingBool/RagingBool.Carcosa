@@ -17,6 +17,7 @@
 // ]]]]
 
 using RagingBool.Carcosa.Core.Workspace;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core
 {
@@ -28,5 +29,7 @@ namespace RagingBool.Carcosa.Core
         ICarcosaWorkspace Workspace { get; }
 
         void AwaitTermination();
+
+        void RegisterControlBoard(IControlBoard controlBoard);
     }
 }

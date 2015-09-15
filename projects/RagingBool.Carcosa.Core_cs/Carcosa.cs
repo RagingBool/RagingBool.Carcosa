@@ -22,6 +22,7 @@ using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
 using RagingBool.Carcosa.Core.Stage;
 using RagingBool.Carcosa.Core.Workspace;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System.Threading;
 
 namespace RagingBool.Carcosa.Core
@@ -35,6 +36,8 @@ namespace RagingBool.Carcosa.Core
         private readonly IStage _stage;
 
         private readonly Thread _updateThread;
+
+        private readonly OverlappingControlBoards _controlBoards;
 
         private readonly ActorSystem _actorSystem;
 
@@ -53,6 +56,8 @@ namespace RagingBool.Carcosa.Core
             _stage = new PartyStage(_clock, _workspace);
 
             _updateThread = new Thread(UpdateThreadLoop);
+
+            _controlBoards = new OverlappingControlBoards();
 
             _actorSystem = ActorSystem.Create("Carcosa");
 
@@ -82,6 +87,11 @@ namespace RagingBool.Carcosa.Core
         public void AwaitTermination()
         {
             _actorSystem.AwaitTermination();
+        }
+
+        public void RegisterControlBoard(IControlBoard controlBoard)
+        {
+            _controlBoards.Register(controlBoard);
         }
 
         private void UpdateThreadLoop()
