@@ -48,7 +48,10 @@ namespace RagingBool.Carcosa.App
 
             InitKeyboardControlBoard();
 
+            _carcosa.RegisterControlBoard(_keyboardControlBoard);
+
             InitializeComponent();
+
             KeyDown += OnKeyEvent;
             KeyUp += OnKeyEvent;
         }
