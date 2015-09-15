@@ -50,7 +50,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
             if(isOn.HasValue)
             {
-                _controlBoard.SetKeyLightState(_buttonId, isOn.Value);
+                _controlBoard.ButtonLights.SetIndicatorValue(_buttonId, isOn.Value);
             }
 
             _phase = (_phase + 1) % 256;

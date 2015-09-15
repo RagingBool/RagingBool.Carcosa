@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 
@@ -27,6 +28,6 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         IControllerBoard<int, double> Controllers { get; }
 
-        void SetKeyLightState(int id, bool newState);
+        IIndicatorBoard<int, bool> ButtonLights { get; }
     }
 }

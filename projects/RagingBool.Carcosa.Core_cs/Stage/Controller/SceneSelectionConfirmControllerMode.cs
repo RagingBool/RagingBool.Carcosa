@@ -63,7 +63,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             var currentSceneId = ControllerUi.SceneId;
 
-            ControlBoard.SetKeyLightState(currentSceneId, _isOn);
+            ControlBoard.ButtonLights.SetIndicatorValue(currentSceneId, _isOn);
         }
 
         public override void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e)

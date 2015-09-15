@@ -19,6 +19,7 @@
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
 using Epicycle.Commons.Time;
+using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -42,6 +43,7 @@ namespace RagingBool.Carcosa.Devices.Midi
 
         private readonly ManualKeyboard<int, TimedKeyVelocity> _buttonsKeyboard;
         private readonly ManualControllerBoard<int, double> _controllerBoard;
+        private readonly UpdatingButtonLights _buttonLights;
 
         private bool[] _buttonLightsState;
 
@@ -66,6 +68,7 @@ namespace RagingBool.Carcosa.Devices.Midi
 
             _buttonsKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
             _controllerBoard = new ManualControllerBoard<int, double>(0);
+            _buttonLights = new UpdatingButtonLights(this);
         }
 
         public void Connect()
@@ -139,11 +142,7 @@ namespace RagingBool.Carcosa.Devices.Midi
 
         public IControllerBoard<int, double> Controllers { get { return _controllerBoard; } }
 
-        public void SetKeyLightState(int id, bool newState)
-        {
-            _buttonLightsState[id] = newState;
-            SendState();
-        }
+        public IIndicatorBoard<int, bool> ButtonLights { get { return _buttonLights; } }
 
         private void SendState()
         {
@@ -179,6 +178,23 @@ namespace RagingBool.Carcosa.Devices.Midi
             public void LongData(MidiBufferStream buffer, long timestamp)
             {
                 // Nothing to do...
+            }
+        }
+
+        private class UpdatingButtonLights : IndicatorBoardBase<int, bool>
+        {
+            private readonly MidiLpd8 _parent;
+
+            public UpdatingButtonLights(MidiLpd8 parent)
+                : base(false)
+            {
+                _parent = parent;
+            }
+
+            protected override void IndicatorValueChanges(int indicatorId, bool value)
+            {
+                _parent._buttonLightsState[indicatorId] = value;
+                _parent.SendState();
             }
         }
     }

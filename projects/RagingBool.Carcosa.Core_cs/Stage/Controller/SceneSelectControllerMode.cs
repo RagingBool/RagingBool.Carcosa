@@ -53,7 +53,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             var currentSceneId = ControllerUi.SceneId;
 
-            ControlBoard.SetKeyLightState(currentSceneId, true);
+            ControlBoard.ButtonLights.SetIndicatorValue(currentSceneId, true);
 
             for (int i = 0; i < LightSequence.Length; i++)
             {
@@ -61,7 +61,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
                 if (buttonId != currentSceneId)
                 {
-                    ControlBoard.SetKeyLightState(buttonId, i == _phase);
+                    ControlBoard.ButtonLights.SetIndicatorValue(buttonId, i == _phase);
                 }
             }
         }

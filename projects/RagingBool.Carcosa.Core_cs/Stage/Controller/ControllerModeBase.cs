@@ -92,7 +92,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             for (int i = 0; i < 8; i++)
             {
-                _controlBoard.SetKeyLightState(i, false);
+                _controlBoard.ButtonLights.SetIndicatorValue(i, false);
             }
         }
 

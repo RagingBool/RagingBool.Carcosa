@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         private readonly VelocityKeyboardEmulator<int, TKeyId> _buttonsKeyboard;
         private readonly ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey> _controllerBoard;
+        private readonly DummyIndicatorBoard<int, bool> _buttonLights;
 
         public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> baseKeyboard,
@@ -54,6 +56,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
                 controllerValueChangeKeysConfig,
                 controllerSmallValueStep, controllerBigValueStep
                 );
+
+            _buttonLights = new DummyIndicatorBoard<int, bool>(false);
         }
 
         private static IDictionary<TKeyId, int> CreateKeyMapping(IEnumerable<TKeyId> keys)
@@ -74,9 +78,6 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         public IControllerBoard<int, double> Controllers { get { return _controllerBoard; } }
 
-        public void SetKeyLightState(int id, bool newState)
-        {
-            // We don't have lights on the keyboard :(
-        }
+        public IIndicatorBoard<int, bool> ButtonLights { get { return _buttonLights; } }
     }
 }
