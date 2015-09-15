@@ -88,7 +88,7 @@ namespace RagingBool.Carcosa.Devices.InputControl
                 step = -step;
             }
 
-            return BasicMath.Clip(value, MinValue, MaxValue);
+            return BasicMath.Clip(value + step, MinValue, MaxValue);
         }
     }
 }
