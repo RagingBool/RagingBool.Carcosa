@@ -21,6 +21,7 @@ using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
+using RagingBool.Carcosa.Devices.Midi;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -50,10 +51,21 @@ namespace RagingBool.Carcosa.App
 
             _carcosa.RegisterControlBoard(_keyboardControlBoard);
 
+            //RegisterMidiLpd8();
+
             InitializeComponent();
 
             KeyDown += OnKeyEvent;
             KeyUp += OnKeyEvent;
+        }
+
+        private void RegisterMidiLpd8()
+        {
+            var lpd8 = new MidiLpd8(_clock, _carcosa.Workspace.ControllerMidiInPort, _carcosa.Workspace.ControllerMidiOutPort);
+
+            _carcosa.RegisterControlBoard(lpd8);
+            _carcosa.RegisterDevice(lpd8);
+            _carcosa.RegisterUpdatable(lpd8);
         }
 
         private void InitKeyboardControlBoard()
