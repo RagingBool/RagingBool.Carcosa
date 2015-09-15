@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
+namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardLpd8<TKeyId> : ILpd8
+    public sealed class KeyboardControlBoard<TKeyId> : IControlBoard
     {
         private const int MinControllerValue = 0;
         private const int MaxControllerValue = 255;
@@ -41,7 +41,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         private readonly Dictionary<TKeyId, double> _absoluteFaderKeys;
         private readonly Dictionary<TKeyId, double> _relativeFaderKeys;
 
-        public KeyboardLpd8(
+        public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> keyboardManager,
             IEnumerable<TKeyId> buttonKeys,
             int defaultVelocity, int highVelocity,
@@ -154,16 +154,16 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
 
         private abstract class ControlBase
         {
-            private readonly KeyboardLpd8<TKeyId> _parent;
+            private readonly KeyboardControlBoard<TKeyId> _parent;
             private readonly int _controlId;
 
-            public ControlBase(KeyboardLpd8<TKeyId> parent, int controlId)
+            public ControlBase(KeyboardControlBoard<TKeyId> parent, int controlId)
             {
                 _parent = parent;
                 _controlId = controlId;
             }
 
-            protected KeyboardLpd8<TKeyId> Parent { get { return _parent; } }
+            protected KeyboardControlBoard<TKeyId> Parent { get { return _parent; } }
 
             protected int ControlId { get { return _controlId; } }
 
@@ -175,7 +175,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
             private readonly TKeyId _keyId;
             private int _pressVelocity;
 
-            public Button(KeyboardLpd8<TKeyId> parent, int controlId, TKeyId keyId)
+            public Button(KeyboardControlBoard<TKeyId> parent, int controlId, TKeyId keyId)
                 : base(parent, controlId)
             {
                 _keyId = keyId;
@@ -217,7 +217,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
             private int _lastSentValue;
             private bool _isArmed;
 
-            public Controller(KeyboardLpd8<TKeyId> parent, int controlId, TKeyId keyId)
+            public Controller(KeyboardControlBoard<TKeyId> parent, int controlId, TKeyId keyId)
                 : base(parent, controlId)
             {
                 _keyId = keyId;

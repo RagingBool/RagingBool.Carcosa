@@ -20,7 +20,7 @@ using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
@@ -29,7 +29,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
     {
         private readonly object _lock = new object();
 
-        private readonly ILpd8 _controller;
+        private readonly IControlBoard _controlBoard;
 
         private LiveControllerMode _liveMode;
         private SceneSelectControllerMode _sceneSelectMode;
@@ -39,16 +39,16 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private SceneChangedEventArgs _lastSceneChangedEventArgs;
 
-        public ControllerUi(IClock clock, ILpd8 controller)
+        public ControllerUi(IClock clock, IControlBoard controlBoard)
         {
-            _controller = controller;
+            _controlBoard = controlBoard;
 
-            _controller.OnButtonEvent += OnButtonEventHandler;
-            _controller.OnControllerChange += OnControllerChangeHandler;
+            _controlBoard.OnButtonEvent += OnButtonEventHandler;
+            _controlBoard.OnControllerChange += OnControllerChangeHandler;
 
-            _liveMode = new LiveControllerMode(this, clock, _controller);
-            _sceneSelectMode = new SceneSelectControllerMode(this, clock, _controller);
-            _SceneSelectionConfirmMode = new SceneSelectionConfirmControllerMode(this, clock, _controller);
+            _liveMode = new LiveControllerMode(this, clock, _controlBoard);
+            _sceneSelectMode = new SceneSelectControllerMode(this, clock, _controlBoard);
+            _SceneSelectionConfirmMode = new SceneSelectionConfirmControllerMode(this, clock, _controlBoard);
 
             _mode = null;
             _lastSceneChangedEventArgs = null;

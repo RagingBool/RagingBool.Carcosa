@@ -22,12 +22,12 @@ using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System;
 
 namespace RagingBool.Carcosa.Devices.Midi
 {
-    public sealed class MidiLpd8 : ILpd8, IDevice, IUpdatable
+    public sealed class MidiLpd8 : IControlBoard, IDevice, IUpdatable
     {
         public static readonly int FixedNumberOfButtons = 8;
         public static readonly int FixedNumberOfKnobs = 8;

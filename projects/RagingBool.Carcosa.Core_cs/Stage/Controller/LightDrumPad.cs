@@ -16,7 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
@@ -25,8 +25,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private int _lightTtl;
         private bool _forceOn;
 
-        public LightDrumPad(ILpd8 controller, int buttonId, bool isContinues)
-            : base(controller, buttonId, isContinues ? ButtonTriggerBehaviour.Continues : ButtonTriggerBehaviour.OnPush)
+        public LightDrumPad(IControlBoard controlBoard, int buttonId, bool isContinues)
+            : base(controlBoard, buttonId, isContinues ? ButtonTriggerBehaviour.Continues : ButtonTriggerBehaviour.OnPush)
         {
             _forceOn = false;
             _lightTtl = 0;

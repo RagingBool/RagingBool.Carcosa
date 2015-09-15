@@ -16,14 +16,14 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal sealed class SubsceneSelectorButton : Button
     {
-        public SubsceneSelectorButton(ILpd8 controller, int subsceneButtonId)
-            : base(controller, subsceneButtonId, ButtonTriggerBehaviour.OnPush)
+        public SubsceneSelectorButton(IControlBoard controlBoard, int subsceneButtonId)
+            : base(controlBoard, subsceneButtonId, ButtonTriggerBehaviour.OnPush)
         {
             SubsceneId = 0;
         }

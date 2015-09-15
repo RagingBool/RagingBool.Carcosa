@@ -18,23 +18,23 @@
 
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal class Button
     {
-        private readonly ILpd8 _controller;
+        private readonly IControlBoard _controlBoard;
         private readonly int _buttonId;
         private readonly ButtonTriggerBehaviour _triggerBehaviour;
 
         private int _phase;
         private int _savedVelocity;
 
-        public Button(ILpd8 controller, int buttonId, ButtonTriggerBehaviour triggerBehaviour)
+        public Button(IControlBoard controlBoard, int buttonId, ButtonTriggerBehaviour triggerBehaviour)
         {
-            _controller = controller;
+            _controlBoard = controlBoard;
             _buttonId = buttonId;
             _triggerBehaviour = triggerBehaviour;
 
@@ -50,7 +50,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
             if(isOn.HasValue)
             {
-                _controller.SetKeyLightState(_buttonId, isOn.Value);
+                _controlBoard.SetKeyLightState(_buttonId, isOn.Value);
             }
 
             _phase = (_phase + 1) % 256;

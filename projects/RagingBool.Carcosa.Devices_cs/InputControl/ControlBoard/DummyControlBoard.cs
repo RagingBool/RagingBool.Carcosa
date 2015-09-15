@@ -20,9 +20,9 @@ using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using System;
 
-namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
+namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class DummyLpd8 : ILpd8
+    public sealed class DummyControlBoard : IControlBoard
     {
         public int NumberOfButtons { get { return 8; } }
         public int NumberOfControllers { get { return 8; } }

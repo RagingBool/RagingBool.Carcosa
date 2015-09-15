@@ -20,7 +20,7 @@ using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -38,7 +38,7 @@ namespace RagingBool.Carcosa.App
         private readonly IClock _clock;
         private readonly ICarcosa _carcosa;
         private readonly WpfKeyboardManager _keyboardManager;
-        private KeyboardLpd8<Key> _keyboardLpd8;
+        private KeyboardControlBoard<Key> _keyboardLpd8;
 
         public MainWindow()
         {
@@ -55,7 +55,7 @@ namespace RagingBool.Carcosa.App
 
         private void InitKeyboardLpd8()
         {
-            _keyboardLpd8 = new KeyboardLpd8<Key>(
+            _keyboardLpd8 = new KeyboardControlBoard<Key>(
                 _keyboardManager,
                 buttonKeys: new Key[] { Key.Z, Key.X, Key.C, Key.V, Key.A, Key.S, Key.D, Key.F},
                 defaultVelocity: 90, 

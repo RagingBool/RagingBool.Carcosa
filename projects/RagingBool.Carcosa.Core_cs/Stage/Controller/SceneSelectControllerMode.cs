@@ -20,7 +20,7 @@ using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
@@ -30,8 +30,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         
         private int _phase;
 
-        public SceneSelectControllerMode(ControllerUi controllerUi, IClock clock, ILpd8 controller) :
-            base(controllerUi, clock, controller) { }
+        public SceneSelectControllerMode(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard) :
+            base(controllerUi, clock, controlBoard) { }
 
         public override void Enter()
         {
@@ -53,7 +53,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             var currentSceneId = ControllerUi.SceneId;
 
-            Controller.SetKeyLightState(currentSceneId, true);
+            ControlBoard.SetKeyLightState(currentSceneId, true);
 
             for (int i = 0; i < LightSequence.Length; i++)
             {
@@ -61,7 +61,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
                 if (buttonId != currentSceneId)
                 {
-                    Controller.SetKeyLightState(buttonId, i == _phase);
+                    ControlBoard.SetKeyLightState(buttonId, i == _phase);
                 }
             }
         }
