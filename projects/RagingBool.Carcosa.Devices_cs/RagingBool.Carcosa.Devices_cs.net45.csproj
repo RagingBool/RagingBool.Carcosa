@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="HighPrecisionSystemClock.cs" />
     <Compile Include="IDevice.cs" />
-    <Compile Include="IUpdatable.cs" />
     <Compile Include="InputControl\BidirectionalMovementKeysConfiguration.cs" />
     <Compile Include="InputControl\ContinuousKeyboardControllerBoardEmulator.cs" />
     <Compile Include="InputControl\ControlBoard\DummyControlBoard.cs" />

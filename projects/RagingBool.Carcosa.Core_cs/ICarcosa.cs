@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;

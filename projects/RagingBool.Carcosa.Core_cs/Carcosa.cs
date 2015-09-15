@@ -42,7 +42,7 @@ namespace RagingBool.Carcosa.Core
         private readonly OverlappingControlBoards _controlBoards;
 
         private IList<IDevice> _devices;
-        private IList<RagingBool.Carcosa.Devices.IUpdatable> _updatables;
+        private IList<IUpdatable> _updatables;
 
         private readonly ActorSystem _actorSystem;
 
@@ -59,7 +59,7 @@ namespace RagingBool.Carcosa.Core
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
 
             _devices = new List<IDevice>();
-            _updatables = new List<RagingBool.Carcosa.Devices.IUpdatable>();
+            _updatables = new List<IUpdatable>();
 
             _controlBoards = new OverlappingControlBoards();
             _stage = new PartyStage(_clock, _workspace, _controlBoards);
@@ -111,7 +111,7 @@ namespace RagingBool.Carcosa.Core
             _devices.Add(device);
         }
 
-        public void RegisterUpdatable(RagingBool.Carcosa.Devices.IUpdatable updatable)
+        public void RegisterUpdatable(IUpdatable updatable)
         {
             _updatables.Add(updatable);
         }

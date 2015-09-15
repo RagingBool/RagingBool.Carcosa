@@ -18,6 +18,7 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using Epicycle.Commons;
 using Epicycle.Commons.Time;
 using Epicycle.Input;
 using Epicycle.Input.Controllers;
