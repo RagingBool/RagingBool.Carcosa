@@ -36,10 +36,12 @@ namespace RagingBool.Carcosa.Devices.Midi
         private readonly int _midiInDeviceId;
         private readonly int _midiOutDeviceId;
 
-        private MidiInPort _midiInPort;
-        private MidiMessageFactory _midiMessageFactory;
+        private readonly MidiInPort _midiInPort;
+        private readonly MidiMessageFactory _midiMessageFactory;
 
-        private MidiOutPort _midiOutPort;
+        private readonly MidiOutPort _midiOutPort;
+
+        private readonly ManualKeyboard<int, TimedKeyVelocity> _buttonsKeyboard;
 
         private bool[] _buttonLightsState;
 
@@ -61,6 +63,8 @@ namespace RagingBool.Carcosa.Devices.Midi
             _midiInPort.Successor = new MidiReceiver(this);
 
             _midiOutPort = new MidiOutPort();
+
+            _buttonsKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
         }
 
         public void Connect()
@@ -113,7 +117,7 @@ namespace RagingBool.Carcosa.Devices.Midi
                         OnControllerChange(this, new ControllerChangeEventArgs<int, int>(controllerId, value));
                     }
                 }
-                else if (OnButtonEvent != null)
+                else
                 {
                     var buttonEventType = midiChannelMessage.Command == MidiChannelCommand.NoteOn ? KeyEventType.Pressed : KeyEventType.Released;
                     var keyId = midiChannelMessage.Parameter1 - 36;
@@ -122,12 +126,14 @@ namespace RagingBool.Carcosa.Devices.Midi
                     SendState();
 
                     var timedKeyVelocity = new TimedKeyVelocity(time, velocity);
-                    OnButtonEvent(this, new KeyEventArgs<int, TimedKeyVelocity>(keyId, buttonEventType, timedKeyVelocity));
+                    
+                    _buttonsKeyboard.ProcessKeyEvent(new KeyEventArgs<int, TimedKeyVelocity>(keyId, buttonEventType, timedKeyVelocity));
                 }
             }
         }
 
-        public event EventHandler<KeyEventArgs<int, TimedKeyVelocity>> OnButtonEvent;
+        public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
+
         public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)

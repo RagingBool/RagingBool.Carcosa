@@ -24,10 +24,17 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
     public sealed class DummyControlBoard : IControlBoard
     {
+        private readonly IKeyboard<int, TimedKeyVelocity> _buttons;
+
+        public DummyControlBoard()
+        {
+            _buttons = new DummyKeyboard<int, TimedKeyVelocity>();
+        }
+
         public int NumberOfButtons { get { return 8; } }
         public int NumberOfControllers { get { return 8; } }
 
-        public event EventHandler<KeyEventArgs<int, TimedKeyVelocity>> OnButtonEvent { add { } remove { } }
+        public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttons; } }
         public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange { add { } remove { } }
 
         public void SetKeyLightState(int id, bool newState) { }

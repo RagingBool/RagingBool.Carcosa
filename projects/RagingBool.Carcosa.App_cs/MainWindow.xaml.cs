@@ -38,24 +38,24 @@ namespace RagingBool.Carcosa.App
         private readonly IClock _clock;
         private readonly ICarcosa _carcosa;
         private readonly WpfKeyboardManager _keyboardManager;
-        private KeyboardControlBoard<Key> _keyboardLpd8;
+        private KeyboardControlBoard<Key> _keyboardControlBoard;
 
         public MainWindow()
         {
             _carcosa = ((App)Application.Current).Carcosa;
             _clock = ((App)Application.Current).Clock;
             _keyboardManager = new WpfKeyboardManager();
-            
-            InitKeyboardLpd8();
+
+            InitKeyboardControlBoard();
 
             InitializeComponent();
             KeyDown += OnKeyEvent;
             KeyUp += OnKeyEvent;
         }
 
-        private void InitKeyboardLpd8()
+        private void InitKeyboardControlBoard()
         {
-            _keyboardLpd8 = new KeyboardControlBoard<Key>(
+            _keyboardControlBoard = new KeyboardControlBoard<Key>(
                 _keyboardManager,
                 buttonKeys: new Key[] { Key.Z, Key.X, Key.C, Key.V, Key.A, Key.S, Key.D, Key.F},
                 defaultVelocity: 90, 
@@ -66,8 +66,8 @@ namespace RagingBool.Carcosa.App
                 faderUpKey: Key.Right, faderDownKey: Key.Left, faderFastUpKey: Key.Up, faderFastDownKey: Key.Down,
                 faderSmallStepResolution: 1000.0, faderBigStepResolution: 100.0);
 
-            _keyboardLpd8.OnButtonEvent += OnButtonEvent;
-            _keyboardLpd8.OnControllerChange += OnControllerChange;
+            _keyboardControlBoard.Buttons.OnKeyEvent += OnButtonEvent;
+            _keyboardControlBoard.OnControllerChange += OnControllerChange;
         }
 
         private void OnButtonEvent(object sender, KeyEventArgs<int, TimedKeyVelocity> e)

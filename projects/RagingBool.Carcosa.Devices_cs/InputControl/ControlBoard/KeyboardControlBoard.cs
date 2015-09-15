@@ -35,11 +35,14 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         private readonly int _highVelocity;
         private readonly TKeyId _highVelocityKey;
 
+        private readonly ManualKeyboard<int, TimedKeyVelocity> _buttonsKeyboard;
+
         private readonly List<Button> _buttons;
         private readonly List<Controller> _controllers;
 
         private readonly Dictionary<TKeyId, double> _absoluteFaderKeys;
         private readonly Dictionary<TKeyId, double> _relativeFaderKeys;
+
 
         public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> keyboardManager,
@@ -54,6 +57,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             _keyboardManager = keyboardManager;
 
             // Init buttons
+
+            _buttonsKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
 
             _buttons = new List<Button>();
             foreach (var buttonKey in buttonKeys)
@@ -144,7 +149,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         public int NumberOfButtons { get { return 0; } }
         public int NumberOfControllers { get { return 0; } }
 
-        public event EventHandler<KeyEventArgs<int, TimedKeyVelocity>> OnButtonEvent;
+        public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
+
         public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
@@ -185,27 +191,24 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             {
                 if (e.EventType != KeyEventType.Repeat && e.KeyId.Equals(_keyId))
                 {
-                    if (Parent.OnButtonEvent != null)
+                    var eventType = e.EventType;
+
+                    int velocity;
+                    if (eventType == KeyEventType.Pressed)
                     {
-                        var eventType = e.EventType;
-
-                        int velocity;
-                        if (eventType == KeyEventType.Pressed)
-                        {
-                            var isHighVelocity = Parent._keyboardManager.GetKeyState(Parent._highVelocityKey) == KeyState.Pressed;
-                            velocity = isHighVelocity ? Parent._highVelocity : Parent._defaultVelocity;
-                            _pressVelocity = velocity;
-                        }
-                        else
-                        {
-                            velocity = _pressVelocity;
-                        }
-
-                        var timedKeyVelocity = new TimedKeyVelocity(e.AdditionalData.Time, velocity);
-                        var outEvent = new KeyEventArgs<int, TimedKeyVelocity>(ControlId, eventType, timedKeyVelocity);
-
-                        Parent.OnButtonEvent(Parent, outEvent);
+                        var isHighVelocity = Parent._keyboardManager.GetKeyState(Parent._highVelocityKey) == KeyState.Pressed;
+                        velocity = isHighVelocity ? Parent._highVelocity : Parent._defaultVelocity;
+                        _pressVelocity = velocity;
                     }
+                    else
+                    {
+                        velocity = _pressVelocity;
+                    }
+
+                    var timedKeyVelocity = new TimedKeyVelocity(e.AdditionalData.Time, velocity);
+                    var outEvent = new KeyEventArgs<int, TimedKeyVelocity>(ControlId, eventType, timedKeyVelocity);
+
+                    Parent._buttonsKeyboard.ProcessKeyEvent(outEvent);
                 }
             }
         }
