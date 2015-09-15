@@ -18,8 +18,9 @@
 
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
-using System.Windows;
+using RagingBool.Carcosa.Devices;
 using System;
+using System.Windows;
 
 namespace RagingBool.Carcosa.App
 {
@@ -30,13 +31,13 @@ namespace RagingBool.Carcosa.App
     /// </summary>
     public partial class App : Application
     {
-        private SystemClock _clock;
+        private IClock _clock;
         private StandardFileSystem _fileSystem;
         private Carcosa _carcosa;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            _clock = new SystemClock();
+            _clock = new HighPrecisionSystemClock();
             _fileSystem = StandardFileSystem.Instance;
 
             CreateCarcosa();

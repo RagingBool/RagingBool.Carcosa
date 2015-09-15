@@ -73,6 +73,7 @@ namespace RagingBool.Carcosa.App
         private void OnButtonEvent(object sender, KeyEventArgs<int, TimedKeyVelocity> e)
         {
             System.Console.WriteLine("Key: {0} - {1} ({2})", e.KeyId, e.EventType, e.AdditionalData.Velocity);
+            System.Console.WriteLine("     dt: {0}", _clock.Time - e.AdditionalData.Time);
         }
 
         private void OnControllerChange(object sender, ControllerChangeEventArgs<int, int> e)
