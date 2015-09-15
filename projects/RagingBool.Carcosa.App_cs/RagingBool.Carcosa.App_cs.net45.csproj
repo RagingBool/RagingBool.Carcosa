@@ -101,6 +101,10 @@
       <Project>{d323da07-474d-4a00-a45d-242f1d86802c}</Project>
       <Name>RagingBool.Carcosa.Core_cs.net45</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RagingBool.Carcosa.Devices.Midi_cs\RagingBool.Carcosa.Devices.Midi_cs.net45.csproj">
+      <Project>{a485a127-9bdc-4de4-95d9-48a46b95e32b}</Project>
+      <Name>RagingBool.Carcosa.Devices.Midi_cs.net45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RagingBool.Carcosa.Devices_cs\RagingBool.Carcosa.Devices_cs.net45.csproj">
       <Project>{76e967a5-9422-4a50-bf41-91706e507c81}</Project>
       <Name>RagingBool.Carcosa.Devices_cs.net45</Name>
