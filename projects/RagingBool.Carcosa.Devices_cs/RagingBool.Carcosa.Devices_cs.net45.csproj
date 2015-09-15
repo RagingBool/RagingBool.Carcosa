@@ -76,6 +76,7 @@
     <Compile Include="InputControl\ManualKeyboard.cs" />
     <Compile Include="InputControl\TimedKey.cs" />
     <Compile Include="InputControl\TimedKeyVelocity.cs" />
+    <Compile Include="InputControl\TwoSpeedBidirectionalMovementKeysConfiguration.cs" />
     <Compile Include="InputControl\VelocityKeyboardEmulator.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
