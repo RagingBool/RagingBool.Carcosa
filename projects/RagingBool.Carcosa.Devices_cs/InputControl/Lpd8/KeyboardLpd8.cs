@@ -31,7 +31,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         private const int MinControllerValue = 0;
         private const int MaxControllerValue = 255;
 
-        private readonly IKeyboard<TKeyId, Unit> _keyboardManager;
+        private readonly IKeyboard<TKeyId, TimedKey> _keyboardManager;
         private readonly KeyVelocity _defaultVelocity;
         private readonly KeyVelocity _highVelocity;
         private readonly TKeyId _highVelocityKey;
@@ -43,7 +43,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
         private readonly Dictionary<TKeyId, double> _relativeFaderKeys;
 
         public KeyboardLpd8(
-            IKeyboard<TKeyId, Unit> keyboardManager,
+            IKeyboard<TKeyId, TimedKey> keyboardManager,
             IEnumerable<TKeyId> buttonKeys,
             int defaultVelocity, int highVelocity,
             TKeyId highVelocityKey,
@@ -129,7 +129,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
             _relativeFaderKeys[faderFastDownKey] = -bigStep;
         }
 
-        private void OnKeyEvent(object sender, KeyEventArgs<TKeyId, Unit> e)
+        private void OnKeyEvent(object sender, KeyEventArgs<TKeyId, TimedKey> e)
         {
             foreach (var button in _buttons)
             {
@@ -168,7 +168,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
 
             protected int ControlId { get { return _controlId; } }
 
-            abstract public void OnKeyEvent(KeyEventArgs<TKeyId, Unit> e);
+            abstract public void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e);
         }
 
         private class Button : ControlBase
@@ -182,7 +182,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
                 _keyId = keyId;
             }
 
-            public override void OnKeyEvent(KeyEventArgs<TKeyId, Unit> e)
+            public override void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e)
             {
                 if (e.EventType != KeyEventType.Repeat && e.KeyId.Equals(_keyId))
                 {
@@ -227,7 +227,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
                 _isArmed = false;
             }
 
-            public override void OnKeyEvent(KeyEventArgs<TKeyId, Unit> e)
+            public override void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e)
             {
                 var key = e.KeyId;
                 var eventType = e.EventType;

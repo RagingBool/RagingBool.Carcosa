@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -34,13 +35,15 @@ namespace RagingBool.Carcosa.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ICarcosa _carcosa;
-        private WpfKeyboardManager _keyboardManager;
+        private readonly IClock _clock;
+        private readonly ICarcosa _carcosa;
+        private readonly WpfKeyboardManager _keyboardManager;
         private KeyboardLpd8<Key> _keyboardLpd8;
 
         public MainWindow()
         {
             _carcosa = ((App)Application.Current).Carcosa;
+            _clock = ((App)Application.Current).Clock;
             _keyboardManager = new WpfKeyboardManager();
             
             InitKeyboardLpd8();
@@ -94,7 +97,8 @@ namespace RagingBool.Carcosa.App
 
         private void OnKeyEvent(object sender, KeyEventArgs e)
         {
-            _keyboardManager.ProcessWpfKeyboardEvent(e);
+            var time = _clock.Time;
+            _keyboardManager.ProcessWpfKeyboardEvent(e, time);
         }
     }
 }

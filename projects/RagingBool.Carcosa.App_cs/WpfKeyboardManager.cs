@@ -21,10 +21,11 @@ using Epicycle.Input.Keyboard;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using RagingBool.Carcosa.Devices.InputControl;
 
 namespace RagingBool.Carcosa.App
 {
-    public class WpfKeyboardManager : IKeyboard<Key, Unit>
+    public class WpfKeyboardManager : IKeyboard<Key, TimedKey>
     {
         private readonly Dictionary<Key, KeyState> _keyStates;
 
@@ -33,7 +34,7 @@ namespace RagingBool.Carcosa.App
             _keyStates = new Dictionary<Key, KeyState>();
         }
 
-        public event EventHandler<KeyEventArgs<Key, Unit>> OnKeyEvent;
+        public event EventHandler<KeyEventArgs<Key, TimedKey>> OnKeyEvent;
 
         public KeyState GetKeyState(Key keyId)
         {
@@ -45,7 +46,7 @@ namespace RagingBool.Carcosa.App
             return _keyStates[keyId];
         }
 
-        public void ProcessWpfKeyboardEvent(System.Windows.Input.KeyEventArgs eventArgs)
+        public void ProcessWpfKeyboardEvent(System.Windows.Input.KeyEventArgs eventArgs, double time)
         {
             var keyId = eventArgs.Key;
             var eventType = CalcEventType(eventArgs);
@@ -57,7 +58,7 @@ namespace RagingBool.Carcosa.App
 
             if (OnKeyEvent != null && eventType == KeyEventType.Repeat || prevState != newState)
             {
-                var outgoingEvent = new KeyEventArgs<Key, Unit>(keyId, eventType, Unit.Instance);
+                var outgoingEvent = new KeyEventArgs<Key, TimedKey>(keyId, eventType, new TimedKey(time));
                 OnKeyEvent(this, outgoingEvent);
             }
         }
