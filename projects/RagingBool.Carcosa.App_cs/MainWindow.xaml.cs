@@ -62,7 +62,7 @@ namespace RagingBool.Carcosa.App
                 highVelocity: 120,
                 highVelocityKey: Key.LeftShift,
                 controllerKeys: new Key[] { Key.M, Key.OemComma, Key.OemPeriod, Key.OemQuestion, Key.K, Key.L, Key.Oem1, Key.OemQuotes },
-                faderKeys: new Key[] { Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
+                faderKeys: new Key[] { Key.Oem3, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
                 faderUpKey: Key.Right, faderDownKey: Key.Left, faderFastUpKey: Key.Up, faderFastDownKey: Key.Down,
                 faderSmallStep: 1.0 / 1000, faderBigStep: 1.0 / 100);
 
