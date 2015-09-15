@@ -31,18 +31,12 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         private const int MaxControllerValue = 255;
 
         private readonly IKeyboard<TKeyId, TimedKey> _keyboardManager;
-        private readonly int _defaultVelocity;
-        private readonly int _highVelocity;
-        private readonly TKeyId _highVelocityKey;
+        private readonly VelocityKeyboardEmulator<int, TKeyId> _buttonsKeyboard;
 
-        private readonly ManualKeyboard<int, TimedKeyVelocity> _buttonsKeyboard;
-
-        private readonly List<Button> _buttons;
         private readonly List<Controller> _controllers;
 
         private readonly Dictionary<TKeyId, double> _absoluteFaderKeys;
         private readonly Dictionary<TKeyId, double> _relativeFaderKeys;
-
 
         public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> keyboardManager,
@@ -58,16 +52,12 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
             // Init buttons
 
-            _buttonsKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
-
-            _buttons = new List<Button>();
-            foreach (var buttonKey in buttonKeys)
-            {
-                _buttons.Add(new Button(this, _buttons.Count, buttonKey));
-            }
-            _defaultVelocity = defaultVelocity;
-            _highVelocity = highVelocity;
-            _highVelocityKey = highVelocityKey;
+            _buttonsKeyboard = new VelocityKeyboardEmulator<int, TKeyId>(
+                keyboardManager,
+                CreateButtonKeyMapping(buttonKeys),
+                defaultVelocity, highVelocity,
+                highVelocityKey
+                );
 
             // Init controllers
 
@@ -88,6 +78,20 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             // Register key events
 
             _keyboardManager.OnKeyEvent += OnKeyEvent;
+        }
+
+        private static IDictionary<TKeyId, int> CreateButtonKeyMapping(IEnumerable<TKeyId> buttonKeys)
+        {
+            var mapping = new Dictionary<TKeyId, int>();
+
+            var index = 0;
+            foreach(var key in buttonKeys)
+            {
+                mapping[key] = index;
+                index++;
+            }
+
+            return mapping;
         }
 
         private void PopulateAbsoluteFaderKeys(IEnumerable<TKeyId> faderKeys)
@@ -135,11 +139,6 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         private void OnKeyEvent(object sender, KeyEventArgs<TKeyId, TimedKey> e)
         {
-            foreach (var button in _buttons)
-            {
-                button.OnKeyEvent(e);
-            }
-
             foreach (var controller in _controllers)
             {
                 controller.OnKeyEvent(e);
@@ -158,71 +157,19 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             // We don't have lights on the keyboard :(
         }
 
-        private abstract class ControlBase
+        private class Controller
         {
             private readonly KeyboardControlBoard<TKeyId> _parent;
-            private readonly int _controlId;
-
-            public ControlBase(KeyboardControlBoard<TKeyId> parent, int controlId)
-            {
-                _parent = parent;
-                _controlId = controlId;
-            }
-
-            protected KeyboardControlBoard<TKeyId> Parent { get { return _parent; } }
-
-            protected int ControlId { get { return _controlId; } }
-
-            abstract public void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e);
-        }
-
-        private class Button : ControlBase
-        {
-            private readonly TKeyId _keyId;
-            private int _pressVelocity;
-
-            public Button(KeyboardControlBoard<TKeyId> parent, int controlId, TKeyId keyId)
-                : base(parent, controlId)
-            {
-                _keyId = keyId;
-            }
-
-            public override void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e)
-            {
-                if (e.EventType != KeyEventType.Repeat && e.KeyId.Equals(_keyId))
-                {
-                    var eventType = e.EventType;
-
-                    int velocity;
-                    if (eventType == KeyEventType.Pressed)
-                    {
-                        var isHighVelocity = Parent._keyboardManager.GetKeyState(Parent._highVelocityKey) == KeyState.Pressed;
-                        velocity = isHighVelocity ? Parent._highVelocity : Parent._defaultVelocity;
-                        _pressVelocity = velocity;
-                    }
-                    else
-                    {
-                        velocity = _pressVelocity;
-                    }
-
-                    var timedKeyVelocity = new TimedKeyVelocity(e.AdditionalData.Time, velocity);
-                    var outEvent = new KeyEventArgs<int, TimedKeyVelocity>(ControlId, eventType, timedKeyVelocity);
-
-                    Parent._buttonsKeyboard.ProcessKeyEvent(outEvent);
-                }
-            }
-        }
-
-        private class Controller : ControlBase
-        {
+            private readonly int _controlId; 
             private readonly TKeyId _keyId;
             private double _curValue;
             private int _lastSentValue;
             private bool _isArmed;
 
             public Controller(KeyboardControlBoard<TKeyId> parent, int controlId, TKeyId keyId)
-                : base(parent, controlId)
             {
+                _parent = parent;
+                _controlId = controlId;
                 _keyId = keyId;
 
                 _lastSentValue = MinControllerValue - 1;
@@ -230,7 +177,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
                 _isArmed = false;
             }
 
-            public override void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e)
+            public void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e)
             {
                 var key = e.KeyId;
                 var eventType = e.EventType;
@@ -244,13 +191,13 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
                 }
                 else if (_isArmed)
                 {
-                    if (eventType == KeyEventType.Pressed && Parent._absoluteFaderKeys.ContainsKey(key))
+                    if (eventType == KeyEventType.Pressed && _parent._absoluteFaderKeys.ContainsKey(key))
                     {
-                        SetNewValue(Parent._absoluteFaderKeys[key]);
+                        SetNewValue(_parent._absoluteFaderKeys[key]);
                     }
-                    else if ((eventType == KeyEventType.Pressed || eventType == KeyEventType.Repeat) && Parent._relativeFaderKeys.ContainsKey(key))
+                    else if ((eventType == KeyEventType.Pressed || eventType == KeyEventType.Repeat) && _parent._relativeFaderKeys.ContainsKey(key))
                     {
-                        SetNewValue(_curValue + Parent._relativeFaderKeys[key]);
+                        SetNewValue(_curValue + _parent._relativeFaderKeys[key]);
                     }
                 }
             }
@@ -267,9 +214,9 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
                 _lastSentValue = clippedRoundedValue;
 
-                if (Parent.OnControllerChange != null)
+                if (_parent.OnControllerChange != null)
                 {
-                    Parent.OnControllerChange(Parent, new ControllerChangeEventArgs<int, int>(ControlId, _lastSentValue));
+                    _parent.OnControllerChange(_parent, new ControllerChangeEventArgs<int, int>(_controlId, _lastSentValue));
                 }
             }
         }
