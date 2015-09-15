@@ -35,7 +35,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         public int NumberOfControllers { get { return 8; } }
 
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttons; } }
-        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange { add { } remove { } }
+        public event EventHandler<ControllerChangeEventArgs<int, double>> OnControllerChange { add { } remove { } }
 
         public void SetKeyLightState(int id, bool newState) { }
     }

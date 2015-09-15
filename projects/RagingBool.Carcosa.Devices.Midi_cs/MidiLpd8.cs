@@ -112,9 +112,9 @@ namespace RagingBool.Carcosa.Devices.Midi
                     if (OnControllerChange != null)
                     {
                         var controllerId = midiChannelMessage.Parameter1 - 1;
-                        var value = midiChannelMessage.Parameter2 * 2;
+                        var value = MidiValueToControllerValue(midiChannelMessage.Parameter2);
 
-                        OnControllerChange(this, new ControllerChangeEventArgs<int, int>(controllerId, value));
+                        OnControllerChange(this, new ControllerChangeEventArgs<int, double>(controllerId, value));
                     }
                 }
                 else
@@ -132,9 +132,23 @@ namespace RagingBool.Carcosa.Devices.Midi
             }
         }
 
+        private static double MidiValueToControllerValue(byte midiValue)
+        {
+            if(midiValue == 0)
+            {
+                return 0.0;
+            }
+            else if (midiValue >= 127)
+            {
+                return 1.0;
+            }
+
+            return midiValue / 127.0;
+        }
+
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
 
-        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
+        public event EventHandler<ControllerChangeEventArgs<int, double>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
         {

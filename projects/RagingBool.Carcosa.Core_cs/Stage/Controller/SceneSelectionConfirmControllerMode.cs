@@ -71,7 +71,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             // Nothing to do here...
         }
 
-        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e)
+        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e)
         {
             // Nothing to do here...
         }

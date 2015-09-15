@@ -111,7 +111,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        private void OnControllerChangeHandler(object sender, ControllerChangeEventArgs<int, int> e)
+        private void OnControllerChangeHandler(object sender, ControllerChangeEventArgs<int, double> e)
         {
             lock (_lock)
             {

@@ -136,7 +136,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             ControllerUi.FireLightDrumEvent(new LightDrumEventArgs(lightDrumIndex, eventArgs.TriggerType, eventArgs.Velocity));
         }
 
-        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> eventArgs)
+        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> eventArgs)
         {
             ControllerUi.FireControlParameterValueChange(new ControlParameterValueChangeEventArgs(eventArgs.ControllerId, eventArgs.Value));
         }

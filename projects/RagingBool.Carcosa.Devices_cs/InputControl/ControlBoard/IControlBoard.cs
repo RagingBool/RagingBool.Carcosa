@@ -28,7 +28,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         int NumberOfControllers { get; }
 
         IKeyboard<int, TimedKeyVelocity> Buttons { get; }
-        event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
+        event EventHandler<ControllerChangeEventArgs<int, double>> OnControllerChange;
 
         void SetKeyLightState(int id, bool newState);
     }

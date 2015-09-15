@@ -64,7 +64,7 @@ namespace RagingBool.Carcosa.App
                 controllerKeys: new Key[] { Key.M, Key.OemComma, Key.OemPeriod, Key.OemQuestion, Key.K, Key.L, Key.Oem1, Key.OemQuotes },
                 faderKeys: new Key[] { Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
                 faderUpKey: Key.Right, faderDownKey: Key.Left, faderFastUpKey: Key.Up, faderFastDownKey: Key.Down,
-                faderSmallStepResolution: 1000.0, faderBigStepResolution: 100.0);
+                faderSmallStep: 1.0 / 1000, faderBigStep: 1.0 / 100);
 
             _keyboardControlBoard.Buttons.OnKeyEvent += OnButtonEvent;
             _keyboardControlBoard.OnControllerChange += OnControllerChange;
@@ -76,7 +76,7 @@ namespace RagingBool.Carcosa.App
             System.Console.WriteLine("     dt: {0}", _clock.Time - e.AdditionalData.Time);
         }
 
-        private void OnControllerChange(object sender, ControllerChangeEventArgs<int, int> e)
+        private void OnControllerChange(object sender, ControllerChangeEventArgs<int, double> e)
         {
             System.Console.WriteLine("Key: {0} = {1}", e.ControllerId, e.Value);
         }

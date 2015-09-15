@@ -27,8 +27,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
     public sealed class KeyboardControlBoard<TKeyId> : IControlBoard
     {
-        private const int MinControllerValue = 0;
-        private const int MaxControllerValue = 255;
+        private const double MinControllerValue = 0.0;
+        private const double MaxControllerValue = 1.0;
 
         private readonly IKeyboard<TKeyId, TimedKey> _keyboardManager;
         private readonly VelocityKeyboardEmulator<int, TKeyId> _buttonsKeyboard;
@@ -46,7 +46,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             IEnumerable<TKeyId> controllerKeys,
             IEnumerable<TKeyId> faderKeys,
             TKeyId faderUpKey, TKeyId faderDownKey, TKeyId faderFastUpKey, TKeyId faderFastDownKey,
-            double faderSmallStepResolution, double faderBigStepResolution)
+            double faderSmallStep, double faderBigStep)
         {
             _keyboardManager = keyboardManager;
 
@@ -73,7 +73,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             _relativeFaderKeys = new Dictionary<TKeyId, double>();
             PopulateRelativeFaderKeys(
                 faderUpKey, faderDownKey, faderFastUpKey, faderFastDownKey,
-                faderSmallStepResolution, faderBigStepResolution);
+                faderSmallStep, faderBigStep);
 
             // Register key events
 
@@ -125,16 +125,14 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         private void PopulateRelativeFaderKeys(
             TKeyId faderUpKey, TKeyId faderDownKey, TKeyId faderFastUpKey, TKeyId faderFastDownKey,
-            double faderSmallStepResolution, double faderBigStepResolution)
+            double faderSmallStep, double faderBigStep)
         {
             var range = MaxControllerValue - MinControllerValue;
-            var smallStep = range / faderSmallStepResolution;
-            var bigStep = range / faderBigStepResolution;
 
-            _relativeFaderKeys[faderUpKey] = smallStep;
-            _relativeFaderKeys[faderDownKey] = -smallStep;
-            _relativeFaderKeys[faderFastUpKey] = bigStep;
-            _relativeFaderKeys[faderFastDownKey] = -bigStep;
+            _relativeFaderKeys[faderUpKey] = faderSmallStep;
+            _relativeFaderKeys[faderDownKey] = -faderSmallStep;
+            _relativeFaderKeys[faderFastUpKey] = faderBigStep;
+            _relativeFaderKeys[faderFastDownKey] = -faderBigStep;
         }
 
         private void OnKeyEvent(object sender, KeyEventArgs<TKeyId, TimedKey> e)
@@ -150,7 +148,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
 
-        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
+        public event EventHandler<ControllerChangeEventArgs<int, double>> OnControllerChange;
 
         public void SetKeyLightState(int id, bool newState)
         {
@@ -163,7 +161,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             private readonly int _controlId; 
             private readonly TKeyId _keyId;
             private double _curValue;
-            private int _lastSentValue;
+            private double _lastSentValue;
             private bool _isArmed;
 
             public Controller(KeyboardControlBoard<TKeyId> parent, int controlId, TKeyId keyId)
@@ -205,18 +203,17 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             private void SetNewValue(double newValue)
             {
                 _curValue = BasicMath.Clip(newValue, MinControllerValue, MaxControllerValue);
-                var clippedRoundedValue = BasicMath.Clip(BasicMath.Round(newValue), MinControllerValue, MaxControllerValue);
 
-                if (clippedRoundedValue == _lastSentValue)
+                if (_lastSentValue == _curValue)
                 {
                     return;
                 }
 
-                _lastSentValue = clippedRoundedValue;
+                _lastSentValue = _curValue;
 
                 if (_parent.OnControllerChange != null)
                 {
-                    _parent.OnControllerChange(_parent, new ControllerChangeEventArgs<int, int>(_controlId, _lastSentValue));
+                    _parent.OnControllerChange(_parent, new ControllerChangeEventArgs<int, double>(_controlId, _curValue));
                 }
             }
         }

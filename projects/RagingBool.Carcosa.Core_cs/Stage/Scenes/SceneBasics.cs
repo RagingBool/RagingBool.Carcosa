@@ -16,11 +16,6 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RagingBool.Carcosa.Core.Stage.Controller;
 
 namespace RagingBool.Carcosa.Core.Stage.Scenes
@@ -30,12 +25,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         private const int NumberOfControls = 8;
         private const int ControlDefaultRawValue = 128;
 
-        private int[] _rawControls;
         private double[] _controls;
 
         public SceneBase()
         {
-            _rawControls = new int[NumberOfControls];
             _controls = new double[NumberOfControls];
 
             for(var i = 0; i < NumberOfControls; i++)
@@ -47,16 +40,10 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
         public abstract void Enter();
         public abstract void Exit();
         public abstract void Update(double dt);
-        
-        private void SetControl(int id, int rawValue)
-        {
-            _rawControls[id] = rawValue;
-            _controls[id] = rawValue / 254.0;
-        }
 
-        public int GetControlRaw(int id)
+        private void SetControl(int id, double value)
         {
-            return _rawControls[id];
+            _controls[id] = value;
         }
 
         public double GetControl(int id)

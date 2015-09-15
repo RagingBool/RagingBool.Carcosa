@@ -29,6 +29,6 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         void Update();
 
         void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
-        void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e);
+        void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e);
     }
 }
