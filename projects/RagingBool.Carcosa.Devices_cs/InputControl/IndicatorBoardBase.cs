@@ -24,12 +24,14 @@ namespace RagingBool.Carcosa.Devices.InputControl
     public abstract class IndicatorBoardBase<TIndicatorId, TIndicatorValue> : IIndicatorBoard<TIndicatorId, TIndicatorValue>
     {
         private readonly TIndicatorValue _defaultValue;
+        private readonly bool _alwaysPropagate;
 
         private IDictionary<TIndicatorId, TIndicatorValue> _values;
 
-        public IndicatorBoardBase(TIndicatorValue defaultValue)
+        public IndicatorBoardBase(TIndicatorValue defaultValue, bool alwaysPropagate = false)
         {
             _defaultValue = defaultValue;
+            _alwaysPropagate = alwaysPropagate;
 
             _values = new Dictionary<TIndicatorId, TIndicatorValue>();
         }
@@ -46,10 +48,12 @@ namespace RagingBool.Carcosa.Devices.InputControl
 
         public void SetIndicatorValue(TIndicatorId indicatorId, TIndicatorValue value)
         {
-            if (_values.ContainsKey(indicatorId) && _values[indicatorId].Equals(value))
+            if (!_alwaysPropagate && _values.ContainsKey(indicatorId) && _values[indicatorId].Equals(value))
             {
                 return;
             }
+
+            _values[indicatorId] = value;
 
             IndicatorValueChanges(indicatorId, value);
         }
