@@ -16,11 +16,12 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public abstract class IndicatorBoardBase<TIndicatorId, TIndicatorValue>
+    public abstract class IndicatorBoardBase<TIndicatorId, TIndicatorValue> : IIndicatorBoard<TIndicatorId, TIndicatorValue>
     {
         private readonly TIndicatorValue _defaultValue;
 
