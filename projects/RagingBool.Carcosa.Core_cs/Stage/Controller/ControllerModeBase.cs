@@ -90,7 +90,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         protected void ClearLights()
         {
-            for (int i = 0; i < _controlBoard.NumberOfButtons; i++)
+            for (int i = 0; i < 8; i++)
             {
                 _controlBoard.SetKeyLightState(i, false);
             }

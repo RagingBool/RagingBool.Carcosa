@@ -89,16 +89,6 @@ namespace RagingBool.Carcosa.Devices.Midi
             // Nothing to update...
         }
 
-        public int NumberOfButtons
-        {
-            get { return FixedNumberOfButtons; }
-        }
-
-        public int NumberOfControllers
-        {
-            get { return FixedNumberOfKnobs; }
-        }
-
         private void ShortMessageReceived(int data)
         {
             var time = _clock.Time;

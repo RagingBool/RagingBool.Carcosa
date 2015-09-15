@@ -70,9 +70,6 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             return mapping;
         }
 
-        public int NumberOfButtons { get { return 0; } }
-        public int NumberOfControllers { get { return 0; } }
-
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
 
         public IControllerBoard<int, double> Controllers { get { return _controllerBoard; } }

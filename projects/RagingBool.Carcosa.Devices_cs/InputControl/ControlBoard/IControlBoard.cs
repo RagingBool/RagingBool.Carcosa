@@ -18,16 +18,13 @@
 
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using System;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
     public interface IControlBoard
     {
-        int NumberOfButtons { get; }
-        int NumberOfControllers { get; }
-
         IKeyboard<int, TimedKeyVelocity> Buttons { get; }
+
         IControllerBoard<int, double> Controllers { get; }
 
         void SetKeyLightState(int id, bool newState);
