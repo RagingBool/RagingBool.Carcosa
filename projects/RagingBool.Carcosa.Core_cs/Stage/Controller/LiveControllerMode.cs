@@ -20,7 +20,7 @@ using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
@@ -45,17 +45,17 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private int _subsceneId;
 
-        public LiveControllerMode(ControllerUi controllerUi, IClock clock, ILpd8 controller)
-            : base(controllerUi, clock, controller)
+        public LiveControllerMode(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard)
+            : base(controllerUi, clock, controlBoard)
         {
             _buttons = new List<Button>();
             _lightDrumPads = new List<LightDrumPad>();
 
-            _sceneSelectorButton = new Button(Controller, SceneSelectButton, ButtonTriggerBehaviour.OnRelease);
+            _sceneSelectorButton = new Button(ControlBoard, SceneSelectButton, ButtonTriggerBehaviour.OnRelease);
             _sceneSelectorButton.OnTrigger += HandleSceneSelect;
             _buttons.Add(_sceneSelectorButton);
 
-            _subsceneSelectorButton = new SubsceneSelectorButton(Controller, SubsceneSelectButton);
+            _subsceneSelectorButton = new SubsceneSelectorButton(ControlBoard, SubsceneSelectButton);
             _subsceneSelectorButton.OnTrigger += HandleSubsceneSelect;
             _buttons.Add(_subsceneSelectorButton);
 
@@ -91,7 +91,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             int lightDrumIndex = _lightDrumPads.Count;
 
-            var button = new LightDrumPad(Controller, buttonId, isContinues);
+            var button = new LightDrumPad(ControlBoard, buttonId, isContinues);
             button.OnTrigger += (sender, eventArgs) => { HandleLightDrumTrigger(lightDrumIndex, eventArgs); };
             _buttons.Add(button);
             _lightDrumPads.Add(button);
@@ -112,7 +112,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
         }
 
-        public override void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> eventArgs)
+        public override void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> eventArgs)
         {
             foreach (var button in _buttons)
             {
@@ -136,7 +136,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             ControllerUi.FireLightDrumEvent(new LightDrumEventArgs(lightDrumIndex, eventArgs.TriggerType, eventArgs.Velocity));
         }
 
-        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> eventArgs)
+        public override void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> eventArgs)
         {
             ControllerUi.FireControlParameterValueChange(new ControlParameterValueChangeEventArgs(eventArgs.ControllerId, eventArgs.Value));
         }

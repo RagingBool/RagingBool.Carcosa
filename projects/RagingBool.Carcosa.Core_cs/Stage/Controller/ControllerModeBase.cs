@@ -20,7 +20,7 @@ using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core.Stage.Controller
 {
@@ -28,21 +28,21 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
     {
         private readonly ControllerUi _controllerUi;
         private readonly IClock _clock;
-        private readonly ILpd8 _controller;
+        private readonly IControlBoard _controlBoard;
 
         private double _lastUpdateTime;
 
-        public ControllerModeBase(ControllerUi controllerUi, IClock clock, ILpd8 controller)
+        public ControllerModeBase(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard)
         {
             _controllerUi = controllerUi;
             _clock = clock;
-            _controller = controller;
+            _controlBoard = controlBoard;
             Fps = 1;
         }
 
-        protected ILpd8 Controller
+        protected IControlBoard ControlBoard
         {
-            get { return _controller; }
+            get { return _controlBoard; }
         }
 
         protected IClock Clock
@@ -90,13 +90,13 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         protected void ClearLights()
         {
-            for (int i = 0; i < _controller.NumberOfButtons; i++)
+            for (int i = 0; i < 8; i++)
             {
-                _controller.SetKeyLightState(i, false);
+                _controlBoard.ButtonLights.SetIndicatorValue(i, false);
             }
         }
 
-        public abstract void ProcessButtonEventHandler(KeyEventArgs<int, KeyVelocity> e);
-        public abstract void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, int> e);
+        public abstract void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
+        public abstract void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e);
     }
 }

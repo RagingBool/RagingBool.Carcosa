@@ -18,31 +18,39 @@
 
 using CannedBytes.Midi;
 using CannedBytes.Midi.Message;
+using Epicycle.Commons;
+using Epicycle.Commons.Time;
+using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
-using System;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Devices.Midi
 {
-    public sealed class MidiLpd8 : ILpd8, IDevice, IUpdatable
+    public sealed class MidiLpd8 : IControlBoard, IDevice, IUpdatable
     {
         public static readonly int FixedNumberOfButtons = 8;
         public static readonly int FixedNumberOfKnobs = 8;
 
+        private readonly IClock _clock;
         private readonly int _midiInDeviceId;
         private readonly int _midiOutDeviceId;
 
-        private MidiInPort _midiInPort;
-        private MidiMessageFactory _midiMessageFactory;
+        private readonly MidiInPort _midiInPort;
+        private readonly MidiMessageFactory _midiMessageFactory;
 
-        private MidiOutPort _midiOutPort;
+        private readonly MidiOutPort _midiOutPort;
+
+        private readonly ManualKeyboard<int, TimedKeyVelocity> _buttonsKeyboard;
+        private readonly ManualControllerBoard<int, double> _controllerBoard;
+        private readonly UpdatingButtonLights _buttonLights;
 
         private bool[] _buttonLightsState;
 
-        public MidiLpd8(int midiInDeviceId, int midiOutDeviceId)
+        public MidiLpd8(IClock clock, int midiInDeviceId, int midiOutDeviceId)
         {
+            _clock = clock;
             _midiInDeviceId = midiInDeviceId;
             _midiOutDeviceId = midiOutDeviceId;
 
@@ -58,6 +66,10 @@ namespace RagingBool.Carcosa.Devices.Midi
             _midiInPort.Successor = new MidiReceiver(this);
 
             _midiOutPort = new MidiOutPort();
+
+            _buttonsKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
+            _controllerBoard = new ManualControllerBoard<int, double>(0);
+            _buttonLights = new UpdatingButtonLights(this);
         }
 
         public void Connect()
@@ -81,18 +93,9 @@ namespace RagingBool.Carcosa.Devices.Midi
             // Nothing to update...
         }
 
-        public int NumberOfButtons
-        {
-            get { return FixedNumberOfButtons; }
-        }
-
-        public int NumberOfControllers
-        {
-            get { return FixedNumberOfKnobs; }
-        }
-
         private void ShortMessageReceived(int data)
         {
+            var time = _clock.Time;
             var message = _midiMessageFactory.CreateShortMessage(data);
 
             if (message is MidiChannelMessage)
@@ -101,15 +104,13 @@ namespace RagingBool.Carcosa.Devices.Midi
 
                 if (midiChannelMessage.Command == MidiChannelCommand.ControlChange)
                 {
-                    if (OnControllerChange != null)
-                    {
-                        var controllerId = midiChannelMessage.Parameter1 - 1;
-                        var value = midiChannelMessage.Parameter2 * 2;
+                    var controllerId = midiChannelMessage.Parameter1 - 1;
+                    var value = MidiValueToControllerValue(midiChannelMessage.Parameter2);
 
-                        OnControllerChange(this, new ControllerChangeEventArgs<int, int>(controllerId, value));
-                    }
+                    var eventArgs = new ControllerChangeEventArgs<int, double>(controllerId, value);
+                    _controllerBoard.ProcessControllerChangeEvent(eventArgs);
                 }
-                else if (OnButtonEvent != null)
+                else
                 {
                     var buttonEventType = midiChannelMessage.Command == MidiChannelCommand.NoteOn ? KeyEventType.Pressed : KeyEventType.Released;
                     var keyId = midiChannelMessage.Parameter1 - 36;
@@ -117,19 +118,32 @@ namespace RagingBool.Carcosa.Devices.Midi
 
                     SendState();
 
-                    OnButtonEvent(this, new KeyEventArgs<int, KeyVelocity>(keyId, buttonEventType, new KeyVelocity(velocity)));
+                    var timedKeyVelocity = new TimedKeyVelocity(time, velocity);
+                    
+                    _buttonsKeyboard.ProcessKeyEvent(new KeyEventArgs<int, TimedKeyVelocity>(keyId, buttonEventType, timedKeyVelocity));
                 }
             }
         }
 
-        public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent;
-        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange;
-
-        public void SetKeyLightState(int id, bool newState)
+        private static double MidiValueToControllerValue(byte midiValue)
         {
-            _buttonLightsState[id] = newState;
-            SendState();
+            if(midiValue == 0)
+            {
+                return 0.0;
+            }
+            else if (midiValue >= 127)
+            {
+                return 1.0;
+            }
+
+            return midiValue / 127.0;
         }
+
+        public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
+
+        public IControllerBoard<int, double> Controllers { get { return _controllerBoard; } }
+
+        public IIndicatorBoard<int, bool> ButtonLights { get { return _buttonLights; } }
 
         private void SendState()
         {
@@ -165,6 +179,23 @@ namespace RagingBool.Carcosa.Devices.Midi
             public void LongData(MidiBufferStream buffer, long timestamp)
             {
                 // Nothing to do...
+            }
+        }
+
+        private class UpdatingButtonLights : IndicatorBoardBase<int, bool>
+        {
+            private readonly MidiLpd8 _parent;
+
+            public UpdatingButtonLights(MidiLpd8 parent)
+                : base(false)
+            {
+                _parent = parent;
+            }
+
+            protected override void IndicatorValueChanges(int indicatorId, bool value)
+            {
+                _parent._buttonLightsState[indicatorId] = value;
+                _parent.SendState();
             }
         }
     }

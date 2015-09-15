@@ -1,6 +1,31 @@
-﻿using System;
+﻿// [[[[INFO>
+// Copyright 2015 Raging Bool (http://ragingbool.org, https://github.com/RagingBool)
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+// For more information check https://github.com/RagingBool/RagingBool.Carcosa
+// ]]]]
+
+using Epicycle.Commons.Time;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
+using RagingBool.Carcosa.Devices.InputControl;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
+using RagingBool.Carcosa.Devices.Midi;
+using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace RagingBool.Carcosa.App
 {
@@ -11,13 +36,54 @@ namespace RagingBool.Carcosa.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ICarcosa _carcosa;
+        private readonly IClock _clock;
+        private readonly ICarcosa _carcosa;
+        private readonly WpfKeyboardManager _keyboardManager;
+        private KeyboardControlBoard<Key> _keyboardControlBoard;
 
         public MainWindow()
         {
             _carcosa = ((App)Application.Current).Carcosa;
+            _clock = ((App)Application.Current).Clock;
+            _keyboardManager = new WpfKeyboardManager();
+
+            InitKeyboardControlBoard();
+
+            _carcosa.RegisterControlBoard(_keyboardControlBoard);
+
+            //RegisterMidiLpd8();
 
             InitializeComponent();
+
+            KeyDown += OnKeyEvent;
+            KeyUp += OnKeyEvent;
+        }
+
+        private void RegisterMidiLpd8()
+        {
+            var lpd8 = new MidiLpd8(_clock, _carcosa.Workspace.ControllerMidiInPort, _carcosa.Workspace.ControllerMidiOutPort);
+
+            _carcosa.RegisterControlBoard(lpd8);
+            _carcosa.RegisterDevice(lpd8);
+            _carcosa.RegisterUpdatable(lpd8);
+        }
+
+        private void InitKeyboardControlBoard()
+        {
+            var controllerValueChangeKeysConfig = new TwoSpeedBidirectionalMovementKeysConfiguration<Key>(
+                slowPositiveDirectionKeyId: Key.Right, slowNegativeDirectionKeyId: Key.Left,
+                fastPositiveDirectionKeyId: Key.Up, fastNegativeDirectionKeyId: Key.Down);
+
+            _keyboardControlBoard = new KeyboardControlBoard<Key>(
+                _keyboardManager,
+                buttonKeys: new Key[] { Key.Z, Key.X, Key.C, Key.V, Key.A, Key.S, Key.D, Key.F},
+                defaultVelocity: 90, 
+                highVelocity: 120,
+                highVelocityKey: Key.LeftShift,
+                controllerKeys: new Key[] { Key.M, Key.OemComma, Key.OemPeriod, Key.OemQuestion, Key.K, Key.L, Key.Oem1, Key.OemQuotes },
+                controllerValueKeys: new Key[] { Key.Oem3, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
+                controllerValueChangeKeysConfig: controllerValueChangeKeysConfig,
+                controllerSmallValueStep: 1.0 / 1000, controllerBigValueStep: 1.0 / 100);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -33,6 +99,12 @@ namespace RagingBool.Carcosa.App
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             _carcosa.Stop();
+        }
+
+        private void OnKeyEvent(object sender, KeyEventArgs e)
+        {
+            var time = _clock.Time;
+            _keyboardManager.ProcessWpfKeyboardEvent(e, time);
         }
     }
 }

@@ -16,10 +16,22 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons.Time;
+using System.Diagnostics;
+
 namespace RagingBool.Carcosa.Devices
 {
-    public interface IUpdatable
+    // TODO: Move to Epicycle.Commons
+    public sealed class HighPrecisionSystemClock : IClock
     {
-        void Update();
+        private static double SecPerTick = 1.0 / Stopwatch.Frequency;
+
+        public double Time
+        {
+            get
+            {
+                return Stopwatch.GetTimestamp() * SecPerTick;
+            }
+        }
     }
 }

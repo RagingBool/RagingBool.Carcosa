@@ -16,19 +16,21 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Input.Controllers;
-using Epicycle.Input.Keyboard;
-using RagingBool.Carcosa.Devices.InputControl;
-
-namespace RagingBool.Carcosa.Core.Stage.Controller
+namespace RagingBool.Carcosa.Devices.InputControl
 {
-    internal interface IControllerMode
+    public struct TimedKeyVelocity
     {
-        void Enter();
-        void Exit();
-        void Update();
+        private readonly double _time;
+        public readonly int _velocity;
 
-        void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
-        void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e);
+        public TimedKeyVelocity(double time, int velocity)
+        {
+            _time = time;
+            _velocity = velocity;
+        }
+
+        public double Time { get { return _time; } }
+
+        public int Velocity { get { return _velocity; } }
     }
 }

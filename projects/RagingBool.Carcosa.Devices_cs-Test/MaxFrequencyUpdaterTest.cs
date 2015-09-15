@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using Epicycle.Commons.Time;
 using Moq;
 using NUnit.Framework;

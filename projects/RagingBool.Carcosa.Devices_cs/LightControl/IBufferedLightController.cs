@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.LightControl

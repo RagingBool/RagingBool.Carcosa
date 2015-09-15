@@ -22,12 +22,12 @@ using RagingBool.Carcosa.Core.Stage.Scenes;
 using RagingBool.Carcosa.Core.Stage.Scenes.Forest;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using RagingBool.Carcosa.Devices.LightControl;
 using RagingBool.Carcosa.Devices.LightControl.Dmx;
 using RagingBool.Carcosa.Devices.LightControl.Opc;
 using RagingBool.Carcosa.Devices.Midi;
 using System;
-using RagingBool.Carcosa.Devices.InputControl.Lpd8;
 
 namespace RagingBool.Carcosa.Core.Stage
 {
@@ -38,10 +38,6 @@ namespace RagingBool.Carcosa.Core.Stage
         private readonly object _lock = new object();
 
         private readonly IClock _clock;
-
-        private IDevice _controllerDevice;
-        private IUpdatable _controllerUpdatable;
-        private ILpd8 _controller;
 
         private E1_31DmxMultiverse _e1_31DmxMultiverse;
         private IBufferedLightController _dmxUniverseController1;
@@ -69,16 +65,15 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private double _lastSceneUpdate;
 
-        public PartyStage(IClock clock, ICarcosaWorkspace workspace)
+        public PartyStage(IClock clock, ICarcosaWorkspace workspace, IControlBoard controlBoard)
         {
             _clock = clock;
 
-            InitController(workspace, false);
             InitDMX(workspace, false);
             InitForestOpcDevice(workspace, false);
             InitSnark(workspace, false);
 
-            _controllerUi = new ControllerUi(_clock, _controller);
+            _controllerUi = new ControllerUi(_clock, controlBoard);
 
             _controllerUi.OnSceneChange += OnSceneChange;
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
@@ -93,24 +88,6 @@ namespace RagingBool.Carcosa.Core.Stage
 
             _curScene = null;
             _curSceneId = -1;
-        }
-
-        private void InitController(ICarcosaWorkspace workspace, bool isOn)
-        {
-            if (isOn)
-            {
-                var controller = new MidiLpd8(workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
-
-                _controller = controller;
-                _controllerUpdatable = controller;
-                _controllerDevice = controller;
-            }
-            else
-            {
-                _controller = new DummyLpd8();
-                _controllerUpdatable = null;
-                _controllerDevice = null;
-            }
         }
 
         private void InitDMX(ICarcosaWorkspace workspace, bool isOn)
@@ -168,11 +145,6 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
-                if (_controllerDevice != null)
-                {
-                    _controllerDevice.Connect();
-                }
-
                 if (_e1_31DmxMultiverse != null)
                 {
                     _e1_31DmxMultiverse.Connect();
@@ -198,11 +170,6 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
-                if (_controllerUpdatable != null)
-                {
-                    _controllerUpdatable.Update();
-                }
-
                 if (_dmxMultiverseUpdater1 != null)
                 {
                     _dmxMultiverseUpdater1.Update();
@@ -245,11 +212,6 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controllerUi.Stop();
-
-                if (_controllerDevice != null)
-                {
-                    _controllerDevice.Disconnect();
-                }
 
                 if(_snark != null)
                 {

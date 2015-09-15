@@ -16,17 +16,25 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Controllers;
+using System;
+
 namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public struct KeyVelocity
+    public sealed class DummyControllerBoard<TControllerId, TControllerValue> : IControllerBoard<TControllerId, TControllerValue>
     {
-        public readonly int _velocity;
+        private readonly TControllerValue _defaultValue;
 
-        public KeyVelocity(int velocity)
+        public DummyControllerBoard(TControllerValue defaultValue)
         {
-            _velocity = velocity;
+            _defaultValue = defaultValue;
         }
 
-        public int Velocity { get { return _velocity; } }
+        public event EventHandler<ControllerChangeEventArgs<TControllerId, TControllerValue>> OnControllerChangeEvent { add { } remove { } }
+
+        public TControllerValue GetControllerValue(TControllerId controllerId)
+        {
+            return _defaultValue;
+        }
     }
 }

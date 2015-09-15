@@ -16,20 +16,18 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using System;
 
-namespace RagingBool.Carcosa.Devices.InputControl.Lpd8
+namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class DummyLpd8 : ILpd8
+    public interface IControlBoard
     {
-        public int NumberOfButtons { get { return 8; } }
-        public int NumberOfControllers { get { return 8; } }
+        IKeyboard<int, TimedKeyVelocity> Buttons { get; }
 
-        public event EventHandler<KeyEventArgs<int, KeyVelocity>> OnButtonEvent { add { } remove { } }
-        public event EventHandler<ControllerChangeEventArgs<int, int>> OnControllerChange { add { } remove { } }
+        IControllerBoard<int, double> Controllers { get; }
 
-        public void SetKeyLightState(int id, bool newState) { }
+        IIndicatorBoard<int, bool> ButtonLights { get; }
     }
 }

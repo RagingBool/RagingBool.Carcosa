@@ -23,9 +23,9 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
     internal class ControlParameterValueChangeEventArgs : EventArgs
     {
         private readonly int _controlParameterId;
-        private readonly int _newValue;
+        private readonly double _newValue;
 
-        public ControlParameterValueChangeEventArgs(int controlParameterId, int newValue)
+        public ControlParameterValueChangeEventArgs(int controlParameterId, double newValue)
         {
             _controlParameterId = controlParameterId;
             _newValue = newValue;
@@ -36,7 +36,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             get { return _controlParameterId; }
         }
 
-        public int NewValue
+        public double NewValue
         {
             get { return _newValue; }
         }

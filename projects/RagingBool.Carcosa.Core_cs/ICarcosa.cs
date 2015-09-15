@@ -16,7 +16,10 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using RagingBool.Carcosa.Core.Workspace;
+using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core
 {
@@ -28,5 +31,11 @@ namespace RagingBool.Carcosa.Core
         ICarcosaWorkspace Workspace { get; }
 
         void AwaitTermination();
+
+        void RegisterDevice(IDevice device);
+
+        void RegisterUpdatable(IUpdatable updatable);
+
+        void RegisterControlBoard(IControlBoard controlBoard);
     }
 }

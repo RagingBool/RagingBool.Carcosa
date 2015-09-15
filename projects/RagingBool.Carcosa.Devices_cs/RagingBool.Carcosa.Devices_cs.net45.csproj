@@ -59,11 +59,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HighPrecisionSystemClock.cs" />
     <Compile Include="IDevice.cs" />
-    <Compile Include="IUpdatable.cs" />
-    <Compile Include="InputControl\KeyVelocity.cs" />
-    <Compile Include="InputControl\Lpd8\DummyLpd8.cs" />
-    <Compile Include="InputControl\Lpd8\ILpd8.cs" />
+    <Compile Include="InputControl\BidirectionalMovementKeysConfiguration.cs" />
+    <Compile Include="InputControl\ContinuousKeyboardControllerBoardEmulator.cs" />
+    <Compile Include="InputControl\ControlBoard\DummyControlBoard.cs" />
+    <Compile Include="InputControl\ControlBoard\IControlBoard.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoard.cs" />
+    <Compile Include="InputControl\ControlBoard\OverlappingControlBoards.cs" />
+    <Compile Include="InputControl\ControllerBoardBase.cs" />
+    <Compile Include="InputControl\DummyControllerBoard.cs" />
+    <Compile Include="InputControl\DummyIndicatorBoard.cs" />
+    <Compile Include="InputControl\DummyKeyboard.cs" />
+    <Compile Include="InputControl\IndicatorBoardBase.cs" />
+    <Compile Include="InputControl\KeyboardBase.cs" />
+    <Compile Include="InputControl\KeyboardControllerBoardEmulator.cs" />
+    <Compile Include="InputControl\ManualControllerBoard.cs" />
+    <Compile Include="InputControl\ManualKeyboard.cs" />
+    <Compile Include="InputControl\OverlappingControllerBoard.cs" />
+    <Compile Include="InputControl\OverlappingIndicatorBoard.cs" />
+    <Compile Include="InputControl\OverlappingKeyboards.cs" />
+    <Compile Include="InputControl\TimedKey.cs" />
+    <Compile Include="InputControl\TimedKeyVelocity.cs" />
+    <Compile Include="InputControl\TwoSpeedBidirectionalMovementKeysConfiguration.cs" />
+    <Compile Include="InputControl\VelocityKeyboardEmulator.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />

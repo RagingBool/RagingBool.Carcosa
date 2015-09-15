@@ -16,19 +16,16 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Input.Controllers;
-using Epicycle.Input.Keyboard;
-using RagingBool.Carcosa.Devices.InputControl;
-
-namespace RagingBool.Carcosa.Core.Stage.Controller
+namespace RagingBool.Carcosa.Devices.InputControl
 {
-    internal interface IControllerMode
+    public sealed class DummyIndicatorBoard<TIndicatorId, TIndicatorValue> : IndicatorBoardBase<TIndicatorId, TIndicatorValue>
     {
-        void Enter();
-        void Exit();
-        void Update();
+        public DummyIndicatorBoard(TIndicatorValue defaultValue)
+            : base(defaultValue) { }
 
-        void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
-        void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e);
+        protected override void IndicatorValueChanges(TIndicatorId indicatorId, TIndicatorValue value)
+        {
+            // Nothing to do, we are dummies!
+        }
     }
 }

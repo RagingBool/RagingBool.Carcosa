@@ -16,19 +16,20 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Input.Controllers;
-using Epicycle.Input.Keyboard;
-using RagingBool.Carcosa.Devices.InputControl;
-
-namespace RagingBool.Carcosa.Core.Stage.Controller
+namespace RagingBool.Carcosa.Devices.InputControl
 {
-    internal interface IControllerMode
+    public sealed class BidirectionalMovementKeysConfiguration<TKeyId>
     {
-        void Enter();
-        void Exit();
-        void Update();
+        private readonly TKeyId _positiveDirectionKeyId;
+        private readonly TKeyId _negativeDirectionKeyId;
 
-        void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
-        void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e);
+        public BidirectionalMovementKeysConfiguration(TKeyId positiveDirectionKeyId, TKeyId negativeDirectionKeyId)
+        {
+            _positiveDirectionKeyId = positiveDirectionKeyId;
+            _negativeDirectionKeyId = negativeDirectionKeyId;
+        }
+
+        public TKeyId PositiveDirectionKeyId { get { return _positiveDirectionKeyId; } }
+        public TKeyId NegativeDirectionKeyId { get { return _negativeDirectionKeyId; } }
     }
 }
