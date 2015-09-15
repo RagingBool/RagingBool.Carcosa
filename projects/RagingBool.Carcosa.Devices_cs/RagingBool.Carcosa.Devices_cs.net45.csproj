@@ -62,6 +62,7 @@
     <Compile Include="HighPrecisionSystemClock.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="IUpdatable.cs" />
+    <Compile Include="InputControl\ContinuousKeyboardControllerBoardEmulator.cs" />
     <Compile Include="InputControl\ControlBoard\DummyControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\IControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoard.cs" />
