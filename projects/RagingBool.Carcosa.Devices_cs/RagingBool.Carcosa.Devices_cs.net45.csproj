@@ -71,6 +71,7 @@
     <Compile Include="InputControl\DummyKeyboard.cs" />
     <Compile Include="InputControl\KeyboardBase.cs" />
     <Compile Include="InputControl\KeyboardControllerBoardEmulator.cs" />
+    <Compile Include="InputControl\ManualControllerBoard.cs" />
     <Compile Include="InputControl\ManualKeyboard.cs" />
     <Compile Include="InputControl\TimedKey.cs" />
     <Compile Include="InputControl\TimedKeyVelocity.cs" />
