@@ -70,6 +70,7 @@
     <Compile Include="InputControl\ControllerBoardBase.cs" />
     <Compile Include="InputControl\DummyControllerBoard.cs" />
     <Compile Include="InputControl\DummyKeyboard.cs" />
+    <Compile Include="InputControl\IndicatorBoardBase.cs" />
     <Compile Include="InputControl\KeyboardBase.cs" />
     <Compile Include="InputControl\KeyboardControllerBoardEmulator.cs" />
     <Compile Include="InputControl\ManualControllerBoard.cs" />
