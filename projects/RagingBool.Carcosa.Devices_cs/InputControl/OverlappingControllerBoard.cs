@@ -23,6 +23,8 @@ namespace RagingBool.Carcosa.Devices.InputControl
 {
     public sealed class OverlappingControllerBoard<TControllerId, TControllerValue> : ControllerBoardBase<TControllerId, TControllerValue>
     {
+        private object _lock = new object();
+
         private readonly IList<IControllerBoard<TControllerId, TControllerValue>> _controllers;
 
         public OverlappingControllerBoard(TControllerValue defaultValue)
@@ -33,14 +35,20 @@ namespace RagingBool.Carcosa.Devices.InputControl
 
         public void Register(IControllerBoard<TControllerId, TControllerValue> controller)
         {
-            _controllers.Add(controller);
+            lock (_lock)
+            {
+                _controllers.Add(controller);
 
-            controller.OnControllerChangeEvent += OnControllerChangeEventHandler;
+                controller.OnControllerChangeEvent += OnControllerChangeEventHandler;
+            }
         }
 
         public void OnControllerChangeEventHandler(object sender, ControllerChangeEventArgs<TControllerId, TControllerValue> e)
         {
-            ProcessControllerChangeEvent(e);
+            lock (_lock)
+            {
+                ProcessControllerChangeEvent(e);
+            }
         }
     }
 }

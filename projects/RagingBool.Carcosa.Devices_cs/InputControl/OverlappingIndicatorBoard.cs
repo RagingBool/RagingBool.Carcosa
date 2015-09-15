@@ -23,6 +23,8 @@ namespace RagingBool.Carcosa.Devices.InputControl
 {
     public sealed class OverlappingIndicatorBoard<TIndicatorId, TIndicatorValue> : IndicatorBoardBase<TIndicatorId, TIndicatorValue>
     {
+        private object _lock = new object();
+
         private readonly IList<IIndicatorBoard<TIndicatorId, TIndicatorValue>> _indicators;
 
         public OverlappingIndicatorBoard(TIndicatorValue defaultValue)
@@ -33,14 +35,20 @@ namespace RagingBool.Carcosa.Devices.InputControl
 
         public void Register(IIndicatorBoard<TIndicatorId, TIndicatorValue> indicator)
         {
-            _indicators.Add(indicator);
+            lock (_lock)
+            {
+                _indicators.Add(indicator);
+            }
         }
 
         protected override void IndicatorValueChanges(TIndicatorId indicatorId, TIndicatorValue value)
         {
-            foreach(var indicator in _indicators)
+            lock (_lock)
             {
-                indicator.SetIndicatorValue(indicatorId, value);
+                foreach (var indicator in _indicators)
+                {
+                    indicator.SetIndicatorValue(indicatorId, value);
+                }
             }
         }
     }

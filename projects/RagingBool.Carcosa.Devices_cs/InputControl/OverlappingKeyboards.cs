@@ -23,6 +23,8 @@ namespace RagingBool.Carcosa.Devices.InputControl
 {
     public sealed class OverlappingKeyboards<TKeyId, TAdditionalKeyEventData> : KeyboardBase<TKeyId, TAdditionalKeyEventData>
     {
+        private object _lock = new object();
+
         private readonly IList<IKeyboard<TKeyId, TAdditionalKeyEventData>> _keyboards;
 
         public OverlappingKeyboards()
@@ -32,14 +34,20 @@ namespace RagingBool.Carcosa.Devices.InputControl
 
         public void Register(IKeyboard<TKeyId, TAdditionalKeyEventData> keyboard)
         {
-            _keyboards.Add(keyboard);
+            lock(_lock)
+            {
+                _keyboards.Add(keyboard);
 
-            keyboard.OnKeyEvent += OnKeyEventHandler;
+                keyboard.OnKeyEvent += OnKeyEventHandler;
+            }
         }
 
         public void OnKeyEventHandler(object sender, KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
         {
-            ProcessKeyEvent(e);
+            lock (_lock)
+            {
+                ProcessKeyEvent(e);
+            }
         }
     }
 }
