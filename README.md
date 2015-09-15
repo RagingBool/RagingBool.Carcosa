@@ -17,6 +17,10 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
 ### Version 0.1 
 
 * **Version 0.2.0.0** [NOT RELEASED]
+  * Control
+    * Refactoring the control board to use Epicycle.Input
+    * Creating a computer keyboard based controller
+    * Support for overlapping multiple controllers
   * Devices infrastructure refactoring and rewriting resulting in a much more cleaner light control protocols implementation
   * Utilizing Epicycle.Input
   * Upgrading Epicycle libs
