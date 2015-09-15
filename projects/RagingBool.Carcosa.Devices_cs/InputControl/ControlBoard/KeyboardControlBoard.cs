@@ -27,12 +27,11 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         private const double MinControllerValue = 0.0;
         private const double MaxControllerValue = 1.0;
 
-        private readonly IKeyboard<TKeyId, TimedKey> _keyboardManager;
         private readonly VelocityKeyboardEmulator<int, TKeyId> _buttonsKeyboard;
         private readonly ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey> _controllerBoard;
 
         public KeyboardControlBoard(
-            IKeyboard<TKeyId, TimedKey> keyboardManager,
+            IKeyboard<TKeyId, TimedKey> baseKeyboard,
             IEnumerable<TKeyId> buttonKeys,
             int defaultVelocity, int highVelocity,
             TKeyId highVelocityKey,
@@ -41,21 +40,15 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> controllerValueChangeKeysConfig,
             double controllerSmallValueStep, double controllerBigValueStep)
         {
-            _keyboardManager = keyboardManager;
-
-            // Init buttons
-
             _buttonsKeyboard = new VelocityKeyboardEmulator<int, TKeyId>(
-                keyboardManager,
+                baseKeyboard,
                 CreateKeyMapping(buttonKeys),
                 defaultVelocity, highVelocity,
                 highVelocityKey
                 );
 
-            // Init controllers
-
             _controllerBoard = new ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey>(
-                keyboardManager,
+                baseKeyboard,
                 CreateKeyMapping(controllerKeys),
                 controllerValueKeys,
                 controllerValueChangeKeysConfig,
