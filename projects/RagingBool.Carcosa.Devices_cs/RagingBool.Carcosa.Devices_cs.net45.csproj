@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HighPrecisionSystemClock.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="InputControl\Lpd8\DummyLpd8.cs" />
