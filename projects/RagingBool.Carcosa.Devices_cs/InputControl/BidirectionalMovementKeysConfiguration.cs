@@ -20,16 +20,16 @@ namespace RagingBool.Carcosa.Devices.InputControl
 {
     public sealed class BidirectionalMovementKeysConfiguration<TKeyId>
     {
-        private readonly TKeyId _negativeDirectionKeyId;
         private readonly TKeyId _positiveDirectionKeyId;
+        private readonly TKeyId _negativeDirectionKeyId;
 
-        public BidirectionalMovementKeysConfiguration(TKeyId negativeDirectionKeyId, TKeyId positiveDirectionKeyId)
+        public BidirectionalMovementKeysConfiguration(TKeyId positiveDirectionKeyId, TKeyId negativeDirectionKeyId)
         {
-            _negativeDirectionKeyId = negativeDirectionKeyId;
             _positiveDirectionKeyId = positiveDirectionKeyId;
+            _negativeDirectionKeyId = negativeDirectionKeyId;
         }
 
-        public TKeyId NegativeDirectionKeyId { get { return _negativeDirectionKeyId; } }
         public TKeyId PositiveDirectionKeyId { get { return _positiveDirectionKeyId; } }
+        public TKeyId NegativeDirectionKeyId { get { return _negativeDirectionKeyId; } }
     }
 }

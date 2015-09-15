@@ -32,11 +32,11 @@ namespace RagingBool.Carcosa.Devices.InputControl
         }
 
         public TwoSpeedBidirectionalMovementKeysConfiguration(
-            TKeyId slowNegativeDirectionKeyId, TKeyId slowPositiveDirectionKeyId,
-            TKeyId fastNegativeDirectionKeyId, TKeyId fastPositiveDirectionKeyId)
+            TKeyId slowPositiveDirectionKeyId, TKeyId slowNegativeDirectionKeyId,
+            TKeyId fastPositiveDirectionKeyId, TKeyId fastNegativeDirectionKeyId)
             : this(
-                new BidirectionalMovementKeysConfiguration<TKeyId>(slowNegativeDirectionKeyId, slowPositiveDirectionKeyId),
-                new BidirectionalMovementKeysConfiguration<TKeyId>(fastNegativeDirectionKeyId, fastPositiveDirectionKeyId)
+                new BidirectionalMovementKeysConfiguration<TKeyId>(slowPositiveDirectionKeyId, slowNegativeDirectionKeyId),
+                new BidirectionalMovementKeysConfiguration<TKeyId>(fastPositiveDirectionKeyId, fastNegativeDirectionKeyId)
             ) { }
 
         public BidirectionalMovementKeysConfiguration<TKeyId> SlowMovementKeysConfiguration { get { return _slowMovementKeysConfiguration; } }
