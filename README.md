@@ -22,6 +22,7 @@ Copyright 2015 Raging Bool (http://ragingbool.org)
     * Creating a computer keyboard based controller
     * Support for overlapping multiple controllers
   * Devices infrastructure refactoring and rewriting resulting in a much more cleaner light control protocols implementation
+  * Addinf Akka and initialing an AcrorSystem
   * Utilizing Epicycle.Input
   * Upgrading Epicycle libs
 
