@@ -23,7 +23,7 @@ namespace RagingBool.Carcosa.Core.Stage.Scenes
     internal abstract class SceneBase : IScene
     {
         private const int NumberOfControls = 8;
-        private const int ControlDefaultRawValue = 128;
+        private const double ControlDefaultRawValue = 0.5;
 
         private double[] _controls;
 
