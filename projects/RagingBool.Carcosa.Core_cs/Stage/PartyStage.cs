@@ -39,10 +39,6 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private readonly IClock _clock;
 
-        private IDevice _controlBoardDevice;
-        private IUpdatable _controlBoardUpdatable;
-        private IControlBoard _controlBoard;
-
         private E1_31DmxMultiverse _e1_31DmxMultiverse;
         private IBufferedLightController _dmxUniverseController1;
         private MaxFrequencyUpdater _dmxMultiverseUpdater1;
@@ -69,16 +65,15 @@ namespace RagingBool.Carcosa.Core.Stage
 
         private double _lastSceneUpdate;
 
-        public PartyStage(IClock clock, ICarcosaWorkspace workspace)
+        public PartyStage(IClock clock, ICarcosaWorkspace workspace, IControlBoard controlBoard)
         {
             _clock = clock;
 
-            InitController(workspace, false);
             InitDMX(workspace, false);
             InitForestOpcDevice(workspace, false);
             InitSnark(workspace, false);
 
-            _controllerUi = new ControllerUi(_clock, _controlBoard);
+            _controllerUi = new ControllerUi(_clock, controlBoard);
 
             _controllerUi.OnSceneChange += OnSceneChange;
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
@@ -93,24 +88,6 @@ namespace RagingBool.Carcosa.Core.Stage
 
             _curScene = null;
             _curSceneId = -1;
-        }
-
-        private void InitController(ICarcosaWorkspace workspace, bool isOn)
-        {
-            if (isOn)
-            {
-                var controller = new MidiLpd8(_clock, workspace.ControllerMidiInPort, workspace.ControllerMidiOutPort);
-
-                _controlBoard = controller;
-                _controlBoardUpdatable = controller;
-                _controlBoardDevice = controller;
-            }
-            else
-            {
-                _controlBoard = new DummyControlBoard();
-                _controlBoardUpdatable = null;
-                _controlBoardDevice = null;
-            }
         }
 
         private void InitDMX(ICarcosaWorkspace workspace, bool isOn)
@@ -168,11 +145,6 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
-                if (_controlBoardDevice != null)
-                {
-                    _controlBoardDevice.Connect();
-                }
-
                 if (_e1_31DmxMultiverse != null)
                 {
                     _e1_31DmxMultiverse.Connect();
@@ -198,11 +170,6 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
-                if (_controlBoardUpdatable != null)
-                {
-                    _controlBoardUpdatable.Update();
-                }
-
                 if (_dmxMultiverseUpdater1 != null)
                 {
                     _dmxMultiverseUpdater1.Update();
@@ -245,11 +212,6 @@ namespace RagingBool.Carcosa.Core.Stage
             lock (_lock)
             {
                 _controllerUi.Stop();
-
-                if (_controlBoardDevice != null)
-                {
-                    _controlBoardDevice.Disconnect();
-                }
 
                 if(_snark != null)
                 {

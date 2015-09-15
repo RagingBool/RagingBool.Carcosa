@@ -53,11 +53,10 @@ namespace RagingBool.Carcosa.Core
             _fileSystem = fileSystem;
             _workspace = new CarcosaWorkspace(_fileSystem, workspacePath);
 
-            _stage = new PartyStage(_clock, _workspace);
+            _controlBoards = new OverlappingControlBoards();
+            _stage = new PartyStage(_clock, _workspace, _controlBoards);
 
             _updateThread = new Thread(UpdateThreadLoop);
-
-            _controlBoards = new OverlappingControlBoards();
 
             _actorSystem = ActorSystem.Create("Carcosa");
 
