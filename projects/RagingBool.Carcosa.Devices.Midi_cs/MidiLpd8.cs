@@ -23,7 +23,6 @@ using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
-using System;
 
 namespace RagingBool.Carcosa.Devices.Midi
 {
@@ -42,6 +41,7 @@ namespace RagingBool.Carcosa.Devices.Midi
         private readonly MidiOutPort _midiOutPort;
 
         private readonly ManualKeyboard<int, TimedKeyVelocity> _buttonsKeyboard;
+        private readonly ManualControllerBoard<int, double> _controllerBoard;
 
         private bool[] _buttonLightsState;
 
@@ -65,6 +65,7 @@ namespace RagingBool.Carcosa.Devices.Midi
             _midiOutPort = new MidiOutPort();
 
             _buttonsKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
+            _controllerBoard = new ManualControllerBoard<int, double>(0);
         }
 
         public void Connect()
@@ -109,13 +110,11 @@ namespace RagingBool.Carcosa.Devices.Midi
 
                 if (midiChannelMessage.Command == MidiChannelCommand.ControlChange)
                 {
-                    if (OnControllerChange != null)
-                    {
-                        var controllerId = midiChannelMessage.Parameter1 - 1;
-                        var value = MidiValueToControllerValue(midiChannelMessage.Parameter2);
+                    var controllerId = midiChannelMessage.Parameter1 - 1;
+                    var value = MidiValueToControllerValue(midiChannelMessage.Parameter2);
 
-                        OnControllerChange(this, new ControllerChangeEventArgs<int, double>(controllerId, value));
-                    }
+                    var eventArgs = new ControllerChangeEventArgs<int, double>(controllerId, value);
+                    _controllerBoard.ProcessControllerChangeEvent(eventArgs);
                 }
                 else
                 {
@@ -148,7 +147,7 @@ namespace RagingBool.Carcosa.Devices.Midi
 
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
 
-        public event EventHandler<ControllerChangeEventArgs<int, double>> OnControllerChange;
+        public IControllerBoard<int, double> Controllers { get { return _controllerBoard; } }
 
         public void SetKeyLightState(int id, bool newState)
         {

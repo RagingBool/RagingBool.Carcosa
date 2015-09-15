@@ -44,7 +44,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             _controlBoard = controlBoard;
 
             _controlBoard.Buttons.OnKeyEvent += OnButtonEventHandler;
-            _controlBoard.OnControllerChange += OnControllerChangeHandler;
+            _controlBoard.Controllers.OnControllerChangeEvent += OnControllerChangeHandler;
 
             _liveMode = new LiveControllerMode(this, clock, _controlBoard);
             _sceneSelectMode = new SceneSelectControllerMode(this, clock, _controlBoard);

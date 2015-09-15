@@ -16,12 +16,9 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
@@ -32,11 +29,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         private readonly IKeyboard<TKeyId, TimedKey> _keyboardManager;
         private readonly VelocityKeyboardEmulator<int, TKeyId> _buttonsKeyboard;
-
-        private readonly List<Controller> _controllers;
-
-        private readonly Dictionary<TKeyId, double> _absoluteFaderKeys;
-        private readonly Dictionary<TKeyId, double> _relativeFaderKeys;
+        private readonly ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey> _controllerBoard;
 
         public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> keyboardManager,
@@ -44,9 +37,10 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             int defaultVelocity, int highVelocity,
             TKeyId highVelocityKey,
             IEnumerable<TKeyId> controllerKeys,
-            IEnumerable<TKeyId> faderKeys,
-            TKeyId faderUpKey, TKeyId faderDownKey, TKeyId faderFastUpKey, TKeyId faderFastDownKey,
-            double faderSmallStep, double faderBigStep)
+            IEnumerable<TKeyId> controllerValueKeys,
+            TKeyId controllerSmallAdvanceForwardKey, TKeyId controllerSmallAdvanceBackwardKey,
+            TKeyId controllerBigAdvanceForwardKey, TKeyId controllerBigAdvanceBackwardKey,
+            double controllerSmallValueStep, double controllerBigValueStep)
         {
             _keyboardManager = keyboardManager;
 
@@ -54,38 +48,29 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
             _buttonsKeyboard = new VelocityKeyboardEmulator<int, TKeyId>(
                 keyboardManager,
-                CreateButtonKeyMapping(buttonKeys),
+                CreateKeyMapping(buttonKeys),
                 defaultVelocity, highVelocity,
                 highVelocityKey
                 );
 
             // Init controllers
 
-            _controllers = new List<Controller>();
-            foreach (var controllerKey in controllerKeys)
-            {
-                _controllers.Add(new Controller(this, _controllers.Count, controllerKey));
-            }
-
-            _absoluteFaderKeys = new Dictionary<TKeyId, double>();
-            PopulateAbsoluteFaderKeys(faderKeys);
-
-            _relativeFaderKeys = new Dictionary<TKeyId, double>();
-            PopulateRelativeFaderKeys(
-                faderUpKey, faderDownKey, faderFastUpKey, faderFastDownKey,
-                faderSmallStep, faderBigStep);
-
-            // Register key events
-
-            _keyboardManager.OnKeyEvent += OnKeyEvent;
+            _controllerBoard = new ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey>(
+                keyboardManager,
+                CreateKeyMapping(controllerKeys),
+                controllerValueKeys,
+                controllerSmallAdvanceForwardKey, controllerSmallAdvanceBackwardKey,
+                controllerBigAdvanceForwardKey, controllerBigAdvanceBackwardKey,
+                controllerSmallValueStep, controllerBigValueStep
+                );
         }
 
-        private static IDictionary<TKeyId, int> CreateButtonKeyMapping(IEnumerable<TKeyId> buttonKeys)
+        private static IDictionary<TKeyId, int> CreateKeyMapping(IEnumerable<TKeyId> keys)
         {
             var mapping = new Dictionary<TKeyId, int>();
 
             var index = 0;
-            foreach(var key in buttonKeys)
+            foreach (var key in keys)
             {
                 mapping[key] = index;
                 index++;
@@ -94,128 +79,16 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             return mapping;
         }
 
-        private void PopulateAbsoluteFaderKeys(IEnumerable<TKeyId> faderKeys)
-        {
-            var low = (double)MinControllerValue;
-            var high = (double)MaxControllerValue;
-
-            var count = faderKeys.Count();
-
-            if (count <= 0)
-            {
-                return;
-            }
-
-            if (count == 1)
-            {
-                throw new ArgumentException("There can not be one fader key");
-            }
-
-            var step = (high - low) / (faderKeys.Count() - 1);
-
-            var curValue = low;
-
-            foreach (var key in faderKeys)
-            {
-                _absoluteFaderKeys[key] = curValue;
-
-                curValue += step;
-            }
-        }
-
-        private void PopulateRelativeFaderKeys(
-            TKeyId faderUpKey, TKeyId faderDownKey, TKeyId faderFastUpKey, TKeyId faderFastDownKey,
-            double faderSmallStep, double faderBigStep)
-        {
-            var range = MaxControllerValue - MinControllerValue;
-
-            _relativeFaderKeys[faderUpKey] = faderSmallStep;
-            _relativeFaderKeys[faderDownKey] = -faderSmallStep;
-            _relativeFaderKeys[faderFastUpKey] = faderBigStep;
-            _relativeFaderKeys[faderFastDownKey] = -faderBigStep;
-        }
-
-        private void OnKeyEvent(object sender, KeyEventArgs<TKeyId, TimedKey> e)
-        {
-            foreach (var controller in _controllers)
-            {
-                controller.OnKeyEvent(e);
-            }
-        }
-
         public int NumberOfButtons { get { return 0; } }
         public int NumberOfControllers { get { return 0; } }
 
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }
 
-        public event EventHandler<ControllerChangeEventArgs<int, double>> OnControllerChange;
+        public IControllerBoard<int, double> Controllers { get { return _controllerBoard; } }
 
         public void SetKeyLightState(int id, bool newState)
         {
             // We don't have lights on the keyboard :(
-        }
-
-        private class Controller
-        {
-            private readonly KeyboardControlBoard<TKeyId> _parent;
-            private readonly int _controlId; 
-            private readonly TKeyId _keyId;
-            private double _curValue;
-            private double _lastSentValue;
-            private bool _isArmed;
-
-            public Controller(KeyboardControlBoard<TKeyId> parent, int controlId, TKeyId keyId)
-            {
-                _parent = parent;
-                _controlId = controlId;
-                _keyId = keyId;
-
-                _lastSentValue = MinControllerValue - 1;
-                _curValue = MinControllerValue;
-                _isArmed = false;
-            }
-
-            public void OnKeyEvent(KeyEventArgs<TKeyId, TimedKey> e)
-            {
-                var key = e.KeyId;
-                var eventType = e.EventType;
-
-                if (key.Equals(_keyId))
-                {
-                    if (eventType != KeyEventType.Repeat)
-                    {
-                        _isArmed = eventType == KeyEventType.Pressed;
-                    }
-                }
-                else if (_isArmed)
-                {
-                    if (eventType == KeyEventType.Pressed && _parent._absoluteFaderKeys.ContainsKey(key))
-                    {
-                        SetNewValue(_parent._absoluteFaderKeys[key]);
-                    }
-                    else if ((eventType == KeyEventType.Pressed || eventType == KeyEventType.Repeat) && _parent._relativeFaderKeys.ContainsKey(key))
-                    {
-                        SetNewValue(_curValue + _parent._relativeFaderKeys[key]);
-                    }
-                }
-            }
-
-            private void SetNewValue(double newValue)
-            {
-                _curValue = BasicMath.Clip(newValue, MinControllerValue, MaxControllerValue);
-
-                if (_lastSentValue == _curValue)
-                {
-                    return;
-                }
-
-                _lastSentValue = _curValue;
-
-                if (_parent.OnControllerChange != null)
-                {
-                    _parent.OnControllerChange(_parent, new ControllerChangeEventArgs<int, double>(_controlId, _curValue));
-                }
-            }
         }
     }
 }
