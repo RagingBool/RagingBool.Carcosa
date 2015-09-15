@@ -16,6 +16,10 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
+using RagingBool.Carcosa.App.Control;
+using RagingBool.Carcosa.Devices.InputControl;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -32,15 +36,45 @@ namespace RagingBool.Carcosa.App
     {
         private ICarcosa _carcosa;
         private WpfKeyboardManager _keyboardManager;
+        private KeyboardLpd8<Key> _keyboardLpd8;
 
         public MainWindow()
         {
             _carcosa = ((App)Application.Current).Carcosa;
             _keyboardManager = new WpfKeyboardManager();
+            
+            InitKeyboardLpd8();
 
             InitializeComponent();
             KeyDown += OnKeyEvent;
             KeyUp += OnKeyEvent;
+        }
+
+        private void InitKeyboardLpd8()
+        {
+            _keyboardLpd8 = new KeyboardLpd8<Key>(
+                _keyboardManager,
+                buttonKeys: new Key[] { Key.Z, Key.X, Key.C, Key.V, Key.A, Key.S, Key.D, Key.F},
+                defaultVelocity: 90, 
+                highVelocity: 120,
+                highVelocityKey: Key.LeftShift,
+                controllerKeys: new Key[] { Key.M, Key.OemComma, Key.OemPeriod, Key.OemQuestion, Key.K, Key.L, Key.Oem1, Key.OemQuotes },
+                faderKeys: new Key[] { Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
+                faderUpKey: Key.Right, faderDownKey: Key.Left, faderFastUpKey: Key.Up, faderFastDownKey: Key.Down,
+                faderSmallStepResolution: 1000.0, faderBigStepResolution: 100.0);
+
+            _keyboardLpd8.OnButtonEvent += OnButtonEvent;
+            _keyboardLpd8.OnControllerChange += OnControllerChange;
+        }
+
+        private void OnButtonEvent(object sender, KeyEventArgs<int, KeyVelocity> e)
+        {
+            System.Console.WriteLine("Key: {0} - {1} ({2})", e.KeyId, e.EventType, e.AdditionalData.Velocity);
+        }
+
+        private void OnControllerChange(object sender, ControllerChangeEventArgs<int, int> e)
+        {
+            System.Console.WriteLine("Key: {0} = {1}", e.ControllerId, e.Value);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
