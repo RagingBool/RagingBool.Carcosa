@@ -84,20 +84,6 @@ namespace RagingBool.Carcosa.App
                 controllerValueKeys: new Key[] { Key.Oem3, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
                 controllerValueChangeKeysConfig: controllerValueChangeKeysConfig,
                 controllerSmallValueStep: 1.0 / 1000, controllerBigValueStep: 1.0 / 100);
-
-            _keyboardControlBoard.Buttons.OnKeyEvent += OnButtonEvent;
-            _keyboardControlBoard.Controllers.OnControllerChangeEvent += OnControllerChange;
-        }
-
-        private void OnButtonEvent(object sender, KeyEventArgs<int, TimedKeyVelocity> e)
-        {
-            System.Console.WriteLine("Key: {0} - {1} ({2})", e.KeyId, e.EventType, e.AdditionalData.Velocity);
-            System.Console.WriteLine("     dt: {0}", _clock.Time - e.AdditionalData.Time);
-        }
-
-        private void OnControllerChange(object sender, ControllerChangeEventArgs<int, double> e)
-        {
-            System.Console.WriteLine("Key: {0} = {1}", e.ControllerId, e.Value);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
