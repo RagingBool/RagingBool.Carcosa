@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Control\KeyboardLpd8.cs" />
     <Compile Include="WpfKeyboardManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -100,6 +101,10 @@
     <ProjectReference Include="..\RagingBool.Carcosa.Core_cs\RagingBool.Carcosa.Core_cs.net45.csproj">
       <Project>{d323da07-474d-4a00-a45d-242f1d86802c}</Project>
       <Name>RagingBool.Carcosa.Core_cs.net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RagingBool.Carcosa.Devices_cs\RagingBool.Carcosa.Devices_cs.net45.csproj">
+      <Project>{76e967a5-9422-4a50-bf41-91706e507c81}</Project>
+      <Name>RagingBool.Carcosa.Devices_cs.net45</Name>
     </ProjectReference>
     <Reference Include="Epicycle.Commons.TestUtils_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.6.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
