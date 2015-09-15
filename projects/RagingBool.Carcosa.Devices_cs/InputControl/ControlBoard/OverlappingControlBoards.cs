@@ -42,6 +42,10 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         public void Register(IControlBoard controlBoard)
         {
+            _buttons.Register(controlBoard.Buttons);
+            _controllers.Register(controlBoard.Controllers);
+            _buttonLights.Register(controlBoard.ButtonLights);
+
             _controlBoards.Add(controlBoard);
         }
 
