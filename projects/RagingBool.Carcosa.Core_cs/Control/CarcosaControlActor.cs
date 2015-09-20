@@ -18,6 +18,7 @@
 
 using Akka.Actor;
 using RagingBool.Carcosa.Commons.Control.Akka.System;
+using RagingBool.Carcosa.Devices.InputControl;
 
 namespace RagingBool.Carcosa.Core.Control
 {
@@ -28,6 +29,8 @@ namespace RagingBool.Carcosa.Core.Control
         public CarcosaControlActor()
         {
             _controlSystemActor = Context.ActorOf<ControlSystemActor>("system");
+
+            _controlSystemActor.Tell(new CreateComponentMesssage("keyboard", typeof(KeyboardControlActor<string, TimedKey>)));
         }
 
         protected override void OnReceive(object message)
