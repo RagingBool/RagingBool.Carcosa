@@ -17,11 +17,19 @@
 // ]]]]
 
 using Akka.Actor;
+using RagingBool.Carcosa.Commons.Control.Akka.System;
 
 namespace RagingBool.Carcosa.Core.Control
 {
     internal sealed class CarcosaControlActor : UntypedActor
     {
+        private readonly IActorRef _controlSystemActor;
+
+        public CarcosaControlActor()
+        {
+            _controlSystemActor = Context.ActorOf<ControlSystemActor>("system");
+        }
+
         protected override void OnReceive(object message)
         {
             Unhandled(message);
