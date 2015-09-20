@@ -20,8 +20,9 @@ using Epicycle.Commons;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public abstract class ControlOutputBase<TControlComponent> : ControlPortBase<TControlComponent>, IControlOutput
+    public abstract class ControlOutputBase<TControlComponent, TControlInput> : ControlPortBase<TControlComponent>, IControlOutput
         where TControlComponent : IControlComponent
+        where TControlInput : IControlInput
     {
         public ControlOutputBase(TControlComponent component, ControlPortConfiguration configuration)
             : base(component, configuration) { }
@@ -39,9 +40,9 @@ namespace RagingBool.Carcosa.Core.Control
         {
             ArgAssert.NotNull(input, "input");
 
-            PerformConnection(input);
+            PerformConnection((TControlInput)input);
         }
 
-        protected abstract void PerformConnection(IControlInput input);
+        protected abstract void PerformConnection(TControlInput input);
     }
 }
