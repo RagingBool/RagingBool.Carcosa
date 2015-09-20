@@ -17,10 +17,11 @@
 // ]]]]
 
 using Akka.Actor;
+using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control.Akka
 {
-    public sealed class ControlActorRef : IControlComponent
+    internal sealed class ControlActorRef : IControlComponent
     {
         private readonly IActorRef _actorRef;
 
@@ -30,6 +31,11 @@ namespace RagingBool.Carcosa.Core.Control.Akka
         }
 
         public IActorRef ActorRef { get { return _actorRef; } }
+
+        public void ConnectTo(string outputName, ControlActorInput toInput)
+        {
+            // TODO
+        }
 
         public IControlInput GetInput(string name)
         {
