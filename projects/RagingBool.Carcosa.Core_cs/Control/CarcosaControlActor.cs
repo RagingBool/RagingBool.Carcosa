@@ -30,7 +30,7 @@ namespace RagingBool.Carcosa.Core.Control
         {
             _controlSystemActor = Context.ActorOf<ControlSystemActor>("system");
 
-            _controlSystemActor.Tell(new CreateComponentMesssage("keyboard", typeof(KeyboardControlActor<string, TimedKey>)));
+            _controlSystemActor.Tell(new CreateComponentMesssage("keyboard", typeof(KeyboardControlActor<WindowsKey, TimedKey>)));
         }
 
         protected override void OnReceive(object message)
