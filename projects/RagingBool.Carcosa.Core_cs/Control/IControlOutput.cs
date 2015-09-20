@@ -20,6 +20,7 @@ namespace RagingBool.Carcosa.Core.Control
 {
     public interface IControlOutput : IControlPort
     {
+        bool CanConnectTo(IControlInput output);
         void ConnectTo(IControlInput input);
     }
 }
