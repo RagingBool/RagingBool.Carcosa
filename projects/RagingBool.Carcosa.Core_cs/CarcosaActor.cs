@@ -16,29 +16,20 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Akka.Actor;
+using RagingBool.Carcosa.Commons.Akka;
 
 namespace RagingBool.Carcosa.Core
 {
-    internal sealed class CarcosaActor : UntypedActor
+    internal sealed class CarcosaActor : InitializableActor<CarcosaActor.InitMessage>
     {
-        protected override void OnReceive(object message)
+        // Init
+        protected override void Init(InitMessage message)
         {
-            if (message is InitMessage)
-            {
-                OnInit();
-            }
-            else if (message is ShutDownMessage)
-            {
-                OnShutDown();
-            }
-            else
-            {
-                Unhandled(message);
-            }
+            // TODO
         }
 
-        private void OnRecieveRunning(object message)
+        // Running
+        protected override void OnRecieveInitialized(object message)
         {
             if (message is ShutDownMessage)
             {
@@ -50,22 +41,24 @@ namespace RagingBool.Carcosa.Core
             }
         }
 
-        private void OnShuttingDown(object message)
+        // Shutting down
+        private void OnRecieveShutDown(object message)
         {
             Unhandled(message);
         }
 
-        private void OnInit()
-        {
-            System.Console.WriteLine("Init");
-            Become(OnRecieveRunning);
-        }
-
         private void OnShutDown()
         {
-            System.Console.WriteLine("Shutdown");
-            Become(OnShuttingDown);
+            Become(OnRecieveShutDown);
+            ShutDown();
         }
+
+        private void ShutDown()
+        {
+            // TODO
+        }
+
+        // Messages
 
         public class InitMessage { }
         public class ShutDownMessage { }
