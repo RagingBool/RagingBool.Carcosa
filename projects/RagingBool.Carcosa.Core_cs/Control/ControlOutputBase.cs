@@ -17,15 +17,14 @@
 // ]]]]
 
 using Epicycle.Commons;
-using System;
 
 namespace RagingBool.Carcosa.Core.Control
 {
     public abstract class ControlOutputBase<TControlComponent> : ControlPortBase<TControlComponent>, IControlOutput
         where TControlComponent : IControlComponent
     {
-        public ControlOutputBase(TControlComponent component, string name, Type dataType)
-            : base(component, name, dataType) { }
+        public ControlOutputBase(TControlComponent component, ControlPortConfiguration configuration)
+            : base(component, configuration) { }
 
         public bool CanConnectTo(IControlInput input)
         {
@@ -33,7 +32,7 @@ namespace RagingBool.Carcosa.Core.Control
 
             // TODO: Check for circles in the graph
 
-            return input.DataType.IsAssignableFrom(DataType);
+            return input.Configuration.DataType.IsAssignableFrom(Configuration.DataType);
         }
 
         public void ConnectTo(IControlInput input)

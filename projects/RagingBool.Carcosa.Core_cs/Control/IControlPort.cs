@@ -16,15 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-
 namespace RagingBool.Carcosa.Core.Control
 {
     public interface IControlPort
     {
         IControlComponent Component { get; }
-        string Name { get; }
-
-        Type DataType { get; }
+        ControlPortConfiguration Configuration { get; }
     }
 }

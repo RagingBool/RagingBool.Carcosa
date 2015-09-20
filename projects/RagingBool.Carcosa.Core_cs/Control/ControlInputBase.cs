@@ -17,15 +17,14 @@
 // ]]]]
 
 using Epicycle.Commons;
-using System;
 
 namespace RagingBool.Carcosa.Core.Control
 {
     public abstract class ControlInputBase<TControlComponent> : ControlPortBase<TControlComponent>, IControlInput
         where TControlComponent : IControlComponent
     {
-        public ControlInputBase(TControlComponent component, string name, Type dataType)
-            : base(component, name, dataType) { }
+        public ControlInputBase(TControlComponent component, ControlPortConfiguration configuration)
+            : base(component, configuration) { }
 
         public bool CanConnectTo(IControlOutput output)
         {

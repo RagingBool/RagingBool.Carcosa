@@ -16,29 +16,23 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-
 namespace RagingBool.Carcosa.Core.Control
 {
     public abstract class ControlPortBase<TControlComponent> : IControlPort
         where TControlComponent : IControlComponent
     {
         private readonly TControlComponent _component;
-        private readonly string _name;
-        private readonly Type _dataType;
+        private readonly ControlPortConfiguration _configuration;
 
-        public ControlPortBase(TControlComponent component, string name, Type dataType)
+        public ControlPortBase(TControlComponent component, ControlPortConfiguration configuration)
         {
             _component = component;
-            _name = name;
-            _dataType = dataType;
+            _configuration = configuration;
         }
 
         public IControlComponent Component { get { return _component; } }
         protected IControlComponent TypedComponent { get { return _component; } }
 
-        public string Name { get { return _name; } }
-
-        public Type DataType { get { return _dataType; } }
+        public ControlPortConfiguration Configuration { get { return _configuration; } }
     }
 }
