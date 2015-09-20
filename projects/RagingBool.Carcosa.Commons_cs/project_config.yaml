@@ -1,0 +1,7 @@
+project_guid: 9F7234ED-ECA6-4DEE-8F9C-820B848396D4
+assemblyinfo_guid: 353bc7af-3c5d-4b69-96f8-bd80d2fbb055
+
+external_libs:
+ - Epicycle.Commons-cs
+ - Akka
+ - YamlDotNet

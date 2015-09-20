@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagingBool.Carcosa.App_cs.net45", "RagingBool.Carcosa.App_cs\RagingBool.Carcosa.App_cs.net45.csproj", "{348D1EC7-EFD1-455D-A366-1FCAFA7C9155}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagingBool.Carcosa.Devices.Midi_cs.net45", "RagingBool.Carcosa.Devices.Midi_cs\RagingBool.Carcosa.Devices.Midi_cs.net45.csproj", "{A485A127-9BDC-4DE4-95D9-48A46B95E32B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagingBool.Carcosa.Devices.Midi_cs-Test.net45", "RagingBool.Carcosa.Devices.Midi_cs-Test\RagingBool.Carcosa.Devices.Midi_cs-Test.net45.csproj", "{338E6518-5199-4B6E-9063-F80AAB5568A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagingBool.Carcosa.Commons_cs.net45", "RagingBool.Carcosa.Commons_cs\RagingBool.Carcosa.Commons_cs.net45.csproj", "{9F7234ED-ECA6-4DEE-8F9C-820B848396D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagingBool.Carcosa.Commons_cs-Test.net45", "RagingBool.Carcosa.Commons_cs-Test\RagingBool.Carcosa.Commons_cs-Test.net45.csproj", "{42FED01C-E20F-463A-BD03-89EDC769A2B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{338E6518-5199-4B6E-9063-F80AAB5568A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338E6518-5199-4B6E-9063-F80AAB5568A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338E6518-5199-4B6E-9063-F80AAB5568A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7234ED-ECA6-4DEE-8F9C-820B848396D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7234ED-ECA6-4DEE-8F9C-820B848396D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7234ED-ECA6-4DEE-8F9C-820B848396D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7234ED-ECA6-4DEE-8F9C-820B848396D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42FED01C-E20F-463A-BD03-89EDC769A2B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FED01C-E20F-463A-BD03-89EDC769A2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FED01C-E20F-463A-BD03-89EDC769A2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FED01C-E20F-463A-BD03-89EDC769A2B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

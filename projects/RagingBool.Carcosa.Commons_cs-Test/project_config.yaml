@@ -1,0 +1,6 @@
+project_guid: 42FED01C-E20F-463A-BD03-89EDC769A2B7
+assemblyinfo_guid: b94d1768-58e0-4aff-83bb-cafa5442278b
+
+external_libs:
+ - NUnit
+ - Moq

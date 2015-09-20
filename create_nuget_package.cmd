@@ -35,6 +35,9 @@ xcopy externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.Midi.pdb NuGetPackag
 xcopy externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.XML NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
 xcopy externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.dll NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
 xcopy externals\lib_dotnet\MIDI.NET.0.1.0.0\lib\CannedBytes.pdb NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Commons_cs.dll NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Commons_cs.pdb NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
+xcopy bin\net45\Release\RagingBool.Carcosa.Commons_cs.xml NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
 xcopy bin\net45\Release\RagingBool.Carcosa.Core_cs.dll NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
 xcopy bin\net45\Release\RagingBool.Carcosa.Core_cs.pdb NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
 xcopy bin\net45\Release\RagingBool.Carcosa.Core_cs.xml NuGetPackage\RagingBool.Carcosa.0.2.0.0\lib\net45\
