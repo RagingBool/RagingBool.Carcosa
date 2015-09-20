@@ -25,9 +25,35 @@ namespace RagingBool.Carcosa.Core.Control.Akka
     {
         private readonly IActorRef _actorRef;
 
-        public ControlActorRef(IActorRef actorRef)
+        private readonly IDictionary<string, ControlActorInput> _inputs;
+        private readonly IDictionary<string, ControlActorOutput> _outputs;
+
+        public ControlActorRef(
+            IActorRef actorRef,
+            IEnumerable<ControlPortConfiguration> inputsConfiguration,
+            IEnumerable<ControlPortConfiguration> outputsConfiguration)
         {
             _actorRef = actorRef;
+
+            // Init inputs
+            _inputs = new Dictionary<string, ControlActorInput>();
+            if (inputsConfiguration != null)
+            {
+                foreach(var config in inputsConfiguration)
+                {
+                    _inputs[config.Name] = new ControlActorInput(this, config);
+                }
+            }
+
+            // Init outputs
+            _outputs = new Dictionary<string, ControlActorOutput>();
+            if (outputsConfiguration != null)
+            {
+                foreach (var config in outputsConfiguration)
+                {
+                    _outputs[config.Name] = new ControlActorOutput(this, config);
+                }
+            }
         }
 
         public IActorRef ActorRef { get { return _actorRef; } }
@@ -39,12 +65,12 @@ namespace RagingBool.Carcosa.Core.Control.Akka
 
         public IControlInput GetInput(string name)
         {
-            return null; // TODO
+            return _inputs[name];
         }
 
         public IControlOutput GetOutput(string name)
         {
-            return null; // TODO
+            return _outputs[name];
         }
     }
 }
