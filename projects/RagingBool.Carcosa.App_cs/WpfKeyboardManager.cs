@@ -23,12 +23,20 @@ using System.Windows.Input;
 
 namespace RagingBool.Carcosa.App
 {
-    public sealed class WpfKeyboardManager : KeyboardBase<Key, TimedKey>
+    public sealed class WpfKeyboardManager : KeyboardBase<WindowsKey, TimedKey>
     {
         public void ProcessWpfKeyboardEvent(System.Windows.Input.KeyEventArgs eventArgs, double time)
         {
-            var convertedEventArgs = new KeyEventArgs<Key, TimedKey>(eventArgs.Key, CalcEventType(eventArgs), new TimedKey(time));
+            var key = ConvertKey(eventArgs.Key);
+            var eventType = CalcEventType(eventArgs);
+
+            var convertedEventArgs = new KeyEventArgs<WindowsKey, TimedKey>(key, eventType, new TimedKey(time));
             ProcessKeyEvent(convertedEventArgs);
+        }
+
+        private static WindowsKey ConvertKey(Key nativeKey)
+        {
+            return (WindowsKey)nativeKey;
         }
 
         private static KeyEventType CalcEventType(System.Windows.Input.KeyEventArgs eventArgs)
