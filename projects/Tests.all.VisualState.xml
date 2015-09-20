@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\Tests.all.nunit</TopNode>
+  <SelectedNode>[0-1000]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\Tests.all.nunit</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\Tests.all.nunit" Expanded="true" />
+    <Node UniqueName="[0-1003]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Debug\RagingBool.Carcosa.Commons_cs-Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1004]RagingBool" Expanded="true" />
+    <Node UniqueName="[0-1005]RagingBool.Carcosa" Expanded="true" />
+    <Node UniqueName="[0-1006]RagingBool.Carcosa.Commons" Expanded="true" />
+    <Node UniqueName="[0-1009]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Release\RagingBool.Carcosa.Commons_cs-Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1010]RagingBool" Expanded="true" />
+    <Node UniqueName="[0-1011]RagingBool.Carcosa" Expanded="true" />
+    <Node UniqueName="[0-1012]RagingBool.Carcosa.Commons" Expanded="true" />
+    <Node UniqueName="[0-1047]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Debug\RagingBool.Carcosa.Devices_cs-Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1048]RagingBool" Expanded="true" />
+    <Node UniqueName="[0-1049]RagingBool.Carcosa" Expanded="true" />
+    <Node UniqueName="[0-1050]RagingBool.Carcosa.Devices" Expanded="true" />
+    <Node UniqueName="[0-1051]RagingBool.Carcosa.Devices.LightControl" Expanded="true" />
+    <Node UniqueName="[0-1052]RagingBool.Carcosa.Devices.LightControl.Dmx" Expanded="true" />
+    <Node UniqueName="[0-1053]RagingBool.Carcosa.Devices.LightControl.Opc" Expanded="true" />
+    <Node UniqueName="[0-1084]C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Release\RagingBool.Carcosa.Devices_cs-Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1085]RagingBool" Expanded="true" />
+    <Node UniqueName="[0-1086]RagingBool.Carcosa" Expanded="true" />
+    <Node UniqueName="[0-1087]RagingBool.Carcosa.Devices" Expanded="true" />
+    <Node UniqueName="[0-1088]RagingBool.Carcosa.Devices.LightControl" Expanded="true" />
+    <Node UniqueName="[0-1089]RagingBool.Carcosa.Devices.LightControl.Dmx" Expanded="true" />
+    <Node UniqueName="[0-1090]RagingBool.Carcosa.Devices.LightControl.Opc" Expanded="true" />
+  </Nodes>
+</VisualState>

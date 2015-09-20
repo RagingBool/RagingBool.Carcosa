@@ -101,7 +101,6 @@
     <Compile Include="LightControl\Opc\SerialOpcDevice.cs" />
     <Compile Include="MaxFrequencyUpdater.cs" />
     <Compile Include="MultipleDevices.cs" />
-    <Compile Include="MultipleUpdatables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

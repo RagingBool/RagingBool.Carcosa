@@ -20,7 +20,7 @@ using Epicycle.Commons;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Commons
 {
     public sealed class MultipleUpdatables: IUpdatable
     {

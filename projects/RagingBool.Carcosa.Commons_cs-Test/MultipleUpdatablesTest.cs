@@ -20,7 +20,7 @@ using Epicycle.Commons;
 using Moq;
 using NUnit.Framework;
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Commons
 {
     [TestFixture]
     public class MultipleUpdatablesTest
