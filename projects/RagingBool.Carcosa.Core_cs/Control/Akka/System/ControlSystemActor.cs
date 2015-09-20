@@ -22,6 +22,13 @@ namespace RagingBool.Carcosa.Core.Control.Akka.System
 {
     public sealed class ControlSystemActor : UntypedActor
     {
+        private readonly IActorRef _controlNetworkActor;
+
+        public ControlSystemActor()
+        {
+            _controlNetworkActor = Context.ActorOf<ControlNetworkActor>("network");
+        }
+
         protected override void OnReceive(object message)
         {
             // TODO
