@@ -48,6 +48,7 @@ namespace RagingBool.Carcosa.App
             InitKeyboardControlBoard();
 
             _carcosa.RegisterControlBoard(_keyboardControlBoard);
+            _carcosa.RegisterWindowsKeyboard(_keyboardManager);
 
             //RegisterMidiLpd8();
 
