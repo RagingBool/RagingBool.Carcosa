@@ -24,7 +24,50 @@ namespace RagingBool.Carcosa.Core
     {
         protected override void OnReceive(object message)
         {
+            if (message is InitMessage)
+            {
+                OnInit();
+            }
+            else if (message is ShutDownMessage)
+            {
+                OnShutDown();
+            }
+            else
+            {
+                Unhandled(message);
+            }
+        }
+
+        private void OnRecieveRunning(object message)
+        {
+            if (message is ShutDownMessage)
+            {
+                OnShutDown();
+            }
+            else
+            {
+                Unhandled(message);
+            }
+        }
+
+        private void OnShuttingDown(object message)
+        {
             Unhandled(message);
         }
+
+        private void OnInit()
+        {
+            System.Console.WriteLine("Init");
+            Become(OnRecieveRunning);
+        }
+
+        private void OnShutDown()
+        {
+            System.Console.WriteLine("Shutdown");
+            Become(OnShuttingDown);
+        }
+
+        public class InitMessage { }
+        public class ShutDownMessage { }
     }
 }
