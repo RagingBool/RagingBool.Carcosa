@@ -16,6 +16,8 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
+
 namespace RagingBool.Carcosa.Core.Control
 {
     public abstract class ControlPortBase<TControlComponent> : IControlPort
@@ -26,6 +28,9 @@ namespace RagingBool.Carcosa.Core.Control
 
         public ControlPortBase(TControlComponent component, ControlPortConfiguration configuration)
         {
+            ArgAssert.NotNull(component, "component");
+            ArgAssert.NotNull(configuration, "configuration");
+
             _component = component;
             _configuration = configuration;
         }

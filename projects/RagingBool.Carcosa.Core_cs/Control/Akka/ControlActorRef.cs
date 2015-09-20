@@ -17,6 +17,7 @@
 // ]]]]
 
 using Akka.Actor;
+using Epicycle.Commons;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control.Akka
@@ -33,6 +34,8 @@ namespace RagingBool.Carcosa.Core.Control.Akka
             IEnumerable<ControlPortConfiguration> inputsConfiguration,
             IEnumerable<ControlPortConfiguration> outputsConfiguration)
         {
+            ArgAssert.NotNull(actorRef, "actorRef");
+
             _actorRef = actorRef;
 
             // Init inputs

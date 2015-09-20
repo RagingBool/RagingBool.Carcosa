@@ -16,6 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Commons;
 using System;
 
 namespace RagingBool.Carcosa.Core.Control
@@ -27,6 +28,9 @@ namespace RagingBool.Carcosa.Core.Control
 
         public ControlPortConfiguration(string name, Type dataType)
         {
+            ArgAssert.NotNull(name, "name");
+            ArgAssert.NotNull(dataType, "dataType");
+
             _name = name;
             _dataType = dataType;
         }
