@@ -31,7 +31,7 @@ namespace RagingBool.Carcosa.Core.Control
         }
 
         public IControlComponent Component { get { return _component; } }
-        protected IControlComponent TypedComponent { get { return _component; } }
+        public TControlComponent TypedComponent { get { return _component; } }
 
         public ControlPortConfiguration Configuration { get { return _configuration; } }
     }
