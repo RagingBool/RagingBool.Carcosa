@@ -111,7 +111,7 @@
     <Compile Include="CarcosaActor.cs" />
     <Compile Include="CarcosaInitMessage.cs" />
     <Compile Include="CarcosaShutDownMessage.cs" />
-    <Compile Include="Control\CarcosaControl.cs" />
+    <Compile Include="Control\CarcosaControlActor.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stage\Controller\Button.cs" />

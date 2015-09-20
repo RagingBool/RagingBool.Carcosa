@@ -20,7 +20,7 @@ using Akka.Actor;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    internal sealed class CarcosaControl : UntypedActor
+    internal sealed class CarcosaControlActor : UntypedActor
     {
         protected override void OnReceive(object message)
         {
