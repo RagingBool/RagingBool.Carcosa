@@ -17,8 +17,10 @@
 // ]]]]
 
 using Epicycle.Commons;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core
@@ -37,5 +39,7 @@ namespace RagingBool.Carcosa.Core
         void RegisterUpdatable(IUpdatable updatable);
 
         void RegisterControlBoard(IControlBoard controlBoard);
+
+        void RegisterWindowsKeyboard(IKeyboard<WindowsKey, TimedKey> keyboard);
     }
 }

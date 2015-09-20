@@ -20,9 +20,11 @@ using Akka.Actor;
 using Epicycle.Commons;
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
+using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Core.Stage;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System.Collections.Generic;
 using System.Threading;
@@ -123,6 +125,11 @@ namespace RagingBool.Carcosa.Core
         public void RegisterControlBoard(IControlBoard controlBoard)
         {
             _controlBoards.Register(controlBoard);
+        }
+
+        public void RegisterWindowsKeyboard(IKeyboard<WindowsKey, TimedKey> keyboard)
+        {
+            // TODO
         }
 
         private void UpdateThreadLoop()
