@@ -20,13 +20,14 @@ using System;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public abstract class ControlPortBase : IControlPort
+    public abstract class ControlPortBase<TControlComponent> : IControlPort
+        where TControlComponent : IControlComponent
     {
-        private readonly IControlComponent _component;
+        private readonly TControlComponent _component;
         private readonly string _name;
         private readonly Type _dataType;
 
-        public ControlPortBase(IControlComponent component, string name, Type dataType)
+        public ControlPortBase(TControlComponent component, string name, Type dataType)
         {
             _component = component;
             _name = name;
@@ -34,6 +35,8 @@ namespace RagingBool.Carcosa.Core.Control
         }
 
         public IControlComponent Component { get { return _component; } }
+        protected IControlComponent TypedComponent { get { return _component; } }
+
         public string Name { get { return _name; } }
 
         public Type DataType { get { return _dataType; } }

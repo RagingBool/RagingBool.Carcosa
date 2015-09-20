@@ -21,9 +21,10 @@ using System;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public abstract class ControlOutputBase : ControlPortBase, IControlOutput
+    public abstract class ControlOutputBase<TControlComponent> : ControlPortBase<TControlComponent>, IControlOutput
+        where TControlComponent : IControlComponent
     {
-        public ControlOutputBase(IControlComponent component, string name, Type dataType)
+        public ControlOutputBase(TControlComponent component, string name, Type dataType)
             : base(component, name, dataType) { }
 
         public bool CanConnectTo(IControlInput input)
