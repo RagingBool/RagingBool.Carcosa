@@ -17,14 +17,27 @@
 // ]]]]
 
 using Akka.Actor;
+using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control.Akka
 {
-    public class ControlActor : UntypedActor
+    public abstract class ControlActor : UntypedActor
     {
+        private readonly ControlActorRef _controlRef;
+
+        public ControlActor()
+        {
+            var inputsConfiguration = CreateInputsConfiguration();
+            var outputsConfiguration = CreateOutputsConfiguration();
+            _controlRef = new ControlActorRef(Self, inputsConfiguration, outputsConfiguration);
+        }
+
         protected override void OnReceive(object message)
         {
             // TODO
         }
+
+        protected abstract IEnumerable<ControlPortConfiguration> CreateInputsConfiguration();
+        protected abstract IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration();
     }
 }
