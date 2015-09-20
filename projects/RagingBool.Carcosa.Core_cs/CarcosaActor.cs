@@ -20,10 +20,10 @@ using RagingBool.Carcosa.Commons.Akka;
 
 namespace RagingBool.Carcosa.Core
 {
-    internal sealed class CarcosaActor : InitializableActor<CarcosaActor.InitMessage>
+    internal sealed class CarcosaActor : InitializableActor<CarcosaInitMessage>
     {
         // Init
-        protected override void Init(InitMessage message)
+        protected override void Init(CarcosaInitMessage message)
         {
             // TODO
         }
@@ -31,7 +31,7 @@ namespace RagingBool.Carcosa.Core
         // Running
         protected override void OnRecieveInitialized(object message)
         {
-            if (message is ShutDownMessage)
+            if (message is CarcosaShutDownMessage)
             {
                 OnShutDown();
             }
@@ -57,10 +57,5 @@ namespace RagingBool.Carcosa.Core
         {
             // TODO
         }
-
-        // Messages
-
-        public class InitMessage { }
-        public class ShutDownMessage { }
     }
 }
