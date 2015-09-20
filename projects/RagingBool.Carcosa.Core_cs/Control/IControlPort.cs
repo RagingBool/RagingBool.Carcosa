@@ -18,8 +18,9 @@
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public interface IControlOutput : IControlPort
+    public interface IControlPort
     {
-        void ConnectTo(IControlInput input);
+        IControlComponent Component { get; }
+        string Name { get; }
     }
 }
