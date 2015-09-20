@@ -24,7 +24,19 @@ namespace RagingBool.Carcosa.Core.Control.Akka.System
     {
         protected override void OnReceive(object message)
         {
-            // TODO
+            if (message is CreateComponentMesssage)
+            {
+                OnCreateComponentMesssage((CreateComponentMesssage)message);
+            }
+            else
+            {
+                Unhandled(message);
+            }
+        }
+
+        private void OnCreateComponentMesssage(CreateComponentMesssage message)
+        {
+            Context.ActorOf(new Props(message.ComponentType), message.Name);
         }
     }
 }
