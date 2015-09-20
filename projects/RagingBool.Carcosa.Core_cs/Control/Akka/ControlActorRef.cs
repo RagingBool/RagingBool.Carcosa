@@ -31,12 +31,12 @@ namespace RagingBool.Carcosa.Core.Control.Akka
 
         public IActorRef ActorRef { get { return _actorRef; } }
 
-        public IControlInput<T> GetInput<T>(string name)
+        public IControlInput GetInput(string name)
         {
             return null; // TODO
         }
 
-        public IControlOutput<T> GetOutput<T>(string name)
+        public IControlOutput GetOutput(string name)
         {
             return null; // TODO
         }

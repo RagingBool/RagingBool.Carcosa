@@ -18,11 +18,11 @@
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public interface IControlOutput<T>
+    public interface IControlOutput
     {
         IControlComponent Component { get; }
         string Name { get; }
 
-        void ConnectTo(IControlInput<T> input);
+        void ConnectTo(IControlInput input);
     }
 }

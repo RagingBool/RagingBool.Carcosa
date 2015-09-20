@@ -20,7 +20,7 @@ namespace RagingBool.Carcosa.Core.Control
 {
     public interface IControlComponent
     {
-        IControlInput<T> GetInput<T>(string name);
-        IControlOutput<T> GetOutput<T>(string name);
+        IControlInput GetInput(string name);
+        IControlOutput GetOutput(string name);
     }
 }
