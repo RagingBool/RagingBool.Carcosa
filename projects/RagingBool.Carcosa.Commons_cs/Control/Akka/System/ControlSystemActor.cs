@@ -17,27 +17,28 @@
 // ]]]]
 
 using Akka.Actor;
-using System.Collections.Generic;
 
-namespace RagingBool.Carcosa.Core.Control.Akka
+namespace RagingBool.Carcosa.Commons.Control.Akka.System
 {
-    public abstract class ControlActor : UntypedActor
+    public sealed class ControlSystemActor : UntypedActor
     {
-        private readonly ControlActorRef _controlRef;
+        private readonly IActorRef _controlNetworkActor;
 
-        public ControlActor()
+        public ControlSystemActor()
         {
-            var inputsConfiguration = CreateInputsConfiguration();
-            var outputsConfiguration = CreateOutputsConfiguration();
-            _controlRef = new ControlActorRef(Self, inputsConfiguration, outputsConfiguration);
+            _controlNetworkActor = Context.ActorOf<ControlNetworkActor>("network");
         }
 
         protected override void OnReceive(object message)
         {
-            // TODO
+            if(message is CreateComponentMesssage)
+            {
+                _controlNetworkActor.Forward(message);
+            }
+            else
+            {
+                Unhandled(message);
+            }
         }
-
-        protected abstract IEnumerable<ControlPortConfiguration> CreateInputsConfiguration();
-        protected abstract IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration();
     }
 }

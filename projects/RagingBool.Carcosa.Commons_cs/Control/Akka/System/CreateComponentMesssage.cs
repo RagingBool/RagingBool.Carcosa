@@ -16,11 +16,22 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Core.Control
+using System;
+
+namespace RagingBool.Carcosa.Commons.Control.Akka.System
 {
-    public interface IControlInput : IControlPort
+    public sealed class CreateComponentMesssage
     {
-        bool CanConnectTo(IControlOutput output);
-        void ConnectTo(IControlOutput output);
+        private readonly string _name;
+        private readonly Type _componentType;
+
+        public CreateComponentMesssage(string name, Type componentType)
+        {
+            _name = name;
+            _componentType = componentType;
+        }
+
+        public string Name { get { return _name; } }
+        public Type ComponentType { get { return _componentType; } }
     }
 }

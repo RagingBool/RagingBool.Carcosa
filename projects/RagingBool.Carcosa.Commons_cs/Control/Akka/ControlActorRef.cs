@@ -20,7 +20,7 @@ using Akka.Actor;
 using Epicycle.Commons;
 using System.Collections.Generic;
 
-namespace RagingBool.Carcosa.Core.Control.Akka
+namespace RagingBool.Carcosa.Commons.Control.Akka
 {
     internal sealed class ControlActorRef : IControlComponent
     {

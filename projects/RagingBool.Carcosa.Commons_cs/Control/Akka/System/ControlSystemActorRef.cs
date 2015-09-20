@@ -16,22 +16,23 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Akka.Actor;
 using System;
 
-namespace RagingBool.Carcosa.Core.Control.Akka.System
+namespace RagingBool.Carcosa.Commons.Control.Akka.System
 {
-    public sealed class CreateComponentMesssage
+    public class ControlSystemActorRef
     {
-        private readonly string _name;
-        private readonly Type _componentType;
+        private readonly IActorRef _actorRef;
 
-        public CreateComponentMesssage(string name, Type componentType)
+        public ControlSystemActorRef(IActorRef actorRef)
         {
-            _name = name;
-            _componentType = componentType;
+            _actorRef = actorRef;
         }
 
-        public string Name { get { return _name; } }
-        public Type ComponentType { get { return _componentType; } }
+        public void CreateComponent(string name, Type componentType)
+        {
+            _actorRef.Tell(new CreateComponentMesssage(name, componentType));
+        }
     }
 }

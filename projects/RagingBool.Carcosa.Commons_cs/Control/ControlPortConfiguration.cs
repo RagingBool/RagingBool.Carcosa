@@ -19,7 +19,7 @@
 using Epicycle.Commons;
 using System;
 
-namespace RagingBool.Carcosa.Core.Control
+namespace RagingBool.Carcosa.Commons.Control
 {
     public sealed class ControlPortConfiguration
     {

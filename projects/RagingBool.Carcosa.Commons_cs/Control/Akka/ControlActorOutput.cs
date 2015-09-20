@@ -16,27 +16,16 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Akka.Actor;
-
-namespace RagingBool.Carcosa.Core.Control.Akka.System
+namespace RagingBool.Carcosa.Commons.Control.Akka
 {
-    internal class ControlNetworkActor : UntypedActor
+    internal sealed class ControlActorOutput : ControlOutputBase<ControlActorRef, ControlActorInput>
     {
-        protected override void OnReceive(object message)
-        {
-            if (message is CreateComponentMesssage)
-            {
-                OnCreateComponentMesssage((CreateComponentMesssage)message);
-            }
-            else
-            {
-                Unhandled(message);
-            }
-        }
+        public ControlActorOutput(ControlActorRef component, ControlPortConfiguration configuration)
+            : base(component, configuration) { }
 
-        private void OnCreateComponentMesssage(CreateComponentMesssage message)
+        protected override void PerformConnection(ControlActorInput input)
         {
-            Context.ActorOf(new Props(message.ComponentType), message.Name);
+            TypedComponent.ConnectTo(this.Configuration.Name, input);
         }
     }
 }

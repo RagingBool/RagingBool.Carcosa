@@ -16,11 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Core.Control
+namespace RagingBool.Carcosa.Commons.Control
 {
-    public interface IControlPort
+    public interface IControlInput : IControlPort
     {
-        IControlComponent Component { get; }
-        ControlPortConfiguration Configuration { get; }
+        bool CanConnectTo(IControlOutput output);
+        void ConnectTo(IControlOutput output);
     }
 }

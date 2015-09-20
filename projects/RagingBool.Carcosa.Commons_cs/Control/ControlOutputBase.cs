@@ -18,7 +18,7 @@
 
 using Epicycle.Commons;
 
-namespace RagingBool.Carcosa.Core.Control
+namespace RagingBool.Carcosa.Commons.Control
 {
     public abstract class ControlOutputBase<TControlComponent, TControlInput> : ControlPortBase<TControlComponent>, IControlOutput
         where TControlComponent : IControlComponent

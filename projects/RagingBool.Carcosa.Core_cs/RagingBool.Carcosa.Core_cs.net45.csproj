@@ -109,22 +109,6 @@
   <ItemGroup>
     <Compile Include="Carcosa.cs" />
     <Compile Include="CarcosaActor.cs" />
-    <Compile Include="Control\Akka\ControlActor.cs" />
-    <Compile Include="Control\Akka\ControlActorInput.cs" />
-    <Compile Include="Control\Akka\ControlActorOutput.cs" />
-    <Compile Include="Control\Akka\ControlActorRef.cs" />
-    <Compile Include="Control\Akka\System\ControlNetworkActor.cs" />
-    <Compile Include="Control\Akka\System\ControlSystemActor.cs" />
-    <Compile Include="Control\Akka\System\ControlSystemActorRef.cs" />
-    <Compile Include="Control\Akka\System\CreateComponentMesssage.cs" />
-    <Compile Include="Control\ControlInputBase.cs" />
-    <Compile Include="Control\ControlOutputBase.cs" />
-    <Compile Include="Control\ControlPortBase.cs" />
-    <Compile Include="Control\ControlPortConfiguration.cs" />
-    <Compile Include="Control\IControlComponent.cs" />
-    <Compile Include="Control\IControlInput.cs" />
-    <Compile Include="Control\IControlOutput.cs" />
-    <Compile Include="Control\IControlPort.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stage\Controller\Button.cs" />

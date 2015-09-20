@@ -16,16 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-namespace RagingBool.Carcosa.Core.Control.Akka
+namespace RagingBool.Carcosa.Commons.Control
 {
-    internal sealed class ControlActorOutput : ControlOutputBase<ControlActorRef, ControlActorInput>
+    public interface IControlPort
     {
-        public ControlActorOutput(ControlActorRef component, ControlPortConfiguration configuration)
-            : base(component, configuration) { }
-
-        protected override void PerformConnection(ControlActorInput input)
-        {
-            TypedComponent.ConnectTo(this.Configuration.Name, input);
-        }
+        IControlComponent Component { get; }
+        ControlPortConfiguration Configuration { get; }
     }
 }

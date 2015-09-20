@@ -16,28 +16,27 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons;
+using Akka.Actor;
 
-namespace RagingBool.Carcosa.Core.Control
+namespace RagingBool.Carcosa.Commons.Control.Akka.System
 {
-    public abstract class ControlInputBase<TControlComponent> : ControlPortBase<TControlComponent>, IControlInput
-        where TControlComponent : IControlComponent
+    internal class ControlNetworkActor : UntypedActor
     {
-        public ControlInputBase(TControlComponent component, ControlPortConfiguration configuration)
-            : base(component, configuration) { }
-
-        public bool CanConnectTo(IControlOutput output)
+        protected override void OnReceive(object message)
         {
-            ArgAssert.NotNull(output, "output");
-
-            return output.CanConnectTo(this);
+            if (message is CreateComponentMesssage)
+            {
+                OnCreateComponentMesssage((CreateComponentMesssage)message);
+            }
+            else
+            {
+                Unhandled(message);
+            }
         }
 
-        public void ConnectTo(IControlOutput output)
+        private void OnCreateComponentMesssage(CreateComponentMesssage message)
         {
-            ArgAssert.NotNull(output, "output");
-
-            output.ConnectTo(this);
+            Context.ActorOf(new Props(message.ComponentType), message.Name);
         }
     }
 }
