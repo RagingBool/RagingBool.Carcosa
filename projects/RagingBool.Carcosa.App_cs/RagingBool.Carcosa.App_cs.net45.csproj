@@ -97,6 +97,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RagingBool.Carcosa.Commons_cs\RagingBool.Carcosa.Commons_cs.net45.csproj">
+      <Project>{9f7234ed-eca6-4dee-8f9c-820b848396d4}</Project>
+      <Name>RagingBool.Carcosa.Commons_cs.net45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RagingBool.Carcosa.Core_cs\RagingBool.Carcosa.Core_cs.net45.csproj">
       <Project>{d323da07-474d-4a00-a45d-242f1d86802c}</Project>
       <Name>RagingBool.Carcosa.Core_cs.net45</Name>
