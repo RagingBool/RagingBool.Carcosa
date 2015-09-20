@@ -16,16 +16,20 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Akka.Actor;
 using RagingBool.Carcosa.Commons.Akka;
+using RagingBool.Carcosa.Core.Control;
 
 namespace RagingBool.Carcosa.Core
 {
     internal sealed class CarcosaActor : InitializableActor<CarcosaInitMessage>
     {
+        private IActorRef _controlActor;
+
         // Init
         protected override void Init(CarcosaInitMessage message)
         {
-            // TODO
+            _controlActor = Context.ActorOf<CarcosaControlActor>("control");
         }
 
         // Running
