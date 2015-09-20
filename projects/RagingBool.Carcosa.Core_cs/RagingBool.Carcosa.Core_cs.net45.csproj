@@ -108,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Carcosa.cs" />
+    <Compile Include="Control\IControlComponent.cs" />
+    <Compile Include="Control\IControlInput.cs" />
+    <Compile Include="Control\IControlOutput.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stage\Controller\Button.cs" />
