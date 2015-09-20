@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Carcosa.cs" />
+    <Compile Include="Control\Akka\ControlActorRef.cs" />
     <Compile Include="Control\IControlComponent.cs" />
     <Compile Include="Control\IControlInput.cs" />
     <Compile Include="Control\IControlOutput.cs" />
