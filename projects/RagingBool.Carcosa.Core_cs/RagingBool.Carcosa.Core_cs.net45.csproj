@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Carcosa.cs" />
     <Compile Include="CarcosaActor.cs" />
-    <Compile Include="CarcosaInitMessage.cs" />
     <Compile Include="CarcosaShutDownMessage.cs" />
     <Compile Include="Control\CarcosaControlActor.cs" />
     <Compile Include="Control\KeyboardControlActor.cs" />
