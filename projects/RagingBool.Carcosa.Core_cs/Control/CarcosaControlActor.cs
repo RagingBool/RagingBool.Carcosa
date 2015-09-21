@@ -24,18 +24,21 @@ namespace RagingBool.Carcosa.Core.Control
 {
     internal sealed class CarcosaControlActor : UntypedActor
     {
-        private readonly IActorRef _controlSystemActor;
+        private readonly ControlSystemActorRef _controlSystemActor;
 
         public CarcosaControlActor()
         {
-            _controlSystemActor = Context.ActorOf<ControlSystemActor>("system");
+            _controlSystemActor = new ControlSystemActorRef(Context.ActorOf<ControlSystemActor>("system"));
         }
 
         protected override void OnReceive(object message)
         {
             if (message is RegisterWindowsKeyboardMessage)
             {
-                _controlSystemActor.Tell(new CreateComponentMesssage("keyboard", typeof(KeyboardControlActor<WindowsKey, TimedKey>)));
+                _controlSystemActor.CreateComponent(
+                    "keyboard",
+                    typeof(KeyboardControlActor<WindowsKey, TimedKey>),
+                    ((RegisterWindowsKeyboardMessage)message).Keyboard);
             }
             else
             {
