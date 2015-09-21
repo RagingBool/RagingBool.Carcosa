@@ -16,15 +16,7 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Epicycle.Input;
-using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
