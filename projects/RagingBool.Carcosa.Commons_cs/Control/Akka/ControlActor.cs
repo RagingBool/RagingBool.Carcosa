@@ -26,7 +26,7 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
         private readonly ControlActorRef _controlRef;
         private readonly IActorRef _savedSelf;
 
-        private readonly IDictionary<string, Output> _outputs;
+        private readonly IDictionary<string, OutputManager> _outputs;
 
         public ControlActor()
         {
@@ -35,23 +35,29 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
             _controlRef = new ControlActorRef(Self, inputsConfiguration, outputsConfiguration);
             _savedSelf = Self;
 
-            _outputs = new Dictionary<string, Output>();
+            _outputs = new Dictionary<string, OutputManager>();
             foreach(var config in outputsConfiguration)
             {
-                _outputs[config.Name] = new Output();
+                _outputs[config.Name] = new OutputManager();
             }
+        }
+
+        protected void Output(string outputName, object data)
+        {
+            _outputs[outputName].Output(Context, data);
         }
 
         protected override void OnReceive(object message)
         {
-            if (message is GetControlRefMessage)
+            if (message is DataMessage)
             {
-                Sender.Tell(new ControlRefMessage(_controlRef));
+                OnDataMessage((DataMessage)message);
             }
             else if (message is ConfigureControlMessage)
             {
                 OnConfigureControl((ConfigureControlMessage)message);
-            } else if(message is ConnectToMessage)
+            }
+            else if(message is ConnectToMessage)
             {
                 OnConnectToMessage((ConnectToMessage)message);
             }
@@ -59,6 +65,11 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
             {
                 Unhandled(message);
             }
+        }
+
+        private void OnDataMessage(DataMessage message)
+        {
+            // TODO
         }
 
         private void OnConfigureControl(ConfigureControlMessage message)
@@ -71,7 +82,8 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
             string destControl, destPort;
             ParsingUtils.ParseControlInputId(message.InputId, out destControl, out destPort);
 
-            _outputs[message.LocalOutput].AddConnection(destControl, destPort);
+            var destPath = "../" + destControl;
+            _outputs[message.LocalOutput].AddConnection(destPath, destPort);
         }
 
         protected abstract void Configure(TConfiguration configuration);
@@ -84,11 +96,11 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
         protected abstract IEnumerable<ControlPortConfiguration> CreateInputsConfiguration();
         protected abstract IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration();
 
-        private class Output
+        private class OutputManager
         {
             private readonly IList<Connection> _connections;
 
-            public Output()
+            public OutputManager()
             {
                 _connections = new List<Connection>();
             }
@@ -96,6 +108,15 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
             public void AddConnection(string destPath, string destInputName)
             {
                 _connections.Add(new Connection(destPath, destInputName));
+            }
+
+            public void Output(IUntypedActorContext context, object data)
+            {
+                foreach(var connection in _connections)
+                {
+                    var message = new DataMessage(connection.DestInputName, data);
+                    context.ActorSelection(connection.DestPath).Tell(message);
+                }
             }
 
             private class Connection
@@ -112,20 +133,6 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
                 public string DestPath { get { return _destPath; } }
                 public string DestInputName { get { return _destInputName; } }
             }
-        }
-
-        internal sealed class GetControlRefMessage { }
-
-        internal sealed class ControlRefMessage
-        {
-            private readonly ControlActorRef _controlRef;
-
-            public ControlRefMessage(ControlActorRef controlRef)
-            {
-                _controlRef = controlRef;
-            }
-
-            public ControlActorRef ControlActorRef { get { return _controlRef; } }
         }
     }
 }
