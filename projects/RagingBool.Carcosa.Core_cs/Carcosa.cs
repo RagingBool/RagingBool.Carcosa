@@ -21,6 +21,7 @@ using Epicycle.Commons;
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
 using Epicycle.Input.Keyboard;
+using RagingBool.Carcosa.Core.Control;
 using RagingBool.Carcosa.Core.Stage;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
@@ -129,7 +130,7 @@ namespace RagingBool.Carcosa.Core
 
         public void RegisterWindowsKeyboard(IKeyboard<WindowsKey, TimedKey> keyboard)
         {
-            // TODO
+            _carcosaActor.Tell(new RegisterWindowsKeyboardMessage(keyboard));
         }
 
         private void UpdateThreadLoop()
