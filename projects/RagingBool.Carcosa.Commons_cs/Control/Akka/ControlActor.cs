@@ -26,7 +26,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
         private readonly ControlActorRef _controlRef;
         private readonly IActorRef _savedSelf;
 
+        private readonly IDictionary<string, InputHandler> _inputHandlers;
         private readonly IDictionary<string, OutputManager> _outputs;
+
+        protected delegate void InputHandler(string input, object data);
 
         public ControlActor()
         {
@@ -35,11 +38,18 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
             _controlRef = new ControlActorRef(Self, inputsConfiguration, outputsConfiguration);
             _savedSelf = Self;
 
+            _inputHandlers = new Dictionary<string, InputHandler>();
+
             _outputs = new Dictionary<string, OutputManager>();
             foreach(var config in outputsConfiguration)
             {
                 _outputs[config.Name] = new OutputManager();
             }
+        }
+
+        protected void RegisterInputHandler(string inputName, InputHandler handler)
+        {
+            _inputHandlers[inputName] = handler;
         }
 
         protected void Output(string outputName, object data)
@@ -69,7 +79,12 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
 
         private void OnDataMessage(DataMessage message)
         {
-            // TODO
+            var inputName = message.InputName;
+
+            if(_inputHandlers.ContainsKey(inputName))
+            {
+                _inputHandlers[inputName](inputName, message.Data);
+            }
         }
 
         private void OnConfigureControl(ConfigureControlMessage message)
