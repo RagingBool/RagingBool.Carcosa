@@ -34,27 +34,21 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 
         public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> baseKeyboard,
-            IEnumerable<TKeyId> buttonKeys,
-            int defaultVelocity, int highVelocity,
-            TKeyId highVelocityKey,
-            IEnumerable<TKeyId> controllerKeys,
-            IEnumerable<TKeyId> controllerValueKeys,
-            TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> controllerValueChangeKeysConfig,
-            double controllerSmallValueStep, double controllerBigValueStep)
+            KeyboardControlBoardConfig<TKeyId> config)
         {
             _buttonsKeyboard = new VelocityKeyboardEmulator<int, TKeyId>(
                 baseKeyboard,
-                CreateKeyMapping(buttonKeys),
-                defaultVelocity, highVelocity,
-                highVelocityKey
+                CreateKeyMapping(config.ButtonKeys),
+                config.DefaultVelocity, config.HighVelocity,
+                config.HighVelocityKey
                 );
 
             _controllerBoard = new ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey>(
                 baseKeyboard,
-                CreateKeyMapping(controllerKeys),
-                controllerValueKeys,
-                controllerValueChangeKeysConfig,
-                controllerSmallValueStep, controllerBigValueStep
+                CreateKeyMapping(config.ControllerKeys),
+                config.ControllerValueKeys,
+                config.ControllerValueChangeKeysConfig,
+                config.ControllerSmallValueStep, config.ControllerBigValueStep
                 );
 
             _buttonLights = new DummyIndicatorBoard<int, bool>(false);

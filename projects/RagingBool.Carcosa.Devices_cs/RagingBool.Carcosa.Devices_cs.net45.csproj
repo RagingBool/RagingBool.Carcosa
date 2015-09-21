@@ -66,6 +66,7 @@
     <Compile Include="InputControl\ControlBoard\DummyControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\IControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoard.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardConfig.cs" />
     <Compile Include="InputControl\ControlBoard\OverlappingControlBoards.cs" />
     <Compile Include="InputControl\ControllerBoardBase.cs" />
     <Compile Include="InputControl\DummyControllerBoard.cs" />

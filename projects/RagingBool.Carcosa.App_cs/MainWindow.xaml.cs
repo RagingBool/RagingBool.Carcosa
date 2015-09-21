@@ -72,8 +72,7 @@ namespace RagingBool.Carcosa.App
                 slowPositiveDirectionKeyId: WindowsKey.Right, slowNegativeDirectionKeyId: WindowsKey.Left,
                 fastPositiveDirectionKeyId: WindowsKey.Up, fastNegativeDirectionKeyId: WindowsKey.Down);
 
-            _keyboardControlBoard = new KeyboardControlBoard<WindowsKey>(
-                _keyboardManager,
+            var config = new KeyboardControlBoardConfig<WindowsKey>(
                 buttonKeys: new WindowsKey[] { WindowsKey.Z, WindowsKey.X, WindowsKey.C, WindowsKey.V, WindowsKey.A, WindowsKey.S, WindowsKey.D, WindowsKey.F },
                 defaultVelocity: 90, 
                 highVelocity: 120,
@@ -82,6 +81,8 @@ namespace RagingBool.Carcosa.App
                 controllerValueKeys: new WindowsKey[] { WindowsKey.Oem3, WindowsKey.D1, WindowsKey.D2, WindowsKey.D3, WindowsKey.D4, WindowsKey.D5, WindowsKey.D6, WindowsKey.D7, WindowsKey.D8, WindowsKey.D9, WindowsKey.D0 },
                 controllerValueChangeKeysConfig: controllerValueChangeKeysConfig,
                 controllerSmallValueStep: 1.0 / 1000, controllerBigValueStep: 1.0 / 100);
+
+            _keyboardControlBoard = new KeyboardControlBoard<WindowsKey>(_keyboardManager, config);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
