@@ -40,6 +40,8 @@ namespace RagingBool.Carcosa.Core
 
         void RegisterControlBoard(IControlBoard controlBoard);
 
-        void RegisterWindowsKeyboard(IKeyboard<WindowsKey, TimedKey> keyboard);
+        void RegisterWindowsKeyboard(
+            IKeyboard<WindowsKey, TimedKey> keyboard,
+            KeyboardControlBoardConfig<WindowsKey> keyboardControlBoardConfig);
     }
 }

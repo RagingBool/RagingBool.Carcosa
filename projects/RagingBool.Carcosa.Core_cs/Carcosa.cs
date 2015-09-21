@@ -127,9 +127,11 @@ namespace RagingBool.Carcosa.Core
             _controlBoards.Register(controlBoard);
         }
 
-        public void RegisterWindowsKeyboard(IKeyboard<WindowsKey, TimedKey> keyboard)
+        public void RegisterWindowsKeyboard(
+            IKeyboard<WindowsKey, TimedKey> keyboard,
+            KeyboardControlBoardConfig<WindowsKey> keyboardControlBoardConfig)
         {
-            _carcosaActor.Tell(new RegisterWindowsKeyboardMessage(keyboard));
+            _carcosaActor.Tell(new RegisterWindowsKeyboardMessage(keyboard, keyboardControlBoardConfig));
         }
 
         private void UpdateThreadLoop()

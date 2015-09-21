@@ -37,6 +37,7 @@ namespace RagingBool.Carcosa.App
         private readonly IClock _clock;
         private readonly ICarcosa _carcosa;
         private readonly WpfKeyboardManager _keyboardManager;
+        private KeyboardControlBoardConfig<WindowsKey> _keyboardControlBoardConfig;
         private KeyboardControlBoard<WindowsKey> _keyboardControlBoard;
 
         public MainWindow()
@@ -84,9 +85,8 @@ namespace RagingBool.Carcosa.App
                 valueChangeKeysConfig: controllerValueChangeKeysConfig,
                 smallValueStep: 1.0 / 1000, bigValueStep: 1.0 / 100);
 
-            var config = new KeyboardControlBoardConfig<WindowsKey>(keyboardConfig, controllerConfig);
-
-            _keyboardControlBoard = new KeyboardControlBoard<WindowsKey>(_keyboardManager, config);
+            _keyboardControlBoardConfig = new KeyboardControlBoardConfig<WindowsKey>(keyboardConfig, controllerConfig);
+            _keyboardControlBoard = new KeyboardControlBoard<WindowsKey>(_keyboardManager, _keyboardControlBoardConfig);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -98,7 +98,7 @@ namespace RagingBool.Carcosa.App
 
             _carcosa.Start();
 
-            _carcosa.RegisterWindowsKeyboard(_keyboardManager);
+            _carcosa.RegisterWindowsKeyboard(_keyboardManager, _keyboardControlBoardConfig);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)

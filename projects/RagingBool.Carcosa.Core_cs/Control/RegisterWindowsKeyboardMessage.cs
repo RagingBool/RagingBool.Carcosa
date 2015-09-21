@@ -18,18 +18,24 @@
 
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 
 namespace RagingBool.Carcosa.Core.Control
 {
     internal sealed class RegisterWindowsKeyboardMessage
     {
         private readonly IKeyboard<WindowsKey, TimedKey> _keyboard;
+        private readonly KeyboardControlBoardConfig<WindowsKey> _keyboardControlBoardConfig;
 
-        public RegisterWindowsKeyboardMessage(IKeyboard<WindowsKey, TimedKey> keyboard)
+        public RegisterWindowsKeyboardMessage(
+            IKeyboard<WindowsKey, TimedKey> keyboard,
+            KeyboardControlBoardConfig<WindowsKey> keyboardControlBoardConfig)
         {
             _keyboard = keyboard;
+            _keyboardControlBoardConfig = keyboardControlBoardConfig;
         }
 
         public IKeyboard<WindowsKey, TimedKey> Keyboard { get { return _keyboard; } }
+        public KeyboardControlBoardConfig<WindowsKey> KeyboardControlBoardConfig { get { return _keyboardControlBoardConfig; } }
     }
 }
