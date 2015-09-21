@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Commons.Control.Akka
 {
-    public abstract class ControlActor : UntypedActor
+    public abstract class ControlActor<TConfiguration> : UntypedActor
     {
         private readonly ControlActorRef _controlRef;
 
@@ -34,8 +34,22 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
 
         protected override void OnReceive(object message)
         {
-            // TODO
+            if(message is ConfigureControlMessage)
+            {
+                OnConfigureControl((ConfigureControlMessage)message);
+            }
+            else
+            {
+                Unhandled(message);
+            }
         }
+
+        private void OnConfigureControl(ConfigureControlMessage message)
+        {
+            Configure((TConfiguration) message.Configuration);
+        }
+
+        protected abstract void Configure(TConfiguration configuration);
 
         protected abstract IEnumerable<ControlPortConfiguration> CreateInputsConfiguration();
         protected abstract IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration();
