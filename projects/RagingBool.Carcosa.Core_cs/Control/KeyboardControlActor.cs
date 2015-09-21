@@ -25,6 +25,13 @@ namespace RagingBool.Carcosa.Core.Control
 {
     internal sealed class KeyboardControlActor<TKeyId, TAdditionalKeyEventData> : ControlActor<IKeyboard<TKeyId, TAdditionalKeyEventData>>
     {
+        private IKeyboard<TKeyId, TAdditionalKeyEventData> _externalKeyboard;
+
+        public KeyboardControlActor()
+        {
+            _externalKeyboard = null;
+        }
+
         protected override IEnumerable<ControlPortConfiguration> CreateInputsConfiguration()
         {
             return null;
@@ -38,7 +45,18 @@ namespace RagingBool.Carcosa.Core.Control
             };
         }
 
-        protected override void Configure(IKeyboard<TKeyId, TAdditionalKeyEventData> keyboard)
+        protected override void Configure(IKeyboard<TKeyId, TAdditionalKeyEventData> externalKeyboard)
+        {
+            if (_externalKeyboard != null)
+            {
+                _externalKeyboard.OnKeyEvent -= OnExternalKeyEvent;
+            }
+
+            _externalKeyboard = externalKeyboard;
+            _externalKeyboard.OnKeyEvent += OnExternalKeyEvent;
+        }
+
+        private void OnExternalKeyEvent(object sender, KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
         {
             // TODO
         }
