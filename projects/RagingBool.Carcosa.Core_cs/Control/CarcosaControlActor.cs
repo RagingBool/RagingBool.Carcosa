@@ -37,7 +37,7 @@ namespace RagingBool.Carcosa.Core.Control
             {
                 _controlSystemActor.CreateComponent(
                     "keyboard",
-                    typeof(KeyboardControlActor<WindowsKey, TimedKey>),
+                    typeof(ExternalKeyboardActor<WindowsKey, TimedKey>),
                     ((RegisterWindowsKeyboardMessage)message).Keyboard);
             }
             else

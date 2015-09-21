@@ -23,11 +23,11 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    internal sealed class KeyboardControlActor<TKeyId, TAdditionalKeyEventData> : ControlActor<IKeyboard<TKeyId, TAdditionalKeyEventData>>
+    internal sealed class ExternalKeyboardActor<TKeyId, TAdditionalKeyEventData> : ControlActor<IKeyboard<TKeyId, TAdditionalKeyEventData>>
     {
         private IKeyboard<TKeyId, TAdditionalKeyEventData> _externalKeyboard;
 
-        public KeyboardControlActor()
+        public ExternalKeyboardActor()
         {
             _externalKeyboard = null;
         }
