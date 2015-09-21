@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Akka\InitializableActor.cs" />
+    <Compile Include="Control\Akka\ConfigureControlMessage.cs" />
     <Compile Include="Control\Akka\ControlActor.cs" />
     <Compile Include="Control\Akka\ControlActorInput.cs" />
     <Compile Include="Control\Akka\ControlActorOutput.cs" />
