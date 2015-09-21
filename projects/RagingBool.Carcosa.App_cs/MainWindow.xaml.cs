@@ -48,7 +48,6 @@ namespace RagingBool.Carcosa.App
             InitKeyboardControlBoard();
 
             _carcosa.RegisterControlBoard(_keyboardControlBoard);
-            _carcosa.RegisterWindowsKeyboard(_keyboardManager);
 
             //RegisterMidiLpd8();
 
@@ -93,6 +92,8 @@ namespace RagingBool.Carcosa.App
             _infoLabel.Content = String.Format("WORKSPACE: {0}", workspaceName);
 
             _carcosa.Start();
+
+            _carcosa.RegisterWindowsKeyboard(_keyboardManager);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
