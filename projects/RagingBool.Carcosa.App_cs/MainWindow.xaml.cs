@@ -68,19 +68,23 @@ namespace RagingBool.Carcosa.App
 
         private void InitKeyboardControlBoard()
         {
+            var keyboardConfig = new KeyboardControlBoardKeyboardConfig<WindowsKey>(
+                buttonKeys: new WindowsKey[] { WindowsKey.Z, WindowsKey.X, WindowsKey.C, WindowsKey.V, WindowsKey.A, WindowsKey.S, WindowsKey.D, WindowsKey.F },
+                defaultVelocity: 90, 
+                highVelocity: 120,
+                highVelocityKey: WindowsKey.LeftShift);
+
             var controllerValueChangeKeysConfig = new TwoSpeedBidirectionalMovementKeysConfiguration<WindowsKey>(
                 slowPositiveDirectionKeyId: WindowsKey.Right, slowNegativeDirectionKeyId: WindowsKey.Left,
                 fastPositiveDirectionKeyId: WindowsKey.Up, fastNegativeDirectionKeyId: WindowsKey.Down);
 
-            var config = new KeyboardControlBoardConfig<WindowsKey>(
-                buttonKeys: new WindowsKey[] { WindowsKey.Z, WindowsKey.X, WindowsKey.C, WindowsKey.V, WindowsKey.A, WindowsKey.S, WindowsKey.D, WindowsKey.F },
-                defaultVelocity: 90, 
-                highVelocity: 120,
-                highVelocityKey: WindowsKey.LeftShift,
+            var controllerConfig = new KeyboardControlBoardControllerConfig<WindowsKey>(
                 controllerKeys: new WindowsKey[] { WindowsKey.M, WindowsKey.OemComma, WindowsKey.OemPeriod, WindowsKey.OemQuestion, WindowsKey.K, WindowsKey.L, WindowsKey.Oem1, WindowsKey.OemQuotes },
-                controllerValueKeys: new WindowsKey[] { WindowsKey.Oem3, WindowsKey.D1, WindowsKey.D2, WindowsKey.D3, WindowsKey.D4, WindowsKey.D5, WindowsKey.D6, WindowsKey.D7, WindowsKey.D8, WindowsKey.D9, WindowsKey.D0 },
-                controllerValueChangeKeysConfig: controllerValueChangeKeysConfig,
-                controllerSmallValueStep: 1.0 / 1000, controllerBigValueStep: 1.0 / 100);
+                valueKeys: new WindowsKey[] { WindowsKey.Oem3, WindowsKey.D1, WindowsKey.D2, WindowsKey.D3, WindowsKey.D4, WindowsKey.D5, WindowsKey.D6, WindowsKey.D7, WindowsKey.D8, WindowsKey.D9, WindowsKey.D0 },
+                valueChangeKeysConfig: controllerValueChangeKeysConfig,
+                smallValueStep: 1.0 / 1000, bigValueStep: 1.0 / 100);
+
+            var config = new KeyboardControlBoardConfig<WindowsKey>(keyboardConfig, controllerConfig);
 
             _keyboardControlBoard = new KeyboardControlBoard<WindowsKey>(_keyboardManager, config);
         }

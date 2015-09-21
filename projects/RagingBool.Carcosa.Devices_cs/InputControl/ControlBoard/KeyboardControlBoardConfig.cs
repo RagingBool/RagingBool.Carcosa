@@ -16,51 +16,23 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Input.Keyboard;
-using System.Collections.Generic;
-
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
     public sealed class KeyboardControlBoardConfig<TKeyId>
     {
-        private readonly IEnumerable<TKeyId> _buttonKeys;
-        private readonly int _defaultVelocity;
-        private readonly int _highVelocity;
-        private readonly TKeyId _highVelocityKey;
-        private readonly IEnumerable<TKeyId> _controllerKeys;
-        private readonly IEnumerable<TKeyId> _controllerValueKeys;
-        private readonly TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> _controllerValueChangeKeysConfig;
-        private readonly double _controllerSmallValueStep;
-        private readonly double _controllerBigValueStep;
+        private readonly KeyboardControlBoardKeyboardConfig<TKeyId> _keyboardConfig;
+        private readonly KeyboardControlBoardControllerConfig<TKeyId> _controllerConfig;
 
         public KeyboardControlBoardConfig(
-            IEnumerable<TKeyId> buttonKeys,
-            int defaultVelocity, int highVelocity,
-            TKeyId highVelocityKey,
-            IEnumerable<TKeyId> controllerKeys,
-            IEnumerable<TKeyId> controllerValueKeys,
-            TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> controllerValueChangeKeysConfig,
-            double controllerSmallValueStep, double controllerBigValueStep)
+            KeyboardControlBoardKeyboardConfig<TKeyId> keyboardConfig,
+            KeyboardControlBoardControllerConfig<TKeyId> controllerConfig
+            )
         {
-            _buttonKeys = buttonKeys;
-            _defaultVelocity = defaultVelocity;
-            _highVelocity = highVelocity;
-            _highVelocityKey = highVelocityKey;
-            _controllerKeys = controllerKeys;
-            _controllerValueKeys = controllerValueKeys;
-            _controllerValueChangeKeysConfig = controllerValueChangeKeysConfig;
-            _controllerSmallValueStep = controllerSmallValueStep;
-            _controllerBigValueStep = controllerBigValueStep;
+            _keyboardConfig = keyboardConfig;
+            _controllerConfig = controllerConfig;
         }
 
-        public IEnumerable<TKeyId> ButtonKeys { get { return _buttonKeys; } }
-        public int DefaultVelocity { get { return _defaultVelocity; } }
-        public int HighVelocity { get { return _highVelocity; } }
-        public TKeyId HighVelocityKey { get { return _highVelocityKey; } }
-        public IEnumerable<TKeyId> ControllerKeys { get { return _controllerKeys; } }
-        public IEnumerable<TKeyId> ControllerValueKeys { get { return _controllerValueKeys; } }
-        public TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> ControllerValueChangeKeysConfig { get { return _controllerValueChangeKeysConfig; } }
-        public double ControllerSmallValueStep { get { return _controllerSmallValueStep; } }
-        public double ControllerBigValueStep { get { return _controllerBigValueStep; } }
+        public KeyboardControlBoardKeyboardConfig<TKeyId> KeyboardConfig { get { return _keyboardConfig; } }
+        public KeyboardControlBoardControllerConfig<TKeyId> ControllerConfig { get { return _controllerConfig; } }
     }
 }
