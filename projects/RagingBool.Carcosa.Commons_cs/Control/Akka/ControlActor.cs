@@ -24,12 +24,14 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
     public abstract class ControlActor<TConfiguration> : UntypedActor
     {
         private readonly ControlActorRef _controlRef;
+        private readonly IActorRef _savedSelf;
 
         public ControlActor()
         {
             var inputsConfiguration = CreateInputsConfiguration();
             var outputsConfiguration = CreateOutputsConfiguration();
             _controlRef = new ControlActorRef(Self, inputsConfiguration, outputsConfiguration);
+            _savedSelf = Self;
         }
 
         protected override void OnReceive(object message)
@@ -50,6 +52,11 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
         }
 
         protected abstract void Configure(TConfiguration configuration);
+
+        protected void TellSelfFromOutside(object message)
+        {
+            _savedSelf.Tell(message, null);
+        }
 
         protected abstract IEnumerable<ControlPortConfiguration> CreateInputsConfiguration();
         protected abstract IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration();
