@@ -26,17 +26,29 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
         private readonly ControlActorRef _controlRef;
         private readonly IActorRef _savedSelf;
 
+        private readonly IDictionary<string, Output> _outputs;
+
         public ControlActor()
         {
             var inputsConfiguration = CreateInputsConfiguration();
             var outputsConfiguration = CreateOutputsConfiguration();
             _controlRef = new ControlActorRef(Self, inputsConfiguration, outputsConfiguration);
             _savedSelf = Self;
+
+            _outputs = new Dictionary<string, Output>();
+            foreach(var config in outputsConfiguration)
+            {
+                _outputs[config.Name] = new Output();
+            }
         }
 
         protected override void OnReceive(object message)
         {
-            if (message is ConfigureControlMessage)
+            if (message is GetControlRefMessage)
+            {
+                Sender.Tell(new ControlRefMessage(_controlRef));
+            }
+            else if (message is ConfigureControlMessage)
             {
                 OnConfigureControl((ConfigureControlMessage)message);
             } else if(message is ConnectToMessage)
@@ -56,7 +68,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
 
         private void OnConnectToMessage(ConnectToMessage message)
         {
-            // TODO
+            string destControl, destPort;
+            ParsingUtils.ParseControlInputId(message.InputId, out destControl, out destPort);
+
+            _outputs[message.LocalOutput].AddConnection(destControl, destPort);
         }
 
         protected abstract void Configure(TConfiguration configuration);
@@ -68,5 +83,49 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
 
         protected abstract IEnumerable<ControlPortConfiguration> CreateInputsConfiguration();
         protected abstract IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration();
+
+        private class Output
+        {
+            private readonly IList<Connection> _connections;
+
+            public Output()
+            {
+                _connections = new List<Connection>();
+            }
+
+            public void AddConnection(string destPath, string destInputName)
+            {
+                _connections.Add(new Connection(destPath, destInputName));
+            }
+
+            private class Connection
+            {
+                private readonly string _destPath;
+                private readonly string _destInputName;
+
+                public Connection(string destPath, string destInputName)
+                {
+                    _destPath = destPath;
+                    _destInputName = destInputName;
+                }
+
+                public string DestPath { get { return _destPath; } }
+                public string DestInputName { get { return _destInputName; } }
+            }
+        }
+
+        internal sealed class GetControlRefMessage { }
+
+        internal sealed class ControlRefMessage
+        {
+            private readonly ControlActorRef _controlRef;
+
+            public ControlRefMessage(ControlActorRef controlRef)
+            {
+                _controlRef = controlRef;
+            }
+
+            public ControlActorRef ControlActorRef { get { return _controlRef; } }
+        }
     }
 }
