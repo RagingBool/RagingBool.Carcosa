@@ -24,14 +24,17 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
     {
         private readonly string _name;
         private readonly Type _componentType;
+        private readonly object _configuration;
 
-        public CreateComponentMesssage(string name, Type componentType)
+        public CreateComponentMesssage(string name, Type componentType, object configuration)
         {
             _name = name;
             _componentType = componentType;
+            _configuration = configuration;
         }
 
         public string Name { get { return _name; } }
         public Type ComponentType { get { return _componentType; } }
+        public object Configuration { get { return _configuration; } }
     }
 }

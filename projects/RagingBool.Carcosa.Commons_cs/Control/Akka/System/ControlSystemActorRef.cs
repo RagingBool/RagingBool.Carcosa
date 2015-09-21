@@ -30,9 +30,9 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
             _actorRef = actorRef;
         }
 
-        public void CreateComponent(string name, Type componentType)
+        public void CreateComponent(string name, Type componentType, object configuration)
         {
-            _actorRef.Tell(new CreateComponentMesssage(name, componentType));
+            _actorRef.Tell(new CreateComponentMesssage(name, componentType, configuration));
         }
     }
 }
