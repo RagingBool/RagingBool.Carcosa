@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    internal sealed class KeyboardControlActor<TKeyId, TAdditionalKeyEventData> : ControlActor
+    internal sealed class KeyboardControlActor<TKeyId, TAdditionalKeyEventData> : ControlActor<IKeyboard<TKeyId, TAdditionalKeyEventData>>
     {
         protected override IEnumerable<ControlPortConfiguration> CreateInputsConfiguration()
         {
@@ -36,6 +36,11 @@ namespace RagingBool.Carcosa.Core.Control
             {
                 new ControlPortConfiguration("keyEvents", typeof(KeyEventArgs<TKeyId, TAdditionalKeyEventData>))
             };
+        }
+
+        protected override void Configure(IKeyboard<TKeyId, TAdditionalKeyEventData> keyboard)
+        {
+            // TODO
         }
     }
 }
