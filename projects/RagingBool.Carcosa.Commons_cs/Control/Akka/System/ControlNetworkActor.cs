@@ -36,7 +36,9 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
 
         private void OnCreateComponentMesssage(CreateComponentMesssage message)
         {
-            Context.ActorOf(new Props(message.ComponentType), message.Name);
+            var actor = Context.ActorOf(new Props(message.ComponentType), message.Name);
+
+            actor.Tell(new ConfigureControlMessage(message.Configuration));
         }
     }
 }
