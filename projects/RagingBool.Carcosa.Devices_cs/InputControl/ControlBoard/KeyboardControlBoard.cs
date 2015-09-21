@@ -35,8 +35,8 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             IKeyboard<TKeyId, TimedKey> baseKeyboard,
             KeyboardControlBoardConfig<TKeyId> config)
         {
-            _buttonsKeyboard = new KeyboardControlBoardButtons<TKeyId>(baseKeyboard, config.KeyboardConfig);
-            _controllerBoard = new KeyboardControlBoardControllers<TKeyId>(baseKeyboard, config.ControllerConfig);
+            _buttonsKeyboard = new KeyboardControlBoardButtons<TKeyId>(baseKeyboard, config.ButtonsConfig);
+            _controllerBoard = new KeyboardControlBoardControllers<TKeyId>(baseKeyboard, config.ControllersConfig);
             _buttonLights = new DummyIndicatorBoard<int, bool>(false);
         }
 

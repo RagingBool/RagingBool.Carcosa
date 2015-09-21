@@ -20,19 +20,19 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
     public sealed class KeyboardControlBoardConfig<TKeyId>
     {
-        private readonly KeyboardControlBoardButtonsConfig<TKeyId> _keyboardConfig;
-        private readonly KeyboardControlBoardControllersConfig<TKeyId> _controllerConfig;
+        private readonly KeyboardControlBoardButtonsConfig<TKeyId> _buttonsConfig;
+        private readonly KeyboardControlBoardControllersConfig<TKeyId> _controllersConfig;
 
         public KeyboardControlBoardConfig(
-            KeyboardControlBoardButtonsConfig<TKeyId> keyboardConfig,
-            KeyboardControlBoardControllersConfig<TKeyId> controllerConfig
+            KeyboardControlBoardButtonsConfig<TKeyId> buttonsConfig,
+            KeyboardControlBoardControllersConfig<TKeyId> controllersConfig
             )
         {
-            _keyboardConfig = keyboardConfig;
-            _controllerConfig = controllerConfig;
+            _buttonsConfig = buttonsConfig;
+            _controllersConfig = controllersConfig;
         }
 
-        public KeyboardControlBoardButtonsConfig<TKeyId> KeyboardConfig { get { return _keyboardConfig; } }
-        public KeyboardControlBoardControllersConfig<TKeyId> ControllerConfig { get { return _controllerConfig; } }
+        public KeyboardControlBoardButtonsConfig<TKeyId> ButtonsConfig { get { return _buttonsConfig; } }
+        public KeyboardControlBoardControllersConfig<TKeyId> ControllersConfig { get { return _controllersConfig; } }
     }
 }
