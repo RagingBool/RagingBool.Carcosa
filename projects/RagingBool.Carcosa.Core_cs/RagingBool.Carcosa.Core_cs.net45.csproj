@@ -112,6 +112,7 @@
     <Compile Include="CarcosaShutDownMessage.cs" />
     <Compile Include="Control\CarcosaControlActor.cs" />
     <Compile Include="Control\ExternalKeyboardActor.cs" />
+    <Compile Include="Control\KeyboardControlBoardButtonsActor.cs" />
     <Compile Include="Control\RegisterWindowsKeyboardMessage.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
