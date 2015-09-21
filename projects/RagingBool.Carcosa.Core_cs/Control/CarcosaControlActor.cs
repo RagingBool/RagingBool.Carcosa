@@ -35,14 +35,27 @@ namespace RagingBool.Carcosa.Core.Control
         {
             if (message is RegisterWindowsKeyboardMessage)
             {
-                _controlSystemActor.CreateComponent(
-                    "keyboard",
-                    typeof(ExternalKeyboardActor<WindowsKey, TimedKey>),
-                    ((RegisterWindowsKeyboardMessage)message).Keyboard);
+                OnRegisterWindowsKeyboardMessage((RegisterWindowsKeyboardMessage)message);
             }
             else
             {
                 Unhandled(message);
+            }
+        }
+        
+        private void OnRegisterWindowsKeyboardMessage(RegisterWindowsKeyboardMessage message)
+        {
+            _controlSystemActor.CreateComponent(
+                "keyboard",
+                typeof(ExternalKeyboardActor<WindowsKey, TimedKey>),
+                message.Keyboard);
+
+            if(message.KeyboardControlBoardConfig != null)
+            {
+                _controlSystemActor.CreateComponent(
+                    "keyboardControlBoardButtons",
+                    typeof(KeyboardControlBoardButtonsActor<WindowsKey>),
+                    message.KeyboardControlBoardConfig.ButtonsConfig);
             }
         }
     }
