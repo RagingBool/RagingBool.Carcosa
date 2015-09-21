@@ -28,6 +28,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
             {
                 OnCreateComponentMesssage((CreateComponentMesssage)message);
             }
+            else if (message is ConnectMesssage)
+            {
+                OnConnectMesssage((ConnectMesssage)message);
+            }
             else
             {
                 Unhandled(message);
@@ -39,6 +43,11 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
             var actor = Context.ActorOf(new Props(message.ComponentType), message.Name);
 
             actor.Tell(new ConfigureControlMessage(message.Configuration));
+        }
+
+        private void OnConnectMesssage(ConnectMesssage message)
+        {
+            // TODO
         }
     }
 }

@@ -35,6 +35,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
             {
                 _controlNetworkActor.Forward(message);
             }
+            else if (message is ConnectMesssage)
+            {
+                _controlNetworkActor.Forward(message);
+            }
             else
             {
                 Unhandled(message);

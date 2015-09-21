@@ -32,7 +32,11 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
 
         public void CreateComponent(string name, Type componentType, object configuration)
         {
-            _actorRef.Tell(new CreateComponentMesssage(name, componentType, configuration));
+        }
+
+        public void Connect(string outputId, string inputId)
+        {
+            _actorRef.Tell(new ConnectMesssage(outputId, inputId));
         }
     }
 }
