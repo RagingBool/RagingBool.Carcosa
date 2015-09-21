@@ -29,7 +29,7 @@ namespace RagingBool.Carcosa.Commons.Akka
             if (message is TInitMessage)
             {
                 Init((TInitMessage)message);
-                Become(OnRecieveInitialized);
+                Become(OnReceiveInitialized);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace RagingBool.Carcosa.Commons.Akka
 
         // Post-initialized
 
-        protected abstract void OnRecieveInitialized(object message);
+        protected abstract void OnReceiveInitialized(object message);
 
     }
 }
