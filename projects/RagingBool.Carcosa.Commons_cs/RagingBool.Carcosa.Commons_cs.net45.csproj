@@ -79,6 +79,7 @@
     <Compile Include="Control\IControlInput.cs" />
     <Compile Include="Control\IControlOutput.cs" />
     <Compile Include="Control\IControlPort.cs" />
+    <Compile Include="Control\ParsingUtils.cs" />
     <Compile Include="MultipleUpdatables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
