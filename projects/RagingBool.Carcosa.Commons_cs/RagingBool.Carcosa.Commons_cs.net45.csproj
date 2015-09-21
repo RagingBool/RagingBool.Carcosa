@@ -66,6 +66,7 @@
     <Compile Include="Control\Akka\ControlActorInput.cs" />
     <Compile Include="Control\Akka\ControlActorOutput.cs" />
     <Compile Include="Control\Akka\ControlActorRef.cs" />
+    <Compile Include="Control\Akka\DataMessage.cs" />
     <Compile Include="Control\Akka\System\ConnectMesssage.cs" />
     <Compile Include="Control\Akka\System\ControlNetworkActor.cs" />
     <Compile Include="Control\Akka\System\ControlSystemActor.cs" />
