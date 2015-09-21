@@ -35,7 +35,11 @@ namespace RagingBool.Carcosa.Core
         // Running
         protected override void OnRecieveInitialized(object message)
         {
-            if (message is CarcosaShutDownMessage)
+            if (message is RegisterWindowsKeyboardMessage)
+            {
+                _controlActor.Forward(message);
+            }
+            else if (message is CarcosaShutDownMessage)
             {
                 OnShutDown();
             }
