@@ -35,6 +35,8 @@ namespace RagingBool.Carcosa.Core.Control
         {
             _inputKeyboard = new ManualKeyboard<TInputKeyId, TimedKey>();
             _keyboard = null;
+
+            RegisterInputHandler("", HandleInput);
         }
 
         protected override IEnumerable<ControlPortConfiguration> CreateInputsConfiguration()
@@ -64,9 +66,16 @@ namespace RagingBool.Carcosa.Core.Control
             _keyboard.OnKeyEvent += OnKeyEventHandler;
         }
 
+        private void HandleInput(string input, object data)
+        {
+            var keyEventArgs = (KeyEventArgs<TInputKeyId, TimedKey>)data;
+
+            _inputKeyboard.ProcessKeyEvent(keyEventArgs);
+        }
+
         private void OnKeyEventHandler(object sender, KeyEventArgs<int, TimedKeyVelocity> e)
         {
-            // TODO
+            Output("", e);
         }
     }
 }
