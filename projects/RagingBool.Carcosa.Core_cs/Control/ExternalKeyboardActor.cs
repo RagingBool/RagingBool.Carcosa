@@ -70,7 +70,7 @@ namespace RagingBool.Carcosa.Core.Control
 
         private void OnKeyEvent(KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
         {
-            // TODO
+            base.Output("", e);
         }
 
         private void OnExternalKeyEvent(object sender, KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
