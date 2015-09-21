@@ -56,9 +56,26 @@ namespace RagingBool.Carcosa.Core.Control
             _externalKeyboard.OnKeyEvent += OnExternalKeyEvent;
         }
 
-        private void OnExternalKeyEvent(object sender, KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
+        protected override void OnReceive(object message)
+        {
+            if(message is KeyEventArgs<TKeyId, TAdditionalKeyEventData>)
+            {
+                OnKeyEvent((KeyEventArgs<TKeyId, TAdditionalKeyEventData>)message);
+            }
+            else
+            {
+                base.OnReceive(message);
+            }
+        }
+
+        private void OnKeyEvent(KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
         {
             // TODO
+        }
+
+        private void OnExternalKeyEvent(object sender, KeyEventArgs<TKeyId, TAdditionalKeyEventData> e)
+        {
+            TellSelfFromOutside(e);
         }
     }
 }
