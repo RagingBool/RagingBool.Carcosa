@@ -16,23 +16,34 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Epicycle.Input;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
+using System.Collections.Generic;
+
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardControlBoardConfig<TKeyId>
+    public sealed class KeyboardControlBoardControllers<TKeyId>
+        : ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey>
     {
-        private readonly KeyboardControlBoardKeyboardConfig<TKeyId> _keyboardConfig;
-        private readonly KeyboardControlBoardControllersConfig<TKeyId> _controllerConfig;
-
-        public KeyboardControlBoardConfig(
-            KeyboardControlBoardKeyboardConfig<TKeyId> keyboardConfig,
-            KeyboardControlBoardControllersConfig<TKeyId> controllerConfig
+        public KeyboardControlBoardControllers(
+            IKeyboard<TKeyId, TimedKey> baseKeyboard,
+            KeyboardControlBoardControllersConfig<TKeyId> config
+            )
+            : base(
+                baseKeyboard,
+                KeyboardControlBoardUtils.CreateKeyMapping(config.ControllerKeys),
+                config.ValueKeys,
+                config.ValueChangeKeysConfig,
+                config.SmallValueStep, config.BigValueStep
             )
         {
-            _keyboardConfig = keyboardConfig;
-            _controllerConfig = controllerConfig;
-        }
 
-        public KeyboardControlBoardKeyboardConfig<TKeyId> KeyboardConfig { get { return _keyboardConfig; } }
-        public KeyboardControlBoardControllersConfig<TKeyId> ControllerConfig { get { return _controllerConfig; } }
+        }
     }
 }

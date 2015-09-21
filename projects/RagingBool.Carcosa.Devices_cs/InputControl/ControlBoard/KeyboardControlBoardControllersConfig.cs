@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardControlBoardControllerConfig<TKeyId>
+    public sealed class KeyboardControlBoardControllersConfig<TKeyId>
     {
         private readonly IEnumerable<TKeyId> _controllerKeys;
         private readonly IEnumerable<TKeyId> _valueKeys;
@@ -28,7 +28,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         private readonly double _smallValueStep;
         private readonly double _bigValueStep;
 
-        public KeyboardControlBoardControllerConfig(
+        public KeyboardControlBoardControllersConfig(
             IEnumerable<TKeyId> controllerKeys,
             IEnumerable<TKeyId> valueKeys,
             TwoSpeedBidirectionalMovementKeysConfiguration<TKeyId> valueChangeKeysConfig,

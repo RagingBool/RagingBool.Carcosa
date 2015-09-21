@@ -16,23 +16,19 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Keyboard;
+
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardControlBoardConfig<TKeyId>
+    public sealed class KeyboardControlBoardKeyboard<TKeyId> : VelocityKeyboardEmulator<int, TKeyId>
     {
-        private readonly KeyboardControlBoardKeyboardConfig<TKeyId> _keyboardConfig;
-        private readonly KeyboardControlBoardControllersConfig<TKeyId> _controllerConfig;
-
-        public KeyboardControlBoardConfig(
-            KeyboardControlBoardKeyboardConfig<TKeyId> keyboardConfig,
-            KeyboardControlBoardControllersConfig<TKeyId> controllerConfig
-            )
-        {
-            _keyboardConfig = keyboardConfig;
-            _controllerConfig = controllerConfig;
-        }
-
-        public KeyboardControlBoardKeyboardConfig<TKeyId> KeyboardConfig { get { return _keyboardConfig; } }
-        public KeyboardControlBoardControllersConfig<TKeyId> ControllerConfig { get { return _controllerConfig; } }
+        public KeyboardControlBoardKeyboard(
+            IKeyboard<TKeyId, TimedKey> baseKeyboard,
+            KeyboardControlBoardKeyboardConfig<TKeyId> config)
+            : base(
+                baseKeyboard,
+                KeyboardControlBoardUtils.CreateKeyMapping(config.ButtonKeys),
+                config.DefaultVelocity, config.HighVelocity,
+                config.HighVelocityKey) { }
     }
 }

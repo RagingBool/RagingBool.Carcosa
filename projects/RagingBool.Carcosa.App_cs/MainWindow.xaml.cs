@@ -78,7 +78,7 @@ namespace RagingBool.Carcosa.App
                 slowPositiveDirectionKeyId: WindowsKey.Right, slowNegativeDirectionKeyId: WindowsKey.Left,
                 fastPositiveDirectionKeyId: WindowsKey.Up, fastNegativeDirectionKeyId: WindowsKey.Down);
 
-            var controllerConfig = new KeyboardControlBoardControllerConfig<WindowsKey>(
+            var controllerConfig = new KeyboardControlBoardControllersConfig<WindowsKey>(
                 controllerKeys: new WindowsKey[] { WindowsKey.M, WindowsKey.OemComma, WindowsKey.OemPeriod, WindowsKey.OemQuestion, WindowsKey.K, WindowsKey.L, WindowsKey.Oem1, WindowsKey.OemQuotes },
                 valueKeys: new WindowsKey[] { WindowsKey.Oem3, WindowsKey.D1, WindowsKey.D2, WindowsKey.D3, WindowsKey.D4, WindowsKey.D5, WindowsKey.D6, WindowsKey.D7, WindowsKey.D8, WindowsKey.D9, WindowsKey.D0 },
                 valueChangeKeysConfig: controllerValueChangeKeysConfig,

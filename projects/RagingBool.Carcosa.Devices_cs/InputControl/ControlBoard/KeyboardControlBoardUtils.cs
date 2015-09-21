@@ -16,23 +16,24 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using System.Collections.Generic;
+
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardControlBoardConfig<TKeyId>
+    internal static class KeyboardControlBoardUtils
     {
-        private readonly KeyboardControlBoardKeyboardConfig<TKeyId> _keyboardConfig;
-        private readonly KeyboardControlBoardControllersConfig<TKeyId> _controllerConfig;
-
-        public KeyboardControlBoardConfig(
-            KeyboardControlBoardKeyboardConfig<TKeyId> keyboardConfig,
-            KeyboardControlBoardControllersConfig<TKeyId> controllerConfig
-            )
+        public static IDictionary<TKeyId, int> CreateKeyMapping<TKeyId>(IEnumerable<TKeyId> keys)
         {
-            _keyboardConfig = keyboardConfig;
-            _controllerConfig = controllerConfig;
-        }
+            var mapping = new Dictionary<TKeyId, int>();
 
-        public KeyboardControlBoardKeyboardConfig<TKeyId> KeyboardConfig { get { return _keyboardConfig; } }
-        public KeyboardControlBoardControllersConfig<TKeyId> ControllerConfig { get { return _controllerConfig; } }
+            var index = 0;
+            foreach (var key in keys)
+            {
+                mapping[key] = index;
+                index++;
+            }
+
+            return mapping;
+        }
     }
 }

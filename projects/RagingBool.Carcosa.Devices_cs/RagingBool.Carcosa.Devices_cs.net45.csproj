@@ -67,8 +67,11 @@
     <Compile Include="InputControl\ControlBoard\IControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoardConfig.cs" />
-    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardControllerConfig.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardControllers.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardControllersConfig.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardKeyboard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoardKeyboardConfig.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardUtils.cs" />
     <Compile Include="InputControl\ControlBoard\OverlappingControlBoards.cs" />
     <Compile Include="InputControl\ControllerBoardBase.cs" />
     <Compile Include="InputControl\DummyControllerBoard.cs" />

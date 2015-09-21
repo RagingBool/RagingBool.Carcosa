@@ -19,7 +19,6 @@
 using Epicycle.Input;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
-using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
@@ -28,44 +27,17 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         private const double MinControllerValue = 0.0;
         private const double MaxControllerValue = 1.0;
 
-        private readonly VelocityKeyboardEmulator<int, TKeyId> _buttonsKeyboard;
-        private readonly ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey> _controllerBoard;
+        private readonly KeyboardControlBoardKeyboard<TKeyId> _buttonsKeyboard;
+        private readonly KeyboardControlBoardControllers<TKeyId> _controllerBoard;
         private readonly DummyIndicatorBoard<int, bool> _buttonLights;
 
         public KeyboardControlBoard(
             IKeyboard<TKeyId, TimedKey> baseKeyboard,
             KeyboardControlBoardConfig<TKeyId> config)
         {
-            _buttonsKeyboard = new VelocityKeyboardEmulator<int, TKeyId>(
-                baseKeyboard,
-                CreateKeyMapping(config.KeyboardConfig.ButtonKeys),
-                config.KeyboardConfig.DefaultVelocity, config.KeyboardConfig.HighVelocity,
-                config.KeyboardConfig.HighVelocityKey
-                );
-
-            _controllerBoard = new ContinuousKeyboardControllerBoardEmulator<int, TKeyId, TimedKey>(
-                baseKeyboard,
-                CreateKeyMapping(config.ControllerConfig.ControllerKeys),
-                config.ControllerConfig.ValueKeys,
-                config.ControllerConfig.ValueChangeKeysConfig,
-                config.ControllerConfig.SmallValueStep, config.ControllerConfig.BigValueStep
-                );
-
+            _buttonsKeyboard = new KeyboardControlBoardKeyboard<TKeyId>(baseKeyboard, config.KeyboardConfig);
+            _controllerBoard = new KeyboardControlBoardControllers<TKeyId>(baseKeyboard, config.ControllerConfig);
             _buttonLights = new DummyIndicatorBoard<int, bool>(false);
-        }
-
-        private static IDictionary<TKeyId, int> CreateKeyMapping(IEnumerable<TKeyId> keys)
-        {
-            var mapping = new Dictionary<TKeyId, int>();
-
-            var index = 0;
-            foreach (var key in keys)
-            {
-                mapping[key] = index;
-                index++;
-            }
-
-            return mapping;
         }
 
         public IKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttonsKeyboard; } }

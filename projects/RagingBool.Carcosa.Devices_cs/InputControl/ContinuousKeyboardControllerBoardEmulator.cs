@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace RagingBool.Carcosa.Devices.InputControl
 {
-    public sealed class ContinuousKeyboardControllerBoardEmulator<TControllerId, TKeyId, TAdditionalKeyEventData>
+    public class ContinuousKeyboardControllerBoardEmulator<TControllerId, TKeyId, TAdditionalKeyEventData>
         : KeyboardControllerBoardEmulator<TControllerId, double, TKeyId, TAdditionalKeyEventData>
     {
         public const double MinValue = 0.0;
