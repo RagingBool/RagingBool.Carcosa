@@ -17,7 +17,7 @@
 // ]]]]
 
 using Epicycle.Input.Keyboard;
-using RagingBool.Carcosa.Commons.Control;
+using RagingBool.Carcosa.Commons.Control;       
 using RagingBool.Carcosa.Commons.Control.Akka;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
@@ -41,13 +41,16 @@ namespace RagingBool.Carcosa.Core.Control
         {
             return new ControlPortConfiguration[]
             {
-                new ControlPortConfiguration("inputKeyEvents", typeof(KeyEventArgs<TInputKeyId, TimedKey>))
+                new ControlPortConfiguration("", typeof(KeyEventArgs<TInputKeyId, TimedKey>))
             };
         }
 
         protected override IEnumerable<ControlPortConfiguration> CreateOutputsConfiguration()
         {
-            return null;
+            return new ControlPortConfiguration[]
+            {
+                new ControlPortConfiguration("", typeof(KeyEventArgs<int, TimedKeyVelocity>))
+            };
         }
 
         protected override void Configure(KeyboardControlBoardButtonsConfig<TInputKeyId> config)

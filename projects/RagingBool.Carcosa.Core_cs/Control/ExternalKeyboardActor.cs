@@ -41,7 +41,7 @@ namespace RagingBool.Carcosa.Core.Control
         {
             return new ControlPortConfiguration[]
             {
-                new ControlPortConfiguration("keyEvents", typeof(KeyEventArgs<TKeyId, TAdditionalKeyEventData>))
+                new ControlPortConfiguration("", typeof(KeyEventArgs<TKeyId, TAdditionalKeyEventData>))
             };
         }
 
