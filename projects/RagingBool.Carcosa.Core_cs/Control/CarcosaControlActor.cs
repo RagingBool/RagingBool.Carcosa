@@ -56,6 +56,8 @@ namespace RagingBool.Carcosa.Core.Control
                     "keyboardControlBoardButtons",
                     typeof(KeyboardControlBoardButtonsActor<WindowsKey>),
                     message.KeyboardControlBoardConfig.ButtonsConfig);
+
+                _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardButtons:in");
             }
         }
     }
