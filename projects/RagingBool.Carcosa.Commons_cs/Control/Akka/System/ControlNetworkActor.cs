@@ -47,7 +47,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
 
         private void OnConnectMesssage(ConnectMesssage message)
         {
-            // TODO
+            string sourceControl, sourcePort;
+            ParsingUtils.ParseControlOutputId(message.OutputId, out sourceControl, out sourcePort);
+            
+            Context.ActorSelection(sourceControl).Tell(new ConnectToMessage(sourcePort, message.InputId));
         }
     }
 }

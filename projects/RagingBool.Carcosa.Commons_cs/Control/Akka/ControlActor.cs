@@ -36,9 +36,12 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
 
         protected override void OnReceive(object message)
         {
-            if(message is ConfigureControlMessage)
+            if (message is ConfigureControlMessage)
             {
                 OnConfigureControl((ConfigureControlMessage)message);
+            } else if(message is ConnectToMessage)
+            {
+                OnConnectToMessage((ConnectToMessage)message);
             }
             else
             {
@@ -48,7 +51,12 @@ namespace RagingBool.Carcosa.Commons.Control.Akka
 
         private void OnConfigureControl(ConfigureControlMessage message)
         {
-            Configure((TConfiguration) message.Configuration);
+            Configure((TConfiguration)message.Configuration);
+        }
+
+        private void OnConnectToMessage(ConnectToMessage message)
+        {
+            // TODO
         }
 
         protected abstract void Configure(TConfiguration configuration);
