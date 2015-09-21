@@ -113,6 +113,7 @@
     <Compile Include="CarcosaShutDownMessage.cs" />
     <Compile Include="Control\CarcosaControlActor.cs" />
     <Compile Include="Control\KeyboardControlActor.cs" />
+    <Compile Include="Control\RegisterWindowsKeyboardMessage.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stage\Controller\Button.cs" />
