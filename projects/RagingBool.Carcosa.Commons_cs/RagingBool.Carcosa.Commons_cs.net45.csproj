@@ -70,6 +70,7 @@
     <Compile Include="Control\Akka\System\ControlSystemActor.cs" />
     <Compile Include="Control\Akka\System\ControlSystemActorRef.cs" />
     <Compile Include="Control\Akka\System\CreateComponentMesssage.cs" />
+    <Compile Include="Control\Akka\System\IControlNetworkMessage.cs" />
     <Compile Include="Control\ControlInputBase.cs" />
     <Compile Include="Control\ControlOutputBase.cs" />
     <Compile Include="Control\ControlPortBase.cs" />

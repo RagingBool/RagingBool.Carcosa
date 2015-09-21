@@ -20,7 +20,7 @@ using System;
 
 namespace RagingBool.Carcosa.Commons.Control.Akka.System
 {
-    public sealed class CreateComponentMesssage
+    public sealed class CreateComponentMesssage : IControlNetworkMessage
     {
         private readonly string _name;
         private readonly Type _componentType;

@@ -18,18 +18,5 @@
 
 namespace RagingBool.Carcosa.Commons.Control.Akka.System
 {
-    public sealed class ConnectMesssage : IControlNetworkMessage
-    {
-        private readonly string _outputId;
-        private readonly string _inputId;
-
-        public ConnectMesssage(string outputId, string inputId)
-        {
-            _outputId = outputId;
-            _inputId = inputId;
-        }
-
-        public string OutputId { get { return _outputId; } }
-        public string InputId { get { return _inputId; } }
-    }
+    internal interface IControlNetworkMessage { }
 }
