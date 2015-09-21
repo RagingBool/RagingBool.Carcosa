@@ -20,14 +20,14 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardControlBoardKeyboardConfig<TKeyId>
+    public sealed class KeyboardControlBoardButtonsConfig<TKeyId>
     {
         private readonly IEnumerable<TKeyId> _buttonKeys;
         private readonly int _defaultVelocity;
         private readonly int _highVelocity;
         private readonly TKeyId _highVelocityKey;
 
-        public KeyboardControlBoardKeyboardConfig(
+        public KeyboardControlBoardButtonsConfig(
             IEnumerable<TKeyId> buttonKeys,
             int defaultVelocity, int highVelocity,
             TKeyId highVelocityKey)

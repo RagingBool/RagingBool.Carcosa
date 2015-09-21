@@ -68,7 +68,7 @@ namespace RagingBool.Carcosa.App
 
         private void InitKeyboardControlBoard()
         {
-            var keyboardConfig = new KeyboardControlBoardKeyboardConfig<WindowsKey>(
+            var keyboardConfig = new KeyboardControlBoardButtonsConfig<WindowsKey>(
                 buttonKeys: new WindowsKey[] { WindowsKey.Z, WindowsKey.X, WindowsKey.C, WindowsKey.V, WindowsKey.A, WindowsKey.S, WindowsKey.D, WindowsKey.F },
                 defaultVelocity: 90, 
                 highVelocity: 120,

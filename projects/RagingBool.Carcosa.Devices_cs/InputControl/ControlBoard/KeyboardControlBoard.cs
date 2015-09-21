@@ -27,7 +27,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
         private const double MinControllerValue = 0.0;
         private const double MaxControllerValue = 1.0;
 
-        private readonly KeyboardControlBoardKeyboard<TKeyId> _buttonsKeyboard;
+        private readonly KeyboardControlBoardButtons<TKeyId> _buttonsKeyboard;
         private readonly KeyboardControlBoardControllers<TKeyId> _controllerBoard;
         private readonly DummyIndicatorBoard<int, bool> _buttonLights;
 
@@ -35,7 +35,7 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             IKeyboard<TKeyId, TimedKey> baseKeyboard,
             KeyboardControlBoardConfig<TKeyId> config)
         {
-            _buttonsKeyboard = new KeyboardControlBoardKeyboard<TKeyId>(baseKeyboard, config.KeyboardConfig);
+            _buttonsKeyboard = new KeyboardControlBoardButtons<TKeyId>(baseKeyboard, config.KeyboardConfig);
             _controllerBoard = new KeyboardControlBoardControllers<TKeyId>(baseKeyboard, config.ControllerConfig);
             _buttonLights = new DummyIndicatorBoard<int, bool>(false);
         }

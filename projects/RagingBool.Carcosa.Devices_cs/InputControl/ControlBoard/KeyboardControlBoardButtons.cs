@@ -20,11 +20,11 @@ using Epicycle.Input.Keyboard;
 
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class KeyboardControlBoardKeyboard<TKeyId> : VelocityKeyboardEmulator<int, TKeyId>
+    public sealed class KeyboardControlBoardButtons<TKeyId> : VelocityKeyboardEmulator<int, TKeyId>
     {
-        public KeyboardControlBoardKeyboard(
+        public KeyboardControlBoardButtons(
             IKeyboard<TKeyId, TimedKey> baseKeyboard,
-            KeyboardControlBoardKeyboardConfig<TKeyId> config)
+            KeyboardControlBoardButtonsConfig<TKeyId> config)
             : base(
                 baseKeyboard,
                 KeyboardControlBoardUtils.CreateKeyMapping(config.ButtonKeys),
