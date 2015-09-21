@@ -48,7 +48,7 @@ namespace RagingBool.Carcosa.Core
         private IList<IUpdatable> _updatables;
 
         private readonly ActorSystem _actorSystem;
-        private readonly IActorRef _carcosaActor;
+        private IActorRef _carcosaActor;
 
         private bool _isRunning;
 
@@ -71,7 +71,6 @@ namespace RagingBool.Carcosa.Core
             _updateThread = new Thread(UpdateThreadLoop);
 
             _actorSystem = ActorSystem.Create("Carcosa");
-            _carcosaActor = _actorSystem.ActorOf<CarcosaActor>(_workspace.WorkspaceName);
 
             _isRunning = false;
         }
@@ -89,7 +88,7 @@ namespace RagingBool.Carcosa.Core
             }
 
             _stage.Start();
-            _carcosaActor.Tell(new CarcosaInitMessage(_workspace));
+            _carcosaActor = _actorSystem.ActorOf<CarcosaActor>(_workspace.WorkspaceName);
             _isRunning = true;
 
             _updateThread.Start();

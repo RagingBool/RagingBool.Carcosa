@@ -17,23 +17,22 @@
 // ]]]]
 
 using Akka.Actor;
-using RagingBool.Carcosa.Commons.Akka;
 using RagingBool.Carcosa.Core.Control;
 
 namespace RagingBool.Carcosa.Core
 {
-    internal sealed class CarcosaActor : InitializableActor<CarcosaInitMessage>
+    internal sealed class CarcosaActor : UntypedActor
     {
         private IActorRef _controlActor;
 
-        // Init
-        protected override void Init(CarcosaInitMessage message)
+        public CarcosaActor()
         {
             _controlActor = Context.ActorOf<CarcosaControlActor>("control");
         }
 
         // Running
-        protected override void OnRecieveInitialized(object message)
+
+        protected override void OnReceive(object message)
         {
             if (message is RegisterWindowsKeyboardMessage)
             {
@@ -50,14 +49,14 @@ namespace RagingBool.Carcosa.Core
         }
 
         // Shutting down
-        private void OnRecieveShutDown(object message)
+        private void OnReceiveShutDown(object message)
         {
             Unhandled(message);
         }
 
         private void OnShutDown()
         {
-            Become(OnRecieveShutDown);
+            Become(OnReceiveShutDown);
             ShutDown();
         }
 
