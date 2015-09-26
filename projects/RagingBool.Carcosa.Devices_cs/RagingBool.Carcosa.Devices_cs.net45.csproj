@@ -44,6 +44,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+
     <Reference Include="Epicycle.Commons.TestUtils_cs">
       <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.8.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>
@@ -81,6 +82,7 @@
     <Compile Include="InputControl\KeyboardBase.cs" />
     <Compile Include="InputControl\KeyboardControllerBoardEmulator.cs" />
     <Compile Include="InputControl\ManualControllerBoard.cs" />
+    <Compile Include="InputControl\ManualIndicatorBoard.cs" />
     <Compile Include="InputControl\ManualKeyboard.cs" />
     <Compile Include="InputControl\OverlappingControllerBoard.cs" />
     <Compile Include="InputControl\OverlappingIndicatorBoard.cs" />
@@ -114,6 +116,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
