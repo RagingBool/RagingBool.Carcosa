@@ -17,6 +17,7 @@
 // ]]]]
 
 using Akka.Actor;
+using RagingBool.Carcosa.Commons;
 using RagingBool.Carcosa.Commons.Control.Akka.System;
 using RagingBool.Carcosa.Devices.InputControl;
 
@@ -46,6 +47,11 @@ namespace RagingBool.Carcosa.Core.Control
         private void OnRegisterWindowsKeyboardMessage(RegisterWindowsKeyboardMessage message)
         {
             _controlSystemActor.CreateComponent(
+                "controlBoard",
+                typeof(ControlBoardActor),
+                Unit.Instance);
+
+            _controlSystemActor.CreateComponent(
                 "keyboard",
                 typeof(ExternalKeyboardActor<WindowsKey, TimedKey>),
                 message.Keyboard);
@@ -64,6 +70,8 @@ namespace RagingBool.Carcosa.Core.Control
 
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardButtons:in");
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardControllers:in");
+
+                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controlBoard:in.keys");
             }
         }
     }
