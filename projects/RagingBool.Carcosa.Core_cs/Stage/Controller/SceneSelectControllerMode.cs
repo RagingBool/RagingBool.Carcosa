@@ -16,7 +16,6 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -30,20 +29,20 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         
         private int _phase;
 
-        public SceneSelectControllerMode(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard) :
-            base(controllerUi, clock, controlBoard) { }
+        public SceneSelectControllerMode(ControllerUi controllerUi, IControlBoard controlBoard) :
+            base(controllerUi, controlBoard) { }
 
-        public override void Enter()
+        public override void Enter(double time)
         {
-            base.Enter();
+            base.Enter(time);
 
             _phase = 0;
             Fps = 20;
         }
 
-        protected override void NewFrame()
+        protected override void NewFrame(double time)
         {
-            base.NewFrame();
+            base.NewFrame(time);
 
             _phase = (_phase + 1) % 8;
             Render();
@@ -70,7 +69,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         {
             if(e.EventType == KeyEventType.Released)
             {
-                ControllerUi.SelectSceneAndGoToLiveMode(e.KeyId);
+                ControllerUi.SelectSceneAndGoToLiveMode(e.KeyId, e.AdditionalData.Time);
             }
         }
 

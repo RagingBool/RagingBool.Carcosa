@@ -16,7 +16,6 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -39,63 +38,63 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private SceneChangedEventArgs _lastSceneChangedEventArgs;
 
-        public ControllerUi(IClock clock, IControlBoard controlBoard)
+        public ControllerUi(IControlBoard controlBoard)
         {
             _controlBoard = controlBoard;
 
             _controlBoard.Buttons.OnKeyEvent += OnButtonEventHandler;
             _controlBoard.Controllers.OnControllerChangeEvent += OnControllerChangeHandler;
 
-            _liveMode = new LiveControllerMode(this, clock, _controlBoard);
-            _sceneSelectMode = new SceneSelectControllerMode(this, clock, _controlBoard);
-            _SceneSelectionConfirmMode = new SceneSelectionConfirmControllerMode(this, clock, _controlBoard);
+            _liveMode = new LiveControllerMode(this, _controlBoard);
+            _sceneSelectMode = new SceneSelectControllerMode(this, _controlBoard);
+            _SceneSelectionConfirmMode = new SceneSelectionConfirmControllerMode(this, _controlBoard);
 
             _mode = null;
             _lastSceneChangedEventArgs = null;
         }
 
-        public void Start()
+        public void Start(double time)
         {
             lock(_lock)
             {
                 SceneId = -1;
-                SelectSceneAndGoToLiveMode(0);
+                SelectSceneAndGoToLiveMode(0, time);
             }
         }
 
-        public void Stop()
+        public void Stop(double time)
         {
             lock (_lock)
             {
-                SwitchMode(null);
+                SwitchMode(null, time);
             }
         }
 
-        public void Update()
+        public void Update(double time)
         {
             lock (_lock)
             {
                 if (_mode != null)
                 {
-                    _mode.Update();
+                    _mode.Update(time);
                 }
             }
         }
 
-        private void SwitchMode(IControllerMode newMode)
+        private void SwitchMode(IControllerMode newMode, double time)
         {
             lock (_lock)
             {
                 if (_mode != null)
                 {
-                    _mode.Exit();
+                    _mode.Exit(time);
                 }
 
                 _mode = newMode;
 
                 if (_mode != null)
                 {
-                    _mode.Enter();
+                    _mode.Enter(time);
                 }
             }
         }
@@ -128,7 +127,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             get { return _liveMode.SubsceneId; }
         }
 
-        public void SelectSceneAndGoToLiveMode(int newSceneId)
+        public void SelectSceneAndGoToLiveMode(int newSceneId, double time)
         {
             lock (_lock)
             {
@@ -137,24 +136,24 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
                     SceneId = newSceneId;
                     _liveMode.SubsceneId = 0;
 
-                    SwitchMode(_SceneSelectionConfirmMode);
+                    SwitchMode(_SceneSelectionConfirmMode, time);
                     FireOnSceneChange();
                 }
                 else
                 {
-                    GoToLiveMode();
+                    GoToLiveMode(time);
                 }
             }
         }
 
-        public void GoToLiveMode()
+        public void GoToLiveMode(double time)
         {
-            SwitchMode(_liveMode);
+            SwitchMode(_liveMode, time);
         }
 
-        public void GoToSceneSelectMode()
+        public void GoToSceneSelectMode(double time)
         {
-            SwitchMode(_sceneSelectMode);
+            SwitchMode(_sceneSelectMode, time);
         }
 
         public void FireOnSceneChange()

@@ -16,7 +16,6 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -27,15 +26,13 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
     internal abstract class ControllerModeBase : IControllerMode
     {
         private readonly ControllerUi _controllerUi;
-        private readonly IClock _clock;
         private readonly IControlBoard _controlBoard;
 
         private double _lastUpdateTime;
 
-        public ControllerModeBase(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard)
+        public ControllerModeBase(ControllerUi controllerUi, IControlBoard controlBoard)
         {
             _controllerUi = controllerUi;
-            _clock = clock;
             _controlBoard = controlBoard;
             Fps = 1;
         }
@@ -45,11 +42,6 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             get { return _controlBoard; }
         }
 
-        protected IClock Clock
-        {
-            get { return _clock; }
-        }
-
         protected ControllerUi ControllerUi
         {
             get { return _controllerUi; }
@@ -57,33 +49,32 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         protected double Fps { get; set; }
 
-        public virtual void Enter()
+        public virtual void Enter(double time)
         {
             ClearLights();
-            _lastUpdateTime = _clock.Time;
+            _lastUpdateTime = time;
         }
 
-        public virtual void Exit()
+        public virtual void Exit(double time)
         {
             ClearLights();
         }
-        
-        public virtual void Update()
+
+        public virtual void Update(double time)
         {
-            var curTime = _clock.Time;
-            var timeSinceLastUpdate = curTime - _lastUpdateTime;
+            var timeSinceLastUpdate = time - _lastUpdateTime;
 
             if(timeSinceLastUpdate < (1 / Fps))
             {
                 return;
             }
 
-            NewFrame();
+            NewFrame(time);
 
-            _lastUpdateTime = curTime;
+            _lastUpdateTime = time;
         }
 
-        protected virtual void NewFrame()
+        protected virtual void NewFrame(double time)
         {
 
         }
