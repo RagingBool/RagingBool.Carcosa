@@ -22,19 +22,19 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
     {
         private ManualKeyboard<int, TimedKeyVelocity> _buttons;
         private ManualControllerBoard<int, double> _controllers;
-        private DummyIndicatorBoard<int, bool> _buttonLights;
+        private ManualIndicatorBoard<int, bool> _buttonLights;
 
         public ManualControlBoard()
         {
             _buttons = new ManualKeyboard<int, TimedKeyVelocity>();
             _controllers = new ManualControllerBoard<int, double>(0);
-            _buttonLights = new DummyIndicatorBoard<int, bool>(false);
+            _buttonLights = new ManualIndicatorBoard<int, bool>(false);
         }
 
         public ManualKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttons; } }
 
         public ManualControllerBoard<int, double> Controllers { get { return _controllers; } }
 
-        public DummyIndicatorBoard<int, bool> ButtonLights { get { return _buttonLights; } }
+        public ManualIndicatorBoard<int, bool> ButtonLights { get { return _buttonLights; } }
     }
 }
