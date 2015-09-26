@@ -16,9 +16,13 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input;
+using Epicycle.Input.Controllers;
+using Epicycle.Input.Keyboard;
+
 namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
 {
-    public sealed class ManualControlBoard
+    public sealed class ManualControlBoard : IControlBoard
     {
         private ManualKeyboard<int, TimedKeyVelocity> _buttons;
         private ManualControllerBoard<int, double> _controllers;
@@ -31,10 +35,16 @@ namespace RagingBool.Carcosa.Devices.InputControl.ControlBoard
             _buttonLights = new ManualIndicatorBoard<int, bool>(false);
         }
 
-        public ManualKeyboard<int, TimedKeyVelocity> Buttons { get { return _buttons; } }
+        public IKeyboard<int, TimedKeyVelocity> Buttons { get { return ManualButtons; } }
 
-        public ManualControllerBoard<int, double> Controllers { get { return _controllers; } }
+        public IControllerBoard<int, double> Controllers { get { return ManualControllers; } }
 
-        public ManualIndicatorBoard<int, bool> ButtonLights { get { return _buttonLights; } }
+        public IIndicatorBoard<int, bool> ButtonLights { get { return ManualButtonLights; } }
+
+        public ManualKeyboard<int, TimedKeyVelocity> ManualButtons { get { return _buttons; } }
+
+        public ManualControllerBoard<int, double> ManualControllers { get { return _controllers; } }
+
+        public ManualIndicatorBoard<int, bool> ManualButtonLights { get { return _buttonLights; } }
     }
 }
