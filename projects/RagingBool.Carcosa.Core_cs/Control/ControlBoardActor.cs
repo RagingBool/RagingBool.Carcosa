@@ -16,31 +16,37 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
+using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Commons;
 using RagingBool.Carcosa.Commons.Control;
 using RagingBool.Carcosa.Commons.Control.Akka;
 using RagingBool.Carcosa.Devices.InputControl;
+using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
 {
     public sealed class ControlBoardActor : ControlActor<Unit>
     {
-        private readonly ManualKeyboard<int, TimedKeyVelocity> _inputKeyboard;
+        private readonly ManualControlBoard _controlBoard;
 
         public ControlBoardActor()
         {
-            _inputKeyboard = new ManualKeyboard<int, TimedKeyVelocity>();
+            _controlBoard = new ManualControlBoard();
 
-            RegisterInputHandler("keys", HandleKeysInput);
+            _controlBoard.ButtonLights.OnIndicatorValueChange += OnButtonLightsValueChange;
+
+            RegisterInputHandler("buttons", HandleButtonsInput);
+            RegisterInputHandler("controllers", HandleControllersInput);
         }
 
         protected override IEnumerable<ControlPortConfiguration> CreateInputsConfiguration()
         {
             return new ControlPortConfiguration[]
             {
-                new ControlPortConfiguration("keys", typeof(KeyEventArgs<int, TimedKeyVelocity>))
+                new ControlPortConfiguration("buttons", typeof(KeyEventArgs<int, TimedKeyVelocity>)),
+                new ControlPortConfiguration("controllers", typeof(ControllerChangeEventArgs<int, double>)),
             };
         }
 
@@ -54,11 +60,21 @@ namespace RagingBool.Carcosa.Core.Control
 
         protected override void Configure(Unit config) { }
 
-        private void HandleKeysInput(string input, object data)
+        private void HandleButtonsInput(string input, object data)
         {
-            var keyEventArgs = (KeyEventArgs<int, TimedKeyVelocity>)data;
+            var buttonEventArgs = (KeyEventArgs<int, TimedKeyVelocity>)data;
+            _controlBoard.Buttons.ProcessKeyEvent(buttonEventArgs);
+        }
 
-            _inputKeyboard.ProcessKeyEvent(keyEventArgs);
+        private void HandleControllersInput(string input, object data)
+        {
+            var controllerEventArgs = (ControllerChangeEventArgs<int, double>)data;
+            _controlBoard.Controllers.ProcessControllerChangeEvent(controllerEventArgs);
+        }
+
+        private void OnButtonLightsValueChange(object sender, ControllerChangeEventArgs<int, bool> e)
+        {
+            // TODO
         }
     }
 }

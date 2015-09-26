@@ -71,7 +71,8 @@ namespace RagingBool.Carcosa.Core.Control
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardButtons:in");
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardControllers:in");
 
-                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controlBoard:in.keys");
+                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controlBoard:in.buttons");
+                _controlSystemActor.Connect("keyboardControlBoardControllers:out", "controlBoard:in.controllers");
             }
         }
     }
