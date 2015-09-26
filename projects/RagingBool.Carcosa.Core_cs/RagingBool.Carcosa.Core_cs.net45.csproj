@@ -111,7 +111,7 @@
     <Compile Include="CarcosaActor.cs" />
     <Compile Include="CarcosaShutDownMessage.cs" />
     <Compile Include="Control\CarcosaControlActor.cs" />
-    <Compile Include="Control\ControlBoardActor.cs" />
+    <Compile Include="Control\ControlUiActor.cs" />
     <Compile Include="Control\ExternalKeyboardActor.cs" />
     <Compile Include="Control\KeyboardControlBoardButtonsActor.cs" />
     <Compile Include="Control\KeyboardControlBoardControllersActor.cs" />

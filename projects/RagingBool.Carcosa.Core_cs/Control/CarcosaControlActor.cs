@@ -47,8 +47,8 @@ namespace RagingBool.Carcosa.Core.Control
         private void OnRegisterWindowsKeyboardMessage(RegisterWindowsKeyboardMessage message)
         {
             _controlSystemActor.CreateComponent(
-                "controlBoard",
-                typeof(ControlBoardActor),
+                "controlUi",
+                typeof(ControlUiActor),
                 Unit.Instance);
 
             _controlSystemActor.CreateComponent(
@@ -71,8 +71,8 @@ namespace RagingBool.Carcosa.Core.Control
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardButtons:in");
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardControllers:in");
 
-                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controlBoard:in.buttons");
-                _controlSystemActor.Connect("keyboardControlBoardControllers:out", "controlBoard:in.controllers");
+                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controlUi:in.buttons");
+                _controlSystemActor.Connect("keyboardControlBoardControllers:out", "controlUi:in.controllers");
             }
         }
     }

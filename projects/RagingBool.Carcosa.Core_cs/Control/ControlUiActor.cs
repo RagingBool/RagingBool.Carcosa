@@ -21,21 +21,24 @@ using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Commons;
 using RagingBool.Carcosa.Commons.Control;
 using RagingBool.Carcosa.Commons.Control.Akka;
+using RagingBool.Carcosa.Core.Stage.Controller;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public sealed class ControlBoardActor : ControlActor<Unit>
+    public sealed class ControlUiActor : ControlActor<Unit>
     {
         private readonly ManualControlBoard _controlBoard;
+        private ControllerUi _controllerUi;
 
-        public ControlBoardActor()
+        public ControlUiActor()
         {
             _controlBoard = new ManualControlBoard();
+            _controllerUi = null;
 
-            _controlBoard.ButtonLights.OnIndicatorValueChange += OnButtonLightsValueChange;
+            _controlBoard.ManualButtonLights.OnIndicatorValueChange += OnButtonLightsValueChange;
 
             RegisterInputHandler("buttons", HandleButtonsInput);
             RegisterInputHandler("controllers", HandleControllersInput);
@@ -58,18 +61,24 @@ namespace RagingBool.Carcosa.Core.Control
             };
         }
 
-        protected override void Configure(Unit config) { }
+        protected override void Configure(Unit config)
+        {
+            if(_controllerUi == null)
+            {
+                _controllerUi = new ControllerUi(_controlBoard);
+            }
+        }
 
         private void HandleButtonsInput(string input, object data)
         {
             var buttonEventArgs = (KeyEventArgs<int, TimedKeyVelocity>)data;
-            _controlBoard.Buttons.ProcessKeyEvent(buttonEventArgs);
+            _controlBoard.ManualButtons.ProcessKeyEvent(buttonEventArgs);
         }
 
         private void HandleControllersInput(string input, object data)
         {
             var controllerEventArgs = (ControllerChangeEventArgs<int, double>)data;
-            _controlBoard.Controllers.ProcessControllerChangeEvent(controllerEventArgs);
+            _controlBoard.ManualControllers.ProcessControllerChangeEvent(controllerEventArgs);
         }
 
         private void OnButtonLightsValueChange(object sender, ControllerChangeEventArgs<int, bool> e)
