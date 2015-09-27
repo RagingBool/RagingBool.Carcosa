@@ -30,8 +30,6 @@ namespace RagingBool.Carcosa.Core
             _controlActor = Context.ActorOf<CarcosaControlActor>("control");
         }
 
-        // Running
-
         protected override void OnReceive(object message)
         {
             if (message is RegisterWindowsKeyboardMessage)
@@ -44,7 +42,12 @@ namespace RagingBool.Carcosa.Core
             }
             else if (message is StopMessage)
             {
-                OnStop((StopMessage)message);
+                _controlActor.Forward(message);
+                Become(OnReceiveStop);
+            }
+            else if (message is UpdateMessage)
+            {
+                _controlActor.Forward(message);
             }
             else
             {
@@ -52,16 +55,9 @@ namespace RagingBool.Carcosa.Core
             }
         }
 
-        // Shutting down
         private void OnReceiveStop(object message)
         {
             Unhandled(message);
-        }
-
-        private void OnStop(StopMessage message)
-        {
-            _controlActor.Forward(message);
-            Become(OnReceiveStop);
         }
     }
 }

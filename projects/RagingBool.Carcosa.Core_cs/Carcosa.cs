@@ -143,6 +143,7 @@ namespace RagingBool.Carcosa.Core
                 {
                     updatable.Update();
                 }
+                _carcosaActor.Tell(new UpdateMessage(_clock.Time));
 
                 _stage.Update();
                 Thread.Sleep(10);
