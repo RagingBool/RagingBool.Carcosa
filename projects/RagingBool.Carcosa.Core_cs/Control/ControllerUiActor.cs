@@ -71,6 +71,10 @@ namespace RagingBool.Carcosa.Core.Control
             {
                 OnStop((StopMessage)message);
             }
+            else if (message is UpdateMessage)
+            {
+                OnUpdate((UpdateMessage)message);
+            }
             else
             {
                 base.OnReceive(message);
@@ -85,6 +89,11 @@ namespace RagingBool.Carcosa.Core.Control
         private void OnStop(StopMessage message)
         {
             _controllerUi.Stop(message.Time);
+        }
+
+        private void OnUpdate(UpdateMessage message)
+        {
+            _controllerUi.Update(message.Time);
         }
 
         protected override void Configure(Unit config)
