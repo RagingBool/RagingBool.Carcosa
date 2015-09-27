@@ -38,9 +38,13 @@ namespace RagingBool.Carcosa.Core
             {
                 _controlActor.Forward(message);
             }
-            else if (message is CarcosaShutDownMessage)
+            else if (message is StartMessage)
             {
-                OnShutDown();
+                _controlActor.Forward(message);
+            }
+            else if (message is StopMessage)
+            {
+                OnStop((StopMessage)message);
             }
             else
             {
@@ -49,20 +53,15 @@ namespace RagingBool.Carcosa.Core
         }
 
         // Shutting down
-        private void OnReceiveShutDown(object message)
+        private void OnReceiveStop(object message)
         {
             Unhandled(message);
         }
 
-        private void OnShutDown()
+        private void OnStop(StopMessage message)
         {
-            Become(OnReceiveShutDown);
-            ShutDown();
-        }
-
-        private void ShutDown()
-        {
-            // TODO
+            _controlActor.Forward(message);
+            Become(OnReceiveStop);
         }
     }
 }
