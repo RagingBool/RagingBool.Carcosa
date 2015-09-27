@@ -20,16 +20,25 @@ using Akka.Actor;
 using RagingBool.Carcosa.Commons;
 using RagingBool.Carcosa.Commons.Control.Akka.System;
 using RagingBool.Carcosa.Devices.InputControl;
+using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
 {
     internal sealed class CarcosaControlActor : UntypedActor
     {
         private readonly ControlSystemActorRef _controlSystemActor;
+        private readonly IList<string> _startStopControls;
 
         public CarcosaControlActor()
         {
             _controlSystemActor = new ControlSystemActorRef(Context.ActorOf<ControlSystemActor>("system"));
+            _startStopControls = new List<string>();
+
+            _controlSystemActor.CreateComponent(
+                "controlUi",
+                typeof(ControlUiActor),
+                Unit.Instance);
+            _startStopControls.Add("controlUi");
         }
 
         protected override void OnReceive(object message)
@@ -38,19 +47,30 @@ namespace RagingBool.Carcosa.Core.Control
             {
                 OnRegisterWindowsKeyboardMessage((RegisterWindowsKeyboardMessage)message);
             }
+            else if (message is StartMessage)
+            {
+                OnStartStop(message);
+            }
+            else if (message is StopMessage)
+            {
+                OnStartStop(message);
+            }
             else
             {
                 Unhandled(message);
             }
         }
+
+        private void OnStartStop(object message)
+        {
+            foreach (var control in _startStopControls)
+            {
+                _controlSystemActor.SendMessage(control, message);
+            }
+        }
         
         private void OnRegisterWindowsKeyboardMessage(RegisterWindowsKeyboardMessage message)
         {
-            _controlSystemActor.CreateComponent(
-                "controlUi",
-                typeof(ControlUiActor),
-                Unit.Instance);
-
             _controlSystemActor.CreateComponent(
                 "keyboard",
                 typeof(ExternalKeyboardActor<WindowsKey, TimedKey>),
