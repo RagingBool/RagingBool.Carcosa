@@ -20,6 +20,7 @@ using Akka.Actor;
 using RagingBool.Carcosa.Commons;
 using RagingBool.Carcosa.Commons.Control.Akka.System;
 using RagingBool.Carcosa.Devices.InputControl;
+using System;
 using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
@@ -27,18 +28,40 @@ namespace RagingBool.Carcosa.Core.Control
     internal sealed class CarcosaControlActor : UntypedActor
     {
         private readonly ControlSystemActorRef _controlSystemActor;
-        private readonly IList<string> _startStopControls;
+        private readonly IList<string> _startStopComponents;
+        private readonly IList<string> _updateableComponents;
 
         public CarcosaControlActor()
         {
             _controlSystemActor = new ControlSystemActorRef(Context.ActorOf<ControlSystemActor>("system"));
-            _startStopControls = new List<string>();
+            _startStopComponents = new List<string>();
+            _updateableComponents = new List<string>();
 
-            _controlSystemActor.CreateComponent(
+            RegisterComponent(
                 "controllerUi",
                 typeof(ControllerUiActor),
-                Unit.Instance);
-            _startStopControls.Add("controllerUi");
+                Unit.Instance,
+                supportsStartStop: true,
+                supportsUpdate: true);
+        }
+
+        private void RegisterComponent(
+            string name, 
+            Type componentType, 
+            object configuration, 
+            bool supportsStartStop = false, 
+            bool supportsUpdate = false)
+        {
+            _controlSystemActor.CreateComponent(name, componentType, configuration);
+
+            if (supportsStartStop)
+            {
+                _startStopComponents.Add(name);
+            }
+            if (supportsStartStop)
+            {
+                _updateableComponents.Add(name);
+            }
         }
 
         protected override void OnReceive(object message)
@@ -49,11 +72,15 @@ namespace RagingBool.Carcosa.Core.Control
             }
             else if (message is StartMessage)
             {
-                OnStartStop(message);
+                SendToAll(_startStopComponents, message);
             }
             else if (message is StopMessage)
             {
-                OnStartStop(message);
+                SendToAll(_startStopComponents, message);
+            }
+            else if (message is UpdateMessage)
+            {
+                SendToAll(_updateableComponents, message);
             }
             else
             {
@@ -61,29 +88,26 @@ namespace RagingBool.Carcosa.Core.Control
             }
         }
 
-        private void OnStartStop(object message)
+        private void SendToAll(IList<string> components, object message)
         {
-            foreach (var control in _startStopControls)
+            foreach (var component in components)
             {
-                _controlSystemActor.SendMessage(control, message);
+                _controlSystemActor.SendMessage(component, message);
             }
         }
         
         private void OnRegisterWindowsKeyboardMessage(RegisterWindowsKeyboardMessage message)
         {
-            _controlSystemActor.CreateComponent(
-                "keyboard",
-                typeof(ExternalKeyboardActor<WindowsKey, TimedKey>),
-                message.Keyboard);
+            RegisterComponent("keyboard", typeof(ExternalKeyboardActor<WindowsKey, TimedKey>), message.Keyboard);
 
             if(message.KeyboardControlBoardConfig != null)
             {
-                _controlSystemActor.CreateComponent(
+                RegisterComponent(
                     "keyboardControlBoardButtons",
                     typeof(KeyboardControlBoardButtonsActor<WindowsKey>),
                     message.KeyboardControlBoardConfig.ButtonsConfig);
 
-                _controlSystemActor.CreateComponent(
+                RegisterComponent(
                     "keyboardControlBoardControllers",
                     typeof(KeyboardControlBoardControllersActor<WindowsKey>),
                     message.KeyboardControlBoardConfig.ControllersConfig);
