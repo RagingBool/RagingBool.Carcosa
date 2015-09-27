@@ -167,6 +167,9 @@
     <Compile Include="Stage\Scenes\Signal\IFunction.cs" />
     <Compile Include="Stage\Scenes\Signal\Oscillator.cs" />
     <Compile Include="Stage\Scenes\Signal\PhaseGenerator.cs" />
+    <Compile Include="StartMessage.cs" />
+    <Compile Include="StopMessage.cs" />
+    <Compile Include="TimedMessage.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
     <Compile Include="Workspace\ICarcosaWorkspace.cs" />
