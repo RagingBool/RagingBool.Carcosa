@@ -168,6 +168,7 @@
     <Compile Include="StartMessage.cs" />
     <Compile Include="StopMessage.cs" />
     <Compile Include="TimedMessage.cs" />
+    <Compile Include="UpdateMessage.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
     <Compile Include="Workspace\ICarcosaWorkspace.cs" />
