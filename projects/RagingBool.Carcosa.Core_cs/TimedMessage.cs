@@ -18,7 +18,7 @@
 
 namespace RagingBool.Carcosa.Core
 {
-    public class TimedMessage
+    internal class TimedMessage
     {
         private readonly double _time;
 

@@ -18,7 +18,7 @@
 
 namespace RagingBool.Carcosa.Core
 {
-    public sealed class StartMessage : TimedMessage
+    internal sealed class StartMessage : TimedMessage
     {
         public StartMessage(double time) : base(time) { }
     }
