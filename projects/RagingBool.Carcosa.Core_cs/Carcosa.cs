@@ -89,6 +89,7 @@ namespace RagingBool.Carcosa.Core
 
             _stage.Start();
             _carcosaActor = _actorSystem.ActorOf<CarcosaActor>(_workspace.WorkspaceName);
+            _carcosaActor.Tell(new StartMessage(_clock.Time));
             _isRunning = true;
 
             _updateThread.Start();
@@ -102,7 +103,7 @@ namespace RagingBool.Carcosa.Core
             } 
             
             _isRunning = false;
-            _carcosaActor.Tell(new CarcosaShutDownMessage());
+            _carcosaActor.Tell(new StopMessage(_clock.Time));
             _stage.Stop();
             _actorSystem.Shutdown();
         }
