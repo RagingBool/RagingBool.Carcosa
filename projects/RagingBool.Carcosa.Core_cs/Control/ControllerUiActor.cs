@@ -28,12 +28,12 @@ using System.Collections.Generic;
 
 namespace RagingBool.Carcosa.Core.Control
 {
-    public sealed class ControlUiActor : ControlActor<Unit>
+    public sealed class ControllerUiActor : ControlActor<Unit>
     {
         private readonly ManualControlBoard _controlBoard;
         private ControllerUi _controllerUi;
 
-        public ControlUiActor()
+        public ControllerUiActor()
         {
             _controlBoard = new ManualControlBoard();
             _controllerUi = null;

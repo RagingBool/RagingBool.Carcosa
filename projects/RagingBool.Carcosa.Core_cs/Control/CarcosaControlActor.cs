@@ -35,10 +35,10 @@ namespace RagingBool.Carcosa.Core.Control
             _startStopControls = new List<string>();
 
             _controlSystemActor.CreateComponent(
-                "controlUi",
-                typeof(ControlUiActor),
+                "controllerUi",
+                typeof(ControllerUiActor),
                 Unit.Instance);
-            _startStopControls.Add("controlUi");
+            _startStopControls.Add("controllerUi");
         }
 
         protected override void OnReceive(object message)
@@ -91,8 +91,8 @@ namespace RagingBool.Carcosa.Core.Control
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardButtons:in");
                 _controlSystemActor.Connect("keyboard:out", "keyboardControlBoardControllers:in");
 
-                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controlUi:in.buttons");
-                _controlSystemActor.Connect("keyboardControlBoardControllers:out", "controlUi:in.controllers");
+                _controlSystemActor.Connect("keyboardControlBoardButtons:out", "controllerUi:in.buttons");
+                _controlSystemActor.Connect("keyboardControlBoardControllers:out", "controllerUi:in.controllers");
             }
         }
     }

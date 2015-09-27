@@ -44,7 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-
     <Reference Include="Akka">
       <HintPath>..\..\externals\NuGet\Akka.1.0.4\lib\net45\Akka.dll</HintPath>
     </Reference>
@@ -110,7 +109,7 @@
     <Compile Include="Carcosa.cs" />
     <Compile Include="CarcosaActor.cs" />
     <Compile Include="Control\CarcosaControlActor.cs" />
-    <Compile Include="Control\ControlUiActor.cs" />
+    <Compile Include="Control\ControllerUiActor.cs" />
     <Compile Include="Control\ExternalKeyboardActor.cs" />
     <Compile Include="Control\KeyboardControlBoardButtonsActor.cs" />
     <Compile Include="Control\KeyboardControlBoardControllersActor.cs" />
