@@ -64,40 +64,41 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             }
 
             int velocity = eventArgs.AdditionalData.Velocity;
+            double time = eventArgs.AdditionalData.Time;
 
             switch (_triggerBehaviour)
             {
                 case ButtonTriggerBehaviour.OnPush:
                     if (eventArgs.EventType == KeyEventType.Pressed)
                     {
-                        FireEvent(ButtonTriggerType.Trigger, velocity);
+                        FireEvent(ButtonTriggerType.Trigger, velocity, time);
                     }
                     break;
                 case ButtonTriggerBehaviour.OnRelease:
                     if (eventArgs.EventType == KeyEventType.Released)
                     {
-                        FireEvent(ButtonTriggerType.Trigger, velocity);
+                        FireEvent(ButtonTriggerType.Trigger, velocity, time);
                     }
                     break;
                 case ButtonTriggerBehaviour.Continues:
                     if (eventArgs.EventType == KeyEventType.Pressed)
                     {
                         _savedVelocity = velocity;
-                        FireEvent(ButtonTriggerType.Pressed, velocity);
+                        FireEvent(ButtonTriggerType.Pressed, velocity, time);
                     }
                     else if (eventArgs.EventType == KeyEventType.Released)
                     {
-                        FireEvent(ButtonTriggerType.Released, _savedVelocity);
+                        FireEvent(ButtonTriggerType.Released, _savedVelocity, time);
                     }
                     break;
             }
         }
 
-        private void FireEvent(ButtonTriggerType triggerType, int velocity)
+        private void FireEvent(ButtonTriggerType triggerType, int velocity, double time)
         {
             if(OnTrigger != null)
             {
-                OnTrigger(this, new ButtonTriggerEventArgs(_buttonId, triggerType, velocity));
+                OnTrigger(this, new ButtonTriggerEventArgs(_buttonId, triggerType, velocity, time));
             }
         }
 

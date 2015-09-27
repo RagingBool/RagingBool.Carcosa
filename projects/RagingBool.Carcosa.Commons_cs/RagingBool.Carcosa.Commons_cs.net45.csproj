@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F7234ED-ECA6-4DEE-8F9C-820B848396D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RagingBool.Carcosa.Commons</RootNamespace>
+    <AssemblyName>RagingBool.Carcosa.Commons_cs</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\net45\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET45</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\net45\Debug\RagingBool.Carcosa.Commons_cs.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\..\bin\net45\Release\</OutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\net45\Debug\RagingBool.Carcosa.Commons_cs.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+
+    <Reference Include="Akka">
+      <HintPath>..\..\externals\NuGet\Akka.1.0.4\lib\net45\Akka.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicycle.Commons.TestUtils_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.8.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicycle.Commons_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.8.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>..\..\externals\NuGet\YamlDotNet.3.5.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Akka\InitializableActor.cs" />
+    <Compile Include="Control\Akka\ConfigureControlMessage.cs" />
+    <Compile Include="Control\Akka\ConnectToMessage.cs" />
+    <Compile Include="Control\Akka\ControlActor.cs" />
+    <Compile Include="Control\Akka\ControlActorInput.cs" />
+    <Compile Include="Control\Akka\ControlActorOutput.cs" />
+    <Compile Include="Control\Akka\ControlActorRef.cs" />
+    <Compile Include="Control\Akka\DataMessage.cs" />
+    <Compile Include="Control\Akka\System\ConnectMesssage.cs" />
+    <Compile Include="Control\Akka\System\ControlNetworkActor.cs" />
+    <Compile Include="Control\Akka\System\ControlSystemActor.cs" />
+    <Compile Include="Control\Akka\System\ControlSystemActorRef.cs" />
+    <Compile Include="Control\Akka\System\CreateComponentMesssage.cs" />
+    <Compile Include="Control\Akka\System\IControlNetworkMessage.cs" />
+    <Compile Include="Control\Akka\System\SendMessageMessage.cs" />
+    <Compile Include="Control\ControlInputBase.cs" />
+    <Compile Include="Control\ControlOutputBase.cs" />
+    <Compile Include="Control\ControlPortBase.cs" />
+    <Compile Include="Control\ControlPortConfiguration.cs" />
+    <Compile Include="Control\IControlComponent.cs" />
+    <Compile Include="Control\IControlInput.cs" />
+    <Compile Include="Control\IControlOutput.cs" />
+    <Compile Include="Control\IControlPort.cs" />
+    <Compile Include="Control\ParsingUtils.cs" />
+    <Compile Include="MultipleUpdatables.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unit.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

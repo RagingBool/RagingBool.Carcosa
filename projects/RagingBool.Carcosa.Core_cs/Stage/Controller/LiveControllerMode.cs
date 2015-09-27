@@ -16,7 +16,6 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -45,8 +44,8 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private int _subsceneId;
 
-        public LiveControllerMode(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard)
-            : base(controllerUi, clock, controlBoard)
+        public LiveControllerMode(ControllerUi controllerUi, IControlBoard controlBoard)
+            : base(controllerUi, controlBoard)
         {
             _buttons = new List<Button>();
             _lightDrumPads = new List<LightDrumPad>();
@@ -97,14 +96,14 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
             _lightDrumPads.Add(button);
         }
 
-        public override void Enter()
+        public override void Enter(double time)
         {
             Fps = 60;
         }
 
-        protected override void NewFrame()
+        protected override void NewFrame(double time)
         {
-            base.NewFrame();
+            base.NewFrame(time);
 
             foreach (var button in _buttons)
             {
@@ -122,7 +121,7 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 
         private void HandleSceneSelect(object sender, ButtonTriggerEventArgs eventArgs)
         {
-            ControllerUi.GoToSceneSelectMode();
+            ControllerUi.GoToSceneSelectMode(eventArgs.Time);
         }
 
         private void HandleSubsceneSelect(object sender, ButtonTriggerEventArgs eventArgs)

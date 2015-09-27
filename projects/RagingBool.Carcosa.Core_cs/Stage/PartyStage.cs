@@ -26,7 +26,6 @@ using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using RagingBool.Carcosa.Devices.LightControl;
 using RagingBool.Carcosa.Devices.LightControl.Dmx;
 using RagingBool.Carcosa.Devices.LightControl.Opc;
-using RagingBool.Carcosa.Devices.Midi;
 using System;
 
 namespace RagingBool.Carcosa.Core.Stage
@@ -73,7 +72,7 @@ namespace RagingBool.Carcosa.Core.Stage
             InitForestOpcDevice(workspace, false);
             InitSnark(workspace, false);
 
-            _controllerUi = new ControllerUi(_clock, controlBoard);
+            _controllerUi = new ControllerUi(controlBoard);
 
             _controllerUi.OnSceneChange += OnSceneChange;
             _controllerUi.OnLightDrumEvent += OnLightDrumEvent;
@@ -145,6 +144,8 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
+                var time = _clock.Time;
+
                 if (_e1_31DmxMultiverse != null)
                 {
                     _e1_31DmxMultiverse.Connect();
@@ -160,9 +161,9 @@ namespace RagingBool.Carcosa.Core.Stage
                     _fadecandy.Connect();
                 }
 
-                _controllerUi.Start();
+                _controllerUi.Start(time);
 
-                _lastSceneUpdate = _clock.Time;
+                _lastSceneUpdate = time;
             }
         }
 
@@ -170,6 +171,8 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
+                var time = _clock.Time;
+
                 if (_dmxMultiverseUpdater1 != null)
                 {
                     _dmxMultiverseUpdater1.Update();
@@ -185,7 +188,7 @@ namespace RagingBool.Carcosa.Core.Stage
                     _fadecandyUpdater.Update();
                 }
 
-                _controllerUi.Update();
+                _controllerUi.Update(time);
                 UpdateScene();
             }
         }
@@ -211,7 +214,9 @@ namespace RagingBool.Carcosa.Core.Stage
         {
             lock (_lock)
             {
-                _controllerUi.Stop();
+                var time = _clock.Time;
+
+                _controllerUi.Stop(time);
 
                 if(_snark != null)
                 {

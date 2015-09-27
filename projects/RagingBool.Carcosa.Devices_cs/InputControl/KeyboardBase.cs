@@ -41,7 +41,7 @@ namespace RagingBool.Carcosa.Devices.InputControl
 
             _keyStates[keyId] = newState;
 
-            if (OnKeyEvent != null && eventType == KeyEventType.Repeat || prevState != newState)
+            if (OnKeyEvent != null && (eventType == KeyEventType.Repeat || prevState != newState))
             {
                 OnKeyEvent(this, eventArgs);
             }

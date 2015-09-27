@@ -25,12 +25,14 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private readonly int _buttonId;
         private readonly ButtonTriggerType _triggerType;
         private readonly int _velocity;
+        private readonly double _time;
 
-        public ButtonTriggerEventArgs(int buttonId, ButtonTriggerType triggerType, int velocity)
+        public ButtonTriggerEventArgs(int buttonId, ButtonTriggerType triggerType, int velocity, double time)
         {
             _buttonId = buttonId;
             _triggerType = triggerType;
             _velocity = velocity;
+            _time = time;
         }
 
         public int ButtonId
@@ -46,6 +48,11 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         public int Velocity
         {
             get { return _velocity; }
+        }
+
+        public double Time
+        {
+            get { return _time; }
         }
     }
 }

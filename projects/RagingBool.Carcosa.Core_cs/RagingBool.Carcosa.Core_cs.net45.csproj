@@ -44,7 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-
     <Reference Include="Akka">
       <HintPath>..\..\externals\NuGet\Akka.1.0.4\lib\net45\Akka.dll</HintPath>
     </Reference>
@@ -108,6 +107,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Carcosa.cs" />
+    <Compile Include="CarcosaActor.cs" />
+    <Compile Include="Control\CarcosaControlActor.cs" />
+    <Compile Include="Control\ControllerUiActor.cs" />
+    <Compile Include="Control\ExternalKeyboardActor.cs" />
+    <Compile Include="Control\KeyboardControlBoardButtonsActor.cs" />
+    <Compile Include="Control\KeyboardControlBoardControllersActor.cs" />
+    <Compile Include="Control\RegisterWindowsKeyboardMessage.cs" />
     <Compile Include="ICarcosa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stage\Controller\Button.cs" />
@@ -159,6 +165,10 @@
     <Compile Include="Stage\Scenes\Signal\IFunction.cs" />
     <Compile Include="Stage\Scenes\Signal\Oscillator.cs" />
     <Compile Include="Stage\Scenes\Signal\PhaseGenerator.cs" />
+    <Compile Include="StartMessage.cs" />
+    <Compile Include="StopMessage.cs" />
+    <Compile Include="TimedMessage.cs" />
+    <Compile Include="UpdateMessage.cs" />
     <Compile Include="Workspace\CarcosaWorkspace.cs" />
     <Compile Include="Workspace\CarcosaWorkspaceConfiguration.cs" />
     <Compile Include="Workspace\ICarcosaWorkspace.cs" />
@@ -167,6 +177,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RagingBool.Carcosa.Commons_cs\RagingBool.Carcosa.Commons_cs.net45.csproj">
+      <Project>{9f7234ed-eca6-4dee-8f9c-820b848396d4}</Project>
+      <Name>RagingBool.Carcosa.Commons_cs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RagingBool.Carcosa.Devices_cs\RagingBool.Carcosa.Devices_cs.net45.csproj">
       <Project>{76e967a5-9422-4a50-bf41-91706e507c81}</Project>
       <Name>RagingBool.Carcosa.Devices_cs</Name>

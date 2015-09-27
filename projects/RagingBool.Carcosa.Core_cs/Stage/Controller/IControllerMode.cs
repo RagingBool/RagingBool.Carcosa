@@ -24,9 +24,9 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal interface IControllerMode
     {
-        void Enter();
-        void Exit();
-        void Update();
+        void Enter(double time);
+        void Exit(double time);
+        void Update(double time);
 
         void ProcessButtonEventHandler(KeyEventArgs<int, TimedKeyVelocity> e);
         void ProcessControllerChangeEvent(ControllerChangeEventArgs<int, double> e);

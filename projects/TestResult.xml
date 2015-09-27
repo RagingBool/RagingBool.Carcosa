@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\Tests.all.nunit" total="48" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-09-21" time="01:21:36">
+  <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.5485" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects" machine-name="C4I7-PC" user="Administrator" user-domain="C4I7-PC" />
+  <culture-info current-culture="he-IL" current-uiculture="en-US" />
+  <test-suite type="Project" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\Tests.all.nunit" executed="True" result="Success" success="True" time="0.644" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Debug\RagingBool.Carcosa.Commons_cs-Test.dll" executed="True" result="Success" success="True" time="0.314" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="RagingBool" executed="True" result="Success" success="True" time="0.314" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Carcosa" executed="True" result="Success" success="True" time="0.313" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Commons" executed="True" result="Success" success="True" time="0.313" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="MultipleUpdatablesTest" executed="True" result="Success" success="True" time="0.312" asserts="0">
+                        <results>
+                          <test-case name="RagingBool.Carcosa.Commons.MultipleUpdatablesTest.Update_updates_all_the_child_updatables" executed="True" result="Success" success="True" time="0.301" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Release\RagingBool.Carcosa.Commons_cs-Test.dll" executed="True" result="Success" success="True" time="0.003" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="RagingBool" executed="True" result="Success" success="True" time="0.003" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Carcosa" executed="True" result="Success" success="True" time="0.003" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Commons" executed="True" result="Success" success="True" time="0.003" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="MultipleUpdatablesTest" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                        <results>
+                          <test-case name="RagingBool.Carcosa.Commons.MultipleUpdatablesTest.Update_updates_all_the_child_updatables" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Debug\RagingBool.Carcosa.Core_cs-Test.dll" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Release\RagingBool.Carcosa.Core_cs-Test.dll" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Debug\RagingBool.Carcosa.Devices.Midi_cs-Test.dll" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Release\RagingBool.Carcosa.Devices.Midi_cs-Test.dll" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Debug\RagingBool.Carcosa.Devices_cs-Test.dll" executed="True" result="Success" success="True" time="0.196" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="RagingBool" executed="True" result="Success" success="True" time="0.196" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Carcosa" executed="True" result="Success" success="True" time="0.196" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Devices" executed="True" result="Success" success="True" time="0.195" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="LightControl" executed="True" result="Success" success="True" time="0.148" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="BufferedLightControllerTest" executed="True" result="Success" success="True" time="0.101" asserts="0">
+                            <results>
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.FrameSize_same_as_FrameSize_of_the_light_controller" executed="True" result="Success" success="True" time="0.049" asserts="1" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.GetEnumerator_returns_enumerator_that_enumerates_on_all_the_values" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.LightController_returns_value_from_ctor" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.Update_passes_the_frame_state_to_the_light_controller" executed="True" result="Success" success="True" time="0.034" asserts="0" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.Values_setting_values_works" executed="True" result="Success" success="True" time="0.001" asserts="5" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.Values_zero_by_default" executed="True" result="Success" success="True" time="0.001" asserts="5" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="Namespace" name="Dmx" executed="True" result="Success" success="True" time="0.018" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="E1_31ProtocolUtilsTest" executed="True" result="Success" success="True" time="0.005" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Dmx.E1_31ProtocolUtilsTest.CreatePacket_creates_proper_packet" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="FramedDmxControllerTest" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Dmx.FramedDmxControllerTest.FrameSize_returns_correct_value" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Dmx.FramedDmxControllerTest.SendFrame_calls_parent_SendFrame" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="Namespace" name="Opc" executed="True" result="Success" success="True" time="0.022" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="FramedOpcControllerTest" executed="True" result="Success" success="True" time="0.015" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.FramedOpcControllerTest.FrameSize_returns_correct_value" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.FramedOpcControllerTest.SendFrame_calls_parent_SendRgbFrame" executed="True" result="Success" success="True" time="0.008" asserts="0" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="OpcProtocolUtilsTest" executed="True" result="Success" success="True" time="0.004" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.OpcProtocolUtilsTest.BuildSetPixelColorsCommand_creates_correect_packet" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.OpcProtocolUtilsTest.BuildSystemExclusiveCommand_creates_correect_packet" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="MaxFrequencyUpdaterTest" executed="True" result="Success" success="True" time="0.025" asserts="0">
+                        <results>
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Clock_returns_object_from_ctor" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.MaxFrequency_returns_object_from_ctor" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Updatable_returns_object_from_ctor" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_always_updates_on_first_time" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_doesnt_propagate_if_dt_is_too_small" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_doesnt_propagate_if_dt_is_too_small_since_last_update" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_propagates_if_dt_is_big_enough" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_propagates_if_dt_is_big_enough_since_last_update" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="MultipleDevicesTest" executed="True" result="Success" success="True" time="0.014" asserts="0">
+                        <results>
+                          <test-case name="RagingBool.Carcosa.Devices.MultipleDevicesTest.Connect_gets_delegated_to_all_the_children" executed="True" result="Success" success="True" time="0.008" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MultipleDevicesTest.Disconnect_gets_delegated_to_all_the_children" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="C:\Dima\RagingBool\workspace\RagingBool.Carcosa\projects\..\bin\net45\Release\RagingBool.Carcosa.Devices_cs-Test.dll" executed="True" result="Success" success="True" time="0.067" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="RagingBool" executed="True" result="Success" success="True" time="0.067" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Carcosa" executed="True" result="Success" success="True" time="0.067" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Devices" executed="True" result="Success" success="True" time="0.066" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="LightControl" executed="True" result="Success" success="True" time="0.037" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="BufferedLightControllerTest" executed="True" result="Success" success="True" time="0.014" asserts="0">
+                            <results>
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.FrameSize_same_as_FrameSize_of_the_light_controller" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.GetEnumerator_returns_enumerator_that_enumerates_on_all_the_values" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.LightController_returns_value_from_ctor" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.Update_passes_the_frame_state_to_the_light_controller" executed="True" result="Success" success="True" time="0.002" asserts="0" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.Values_setting_values_works" executed="True" result="Success" success="True" time="0.000" asserts="5" />
+                              <test-case name="RagingBool.Carcosa.Devices.LightControl.BufferedLightControllerTest.Values_zero_by_default" executed="True" result="Success" success="True" time="0.000" asserts="5" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="Namespace" name="Dmx" executed="True" result="Success" success="True" time="0.008" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="E1_31ProtocolUtilsTest" executed="True" result="Success" success="True" time="0.001" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Dmx.E1_31ProtocolUtilsTest.CreatePacket_creates_proper_packet" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="FramedDmxControllerTest" executed="True" result="Success" success="True" time="0.004" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Dmx.FramedDmxControllerTest.FrameSize_returns_correct_value" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Dmx.FramedDmxControllerTest.SendFrame_calls_parent_SendFrame" executed="True" result="Success" success="True" time="0.002" asserts="0" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                          <test-suite type="Namespace" name="Opc" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="FramedOpcControllerTest" executed="True" result="Success" success="True" time="0.005" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.FramedOpcControllerTest.FrameSize_returns_correct_value" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.FramedOpcControllerTest.SendFrame_calls_parent_SendRgbFrame" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                                </results>
+                              </test-suite>
+                              <test-suite type="TestFixture" name="OpcProtocolUtilsTest" executed="True" result="Success" success="True" time="0.002" asserts="0">
+                                <results>
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.OpcProtocolUtilsTest.BuildSetPixelColorsCommand_creates_correect_packet" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                  <test-case name="RagingBool.Carcosa.Devices.LightControl.Opc.OpcProtocolUtilsTest.BuildSystemExclusiveCommand_creates_correect_packet" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="MaxFrequencyUpdaterTest" executed="True" result="Success" success="True" time="0.016" asserts="0">
+                        <results>
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Clock_returns_object_from_ctor" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.MaxFrequency_returns_object_from_ctor" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Updatable_returns_object_from_ctor" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_always_updates_on_first_time" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_doesnt_propagate_if_dt_is_too_small" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_doesnt_propagate_if_dt_is_too_small_since_last_update" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_propagates_if_dt_is_big_enough" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MaxFrequencyUpdaterTest.Update_propagates_if_dt_is_big_enough_since_last_update" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="MultipleDevicesTest" executed="True" result="Success" success="True" time="0.005" asserts="0">
+                        <results>
+                          <test-case name="RagingBool.Carcosa.Devices.MultipleDevicesTest.Connect_gets_delegated_to_all_the_children" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="RagingBool.Carcosa.Devices.MultipleDevicesTest.Disconnect_gets_delegated_to_all_the_children" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

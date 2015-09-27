@@ -17,8 +17,6 @@
 // ]]]]
 
 using Epicycle.Commons.Time;
-using Epicycle.Input.Controllers;
-using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using RagingBool.Carcosa.Devices.Midi;
@@ -39,7 +37,8 @@ namespace RagingBool.Carcosa.App
         private readonly IClock _clock;
         private readonly ICarcosa _carcosa;
         private readonly WpfKeyboardManager _keyboardManager;
-        private KeyboardControlBoard<Key> _keyboardControlBoard;
+        private KeyboardControlBoardConfig<WindowsKey> _keyboardControlBoardConfig;
+        private KeyboardControlBoard<WindowsKey> _keyboardControlBoard;
 
         public MainWindow()
         {
@@ -70,20 +69,24 @@ namespace RagingBool.Carcosa.App
 
         private void InitKeyboardControlBoard()
         {
-            var controllerValueChangeKeysConfig = new TwoSpeedBidirectionalMovementKeysConfiguration<Key>(
-                slowPositiveDirectionKeyId: Key.Right, slowNegativeDirectionKeyId: Key.Left,
-                fastPositiveDirectionKeyId: Key.Up, fastNegativeDirectionKeyId: Key.Down);
-
-            _keyboardControlBoard = new KeyboardControlBoard<Key>(
-                _keyboardManager,
-                buttonKeys: new Key[] { Key.Z, Key.X, Key.C, Key.V, Key.A, Key.S, Key.D, Key.F},
+            var buttonsConfig = new KeyboardControlBoardButtonsConfig<WindowsKey>(
+                buttonKeys: new WindowsKey[] { WindowsKey.Z, WindowsKey.X, WindowsKey.C, WindowsKey.V, WindowsKey.A, WindowsKey.S, WindowsKey.D, WindowsKey.F },
                 defaultVelocity: 90, 
                 highVelocity: 120,
-                highVelocityKey: Key.LeftShift,
-                controllerKeys: new Key[] { Key.M, Key.OemComma, Key.OemPeriod, Key.OemQuestion, Key.K, Key.L, Key.Oem1, Key.OemQuotes },
-                controllerValueKeys: new Key[] { Key.Oem3, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9, Key.D0 },
-                controllerValueChangeKeysConfig: controllerValueChangeKeysConfig,
-                controllerSmallValueStep: 1.0 / 1000, controllerBigValueStep: 1.0 / 100);
+                highVelocityKey: WindowsKey.LeftShift);
+
+            var controllerValueChangeKeysConfig = new TwoSpeedBidirectionalMovementKeysConfiguration<WindowsKey>(
+                slowPositiveDirectionKeyId: WindowsKey.Right, slowNegativeDirectionKeyId: WindowsKey.Left,
+                fastPositiveDirectionKeyId: WindowsKey.Up, fastNegativeDirectionKeyId: WindowsKey.Down);
+
+            var controllersConfig = new KeyboardControlBoardControllersConfig<WindowsKey>(
+                controllerKeys: new WindowsKey[] { WindowsKey.M, WindowsKey.OemComma, WindowsKey.OemPeriod, WindowsKey.OemQuestion, WindowsKey.K, WindowsKey.L, WindowsKey.Oem1, WindowsKey.OemQuotes },
+                valueKeys: new WindowsKey[] { WindowsKey.Oem3, WindowsKey.D1, WindowsKey.D2, WindowsKey.D3, WindowsKey.D4, WindowsKey.D5, WindowsKey.D6, WindowsKey.D7, WindowsKey.D8, WindowsKey.D9, WindowsKey.D0 },
+                valueChangeKeysConfig: controllerValueChangeKeysConfig,
+                smallValueStep: 1.0 / 1000, bigValueStep: 1.0 / 100);
+
+            _keyboardControlBoardConfig = new KeyboardControlBoardConfig<WindowsKey>(buttonsConfig, controllersConfig);
+            _keyboardControlBoard = new KeyboardControlBoard<WindowsKey>(_keyboardManager, _keyboardControlBoardConfig);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -94,6 +97,8 @@ namespace RagingBool.Carcosa.App
             _infoLabel.Content = String.Format("WORKSPACE: {0}", workspaceName);
 
             _carcosa.Start();
+
+            _carcosa.RegisterWindowsKeyboard(_keyboardManager, _keyboardControlBoardConfig);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)

@@ -20,9 +20,12 @@ using Akka.Actor;
 using Epicycle.Commons;
 using Epicycle.Commons.FileSystem;
 using Epicycle.Commons.Time;
+using Epicycle.Input.Keyboard;
+using RagingBool.Carcosa.Core.Control;
 using RagingBool.Carcosa.Core.Stage;
 using RagingBool.Carcosa.Core.Workspace;
 using RagingBool.Carcosa.Devices;
+using RagingBool.Carcosa.Devices.InputControl;
 using RagingBool.Carcosa.Devices.InputControl.ControlBoard;
 using System.Collections.Generic;
 using System.Threading;
@@ -45,6 +48,7 @@ namespace RagingBool.Carcosa.Core
         private IList<IUpdatable> _updatables;
 
         private readonly ActorSystem _actorSystem;
+        private IActorRef _carcosaActor;
 
         private bool _isRunning;
 
@@ -84,6 +88,8 @@ namespace RagingBool.Carcosa.Core
             }
 
             _stage.Start();
+            _carcosaActor = _actorSystem.ActorOf<CarcosaActor>(_workspace.WorkspaceName);
+            _carcosaActor.Tell(new StartMessage(_clock.Time));
             _isRunning = true;
 
             _updateThread.Start();
@@ -97,6 +103,7 @@ namespace RagingBool.Carcosa.Core
             } 
             
             _isRunning = false;
+            _carcosaActor.Tell(new StopMessage(_clock.Time));
             _stage.Stop();
             _actorSystem.Shutdown();
         }
@@ -121,6 +128,13 @@ namespace RagingBool.Carcosa.Core
             _controlBoards.Register(controlBoard);
         }
 
+        public void RegisterWindowsKeyboard(
+            IKeyboard<WindowsKey, TimedKey> keyboard,
+            KeyboardControlBoardConfig<WindowsKey> keyboardControlBoardConfig)
+        {
+            _carcosaActor.Tell(new RegisterWindowsKeyboardMessage(keyboard, keyboardControlBoardConfig));
+        }
+
         private void UpdateThreadLoop()
         {
             while(_isRunning)
@@ -129,6 +143,7 @@ namespace RagingBool.Carcosa.Core
                 {
                     updatable.Update();
                 }
+                _carcosaActor.Tell(new UpdateMessage(_clock.Time));
 
                 _stage.Update();
                 Thread.Sleep(10);

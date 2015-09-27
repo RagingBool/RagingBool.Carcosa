@@ -22,11 +22,11 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
 {
     internal interface IControllerUi
     {
-        void Start();
+        void Start(double time);
 
-        void Stop();
+        void Stop(double time);
 
-        void Update();
+        void Update(double time);
 
         int SceneId { get; }
 

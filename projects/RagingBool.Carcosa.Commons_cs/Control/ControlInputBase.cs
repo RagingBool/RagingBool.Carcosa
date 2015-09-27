@@ -17,31 +17,27 @@
 // ]]]]
 
 using Epicycle.Commons;
-using Moq;
-using NUnit.Framework;
 
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Commons.Control
 {
-    [TestFixture]
-    public class MultipleUpdatablesTest
+    public abstract class ControlInputBase<TControlComponent> : ControlPortBase<TControlComponent>, IControlInput
+        where TControlComponent : IControlComponent
     {
-        [Test]
-        public void Update_updates_all_the_child_updatables()
+        public ControlInputBase(TControlComponent component, ControlPortConfiguration configuration)
+            : base(component, configuration) { }
+
+        public bool CanConnectTo(IControlOutput output)
         {
-            var updatableMock1 = new Mock<IUpdatable>();
-            var updatableMock2 = new Mock<IUpdatable>();
-            var updatableMock3 = new Mock<IUpdatable>();
+            ArgAssert.NotNull(output, "output");
 
-            var multipleUpdatables = new MultipleUpdatables(new IUpdatable[] { 
-                updatableMock1.Object,
-                updatableMock2.Object,
-                updatableMock3.Object});
+            return output.CanConnectTo(this);
+        }
 
-            multipleUpdatables.Update();
+        public void ConnectTo(IControlOutput output)
+        {
+            ArgAssert.NotNull(output, "output");
 
-            updatableMock1.Verify(m => m.Update(), Times.Once);
-            updatableMock2.Verify(m => m.Update(), Times.Once);
-            updatableMock3.Verify(m => m.Update(), Times.Once);
+            output.ConnectTo(this);
         }
     }
 }

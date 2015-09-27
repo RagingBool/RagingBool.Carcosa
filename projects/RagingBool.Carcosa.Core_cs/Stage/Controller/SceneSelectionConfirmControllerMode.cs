@@ -16,7 +16,6 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons.Time;
 using Epicycle.Input.Controllers;
 using Epicycle.Input.Keyboard;
 using RagingBool.Carcosa.Devices.InputControl;
@@ -31,27 +30,27 @@ namespace RagingBool.Carcosa.Core.Stage.Controller
         private bool _isOn;
         private double _startTime;
 
-        public SceneSelectionConfirmControllerMode(ControllerUi controllerUi, IClock clock, IControlBoard controlBoard) :
-            base(controllerUi, clock, controlBoard) { }
+        public SceneSelectionConfirmControllerMode(ControllerUi controllerUi, IControlBoard controlBoard) :
+            base(controllerUi, controlBoard) { }
 
-        public override void Enter()
+        public override void Enter(double time)
         {
-            base.Enter();
+            base.Enter(time);
 
             _isOn = true;
             Fps = 40;
 
-            _startTime = Clock.Time;
+            _startTime = time;
         }
 
-        protected override void NewFrame()
+        protected override void NewFrame(double time)
         {
-            base.NewFrame();
+            base.NewFrame(time);
 
-            var elapsedTime = Clock.Time - _startTime;
+            var elapsedTime = time - _startTime;
             if(elapsedTime > Duration)
             {
-                ControllerUi.GoToLiveMode();
+                ControllerUi.GoToLiveMode(time);
                 return;
             }
 

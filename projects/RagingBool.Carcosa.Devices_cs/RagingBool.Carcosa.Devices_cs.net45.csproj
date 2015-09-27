@@ -66,6 +66,13 @@
     <Compile Include="InputControl\ControlBoard\DummyControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\IControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\KeyboardControlBoard.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardButtons.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardButtonsConfig.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardConfig.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardControllers.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardControllersConfig.cs" />
+    <Compile Include="InputControl\ControlBoard\KeyboardControlBoardUtils.cs" />
+    <Compile Include="InputControl\ControlBoard\ManualControlBoard.cs" />
     <Compile Include="InputControl\ControlBoard\OverlappingControlBoards.cs" />
     <Compile Include="InputControl\ControllerBoardBase.cs" />
     <Compile Include="InputControl\DummyControllerBoard.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="InputControl\KeyboardBase.cs" />
     <Compile Include="InputControl\KeyboardControllerBoardEmulator.cs" />
     <Compile Include="InputControl\ManualControllerBoard.cs" />
+    <Compile Include="InputControl\ManualIndicatorBoard.cs" />
     <Compile Include="InputControl\ManualKeyboard.cs" />
     <Compile Include="InputControl\OverlappingControllerBoard.cs" />
     <Compile Include="InputControl\OverlappingIndicatorBoard.cs" />
@@ -83,6 +91,7 @@
     <Compile Include="InputControl\TimedKeyVelocity.cs" />
     <Compile Include="InputControl\TwoSpeedBidirectionalMovementKeysConfiguration.cs" />
     <Compile Include="InputControl\VelocityKeyboardEmulator.cs" />
+    <Compile Include="InputControl\WindowsKey.cs" />
     <Compile Include="LightControl\BufferedLightController.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxMultiverse.cs" />
     <Compile Include="LightControl\Dmx\E1_31DmxUniverse.cs" />
@@ -101,7 +110,6 @@
     <Compile Include="LightControl\Opc\SerialOpcDevice.cs" />
     <Compile Include="MaxFrequencyUpdater.cs" />
     <Compile Include="MultipleDevices.cs" />
-    <Compile Include="MultipleUpdatables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

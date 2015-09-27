@@ -16,29 +16,11 @@
 // For more information check https://github.com/RagingBool/RagingBool.Carcosa
 // ]]]]
 
-using Epicycle.Commons;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace RagingBool.Carcosa.Devices
+namespace RagingBool.Carcosa.Commons.Control.Akka
 {
-    public sealed class MultipleUpdatables: IUpdatable
+    internal sealed class ControlActorInput : ControlInputBase<ControlActorRef>
     {
-        private readonly IList<IUpdatable> _updatables;
-
-        public MultipleUpdatables(IEnumerable<IUpdatable> updatables)
-        {
-            ArgAssert.NotNull(updatables, "updatables");
-
-            _updatables = updatables.ToList();
-        }
-
-        public void Update()
-        {
-            foreach (var updateable in _updatables)
-            {
-                updateable.Update();
-            }
-        }
+        public ControlActorInput(ControlActorRef component, ControlPortConfiguration configuration)
+            : base(component, configuration) { }
     }
 }
