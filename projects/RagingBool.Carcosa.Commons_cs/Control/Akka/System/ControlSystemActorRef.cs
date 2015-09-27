@@ -39,5 +39,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
         {
             _actorRef.Tell(new ConnectMesssage(outputId, inputId));
         }
+
+        public void SendMessage(string name, object message)
+        {
+            _actorRef.Tell(new SendMessageMessage(name, message));
+        }
     }
 }

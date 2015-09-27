@@ -32,6 +32,10 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
             {
                 OnConnectMesssage((ConnectMesssage)message);
             }
+            else if (message is SendMessageMessage)
+            {
+                OnSendMessageMessage((SendMessageMessage)message);
+            }
             else
             {
                 Unhandled(message);
@@ -51,6 +55,11 @@ namespace RagingBool.Carcosa.Commons.Control.Akka.System
             ParsingUtils.ParseControlOutputId(message.OutputId, out sourceControl, out sourcePort);
             
             Context.ActorSelection(sourceControl).Tell(new ConnectToMessage(sourcePort, message.InputId));
+        }
+
+        private void OnSendMessageMessage(SendMessageMessage message)
+        {
+            Context.ActorSelection(message.Name).Tell(message.Message);
         }
     }
 }
