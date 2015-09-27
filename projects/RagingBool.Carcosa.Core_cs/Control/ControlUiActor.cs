@@ -61,6 +61,32 @@ namespace RagingBool.Carcosa.Core.Control
             };
         }
 
+        protected override void OnReceive(object message)
+        {
+            if (message is StartMessage)
+            {
+                OnStart((StartMessage)message);
+            }
+            else if (message is StopMessage)
+            {
+                OnStop((StopMessage)message);
+            }
+            else
+            {
+                base.OnReceive(message);
+            }
+        }
+
+        private void OnStart(StartMessage message)
+        {
+            _controllerUi.Start(message.Time);
+        }
+
+        private void OnStop(StopMessage message)
+        {
+            _controllerUi.Stop(message.Time);
+        }
+
         protected override void Configure(Unit config)
         {
             if(_controllerUi == null)
